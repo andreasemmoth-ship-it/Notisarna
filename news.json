@@ -1,115 +1,104 @@
 {
   "articles": [
     {
-      "id": "naringsliv_915f5640",
+      "id": "naringsliv_62742daf",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "7 maj 2026",
-      "headline": "Stegra - skillnaden mellan långsiktighet och trend",
-      "summary": "Wallenbergs investering i Stegra visar vad långsiktigt ägarskap betyder, skriver de båda grundarna av företaget Lynxeye, Johan Ekelin och Christian Ihre.",
+      "headline": "Intrums storägare avvaktar villkoren: ”Vårt ansvar att utvärdera”",
+      "summary": "Intrums största ägare Nordic Capital vet ännu inte om det ska delta i kredithanteringsbolagets stora nyemission. ”Som ägare är det standardpraxis och vårt ansvar att utvärdera de slutliga villkoren innan beslut fattas”, …",
       "hue": 150,
-      "link": "https://www.di.se/debatt/stegra-skillnaden-mellan-langsiktighet-och-trend/",
+      "link": "https://www.di.se/nyheter/intrums-storagare-avvaktar-villkoren-vart-ansvar-att-utvardera/",
       "featured": true
     },
     {
-      "id": "lokalt_33fc423d",
+      "id": "skatt_3cd7c10e",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "7 maj 2026",
+      "headline": "Ny överdirektör för Skatteverket utsedd",
+      "summary": "Regeringen har i dag utsett Gunilla Åsenius till överdirektör vid Skatteverket. Gunilla Åsenius är i dag rättschef på Polismyndigheten. Hon tillträder som överdirektör den 15 juni.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/ny-overdirektor-for-skatteverket-utsedd/"
+    },
+    {
+      "id": "naringsliv_f45d6686",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Spådomen bådar gott för börsen",
+      "summary": "Lönsamheten var urstark och orderingången bådar gott inför framtiden, visar Di:s stora rapportgenomgång. Dessutom spår proffsen att den trista trenden för såväl översta som sista raden nu är över. Det talar för att place…",
+      "hue": 150,
+      "link": "https://www.di.se/analys/spadomen-badar-gott-for-borsen/"
+    },
+    {
+      "id": "naringsliv_88795a55",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Stenafartyg passerade genom Hormuzsundet: ”En lättnad”",
+      "summary": "Tankfartyget CS Anthem, som ingår i flottan hos ett Stenaägt bolag, är ett av de två fartyg som passerade Hormuzsundet med amerikansk eskort innan den amerikanska militären pausade aktionen. Det bekräftar Stena Bulks vd …",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/stenafartyg-passerade-genom-hormuzsundet-en-lattnad/"
+    },
+    {
+      "id": "naringsliv_487741a5",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Johan Pehrson blir ambassadör i Portugal",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/bOXn4d/johan-pehrson-blir-ambassador-i-portugal"
+    },
+    {
+      "id": "naringsliv_99cc54c1",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Essitys vd: ”Inget beslut taget”",
+      "summary": "Hygienjätten Essity överväger att knoppa av Consumer Tissue-verksamheten som stod för en tredjedel av koncernens omsättning i fjol. Översynen kan ta uppemot ett år och än är inget beslut taget, understryker vd:n Ulrika K…",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/essitys-vd-inget-beslut-taget/"
+    },
+    {
+      "id": "lokalt_310c4194",
       "category": "Lokalt",
       "categoryKey": "lokalt",
       "source": "SVT Stockholm",
       "date": "7 maj 2026",
-      "headline": "Cykeletikett – att inte göra rätt kan blir dyrt",
-      "summary": "Cykelsäsongen är nu i full gång men många missar svängtecken och ett och annat rödljus. Hör tips från Cykelfrämjandet om vad man ska tänka på och hur man bäst använder en cykelbox.",
+      "headline": "Fyra nya misstänkta i bussmordet i Tyresö",
+      "summary": "Ytterligare fyra personer är misstänkta gällande bussmordet i Tyresö den 25 mars.",
       "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/cykeletikett-att-inte-gora-ratt-kan-blir-dyrt"
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/fyra-nya-misstankta-i-bussmordet-i-tyreso"
     },
     {
-      "id": "varlden_1bed8a60",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Shell latest oil giant to see profits surge due to Iran war impact",
-      "summary": "The energy giant's profits jump by nearly a quarter as it benefits from the recent volatility in the oil price",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/ce3p0x54drwo?at_medium=RSS&at_campaign=rss"
-    },
-    {
-      "id": "naringsliv_89e02e5c",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "LIVE: Pressträff om penningpolitiska mötet",
-      "summary": "",
-      "hue": 150,
-      "link": "https://www.di.se/ditv/borsmorgon/live-presstraff-om-penningpolitiska-motet/"
-    },
-    {
-      "id": "naringsliv_7aea3cc1",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Fraktjätten: Kunder får stå för stigande oljekostnader",
-      "summary": "Konsumenterna kommer att få betala för de stigande oljekostnaderna. Det säger vd:n för transport- och logistikbolaget AP Møller-Mærsk.",
-      "hue": 150,
-      "link": "https://www.di.se/live/fraktjatten-kunder-far-sta-for-stigande-oljekostnader/"
-    },
-    {
-      "id": "naringsliv_60370e2a",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Rätt att rycka plåstret",
-      "summary": "Kredithanteraren Intrum gör en jätteemission för att minska sitt skuldberg och få ett bättre utgångsläge framåt. Trots en stor utspädning är detta rätt steg att ta.",
-      "hue": 150,
-      "link": "https://www.di.se/analys/ratt-att-rycka-plastret/"
-    },
-    {
-      "id": "naringsliv_0a33e795",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Norska och svenska kronan nära paritet",
-      "summary": "Svenska räntor sjönk marginellt medan kronan stärktes en aning efter att Riksbanken som väntat lämnat styrräntan oförändrad. Efter att Norges Bank höjt sin styrränta stärktes den norska, men även den svenska kronan, meda…",
-      "hue": 150,
-      "link": "https://www.di.se/live/norska-och-svenska-kronan-nara-paritet/"
-    },
-    {
-      "id": "naringsliv_d317bdd4",
+      "id": "naringsliv_76e10788",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "7 maj 2026",
-      "headline": "Oförändrad ränta: ”Flera risker”",
-      "summary": "Riksbanken lämnar som väntat styrräntan oförändrad på 1,75 procent. Prognosen framåt är även den oförändrad – men omvärldsläget gör att banken kan behöva agera redan i år.",
+      "headline": "Replik från Anne Ramberg",
+      "summary": "Med anledning av Paulina Neudings ledare ”Juristerna blundar för de utsatta” har följande replik inkommit från Anne Ramberg.",
       "hue": 150,
-      "link": "https://www.svd.se/a/43bqeV/riksbanken-lamnar-styrrantan-oforandrad"
+      "link": "https://www.svd.se/a/Wv6Omd/anne-ramberg-svarar-paulina-neuding"
     },
     {
-      "id": "naringsliv_f970c682",
+      "id": "naringsliv_49261d9a",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
+      "source": "Dagens industri",
       "date": "7 maj 2026",
-      "headline": "Flygvärdinna i karantän – symtom på hantavirus",
-      "summary": "",
+      "headline": "EU planerar för begränsning av amerikanska molntjänster",
+      "summary": "EU planerar att införa lagar för att begränsa medlemsländernas användning av amerikanska molnleverantörer. Det skriver CNBC.",
       "hue": 150,
-      "link": "https://www.svd.se/a/oEkpj7/flygvardinna-i-karantan-symptom-pa-hantavirus"
-    },
-    {
-      "id": "naringsliv_594a1aa7",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Rubio och påven möts – efter Trumps ordbråk",
-      "summary": "USA:s utrikesminister Marco Rubio är på plats i Italien för ett möte med Leo XIV – kanske för att tina upp relationen mellan parterna. Samtidigt hyllas Rubio för sin insats som inhoppande pressekreterare, och röster höjs…",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Ok6nok/paven-och-marco-rubio-mots-i-vatikanstaten-efter-ordbraket-om-iran-med-trump"
+      "link": "https://www.di.se/live/eu-planerar-for-begransning-av-amerikanska-molntjanster/"
     },
     {
       "id": "varlden_1055c4eb",
@@ -123,15 +112,15 @@
       "link": "https://www.bbc.com/news/articles/czj2emlv2kjo?at_medium=RSS&at_campaign=rss"
     },
     {
-      "id": "naringsliv_950c50e2",
+      "id": "naringsliv_1d71993b",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "7 maj 2026",
-      "headline": "Rättegång mot Joakim Medin skjuts upp",
-      "summary": "",
+      "headline": "Det nya är att han är stolt över det",
+      "summary": "Sverigedemokraterna stoltserar med vad de har gjort och Tidö avslutar mandatperioden med att ifrågasätta regeringsformen. Kvittningskaoset i riksdagen är både historiskt och ironiskt.",
       "hue": 150,
-      "link": "https://www.svd.se/a/5pb07z/rattegang-mot-joakim-medin-skjuts-upp"
+      "link": "https://www.svd.se/a/8pPbvG/stora-nyheten-i-kvittningskaoset-sverigedemokraterna-stoltserar-med-vad-de-har-gjort"
     },
     {
       "id": "varlden_eee46eaf",
@@ -143,6 +132,39 @@
       "summary": "A British man is among three evacuees sent to the Netherlands after displaying symptoms while aboard the MV Hondius.",
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/c5y093d5n9ko?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": "varlden_1bed8a60",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Shell latest oil giant to see profits surge due to Iran war impact",
+      "summary": "The energy giant's profits jump by nearly a quarter as it benefits from the recent volatility in the oil price",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/ce3p0x54drwo?at_medium=RSS&at_campaign=rss"
+    },
+    {
+      "id": "naringsliv_b92d30d4",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Buss och spårvagn i krock i Göteborg",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/rrzglA/buss-och-sparvagn-i-krock-i-goteborg"
+    },
+    {
+      "id": "lokalt_33fc423d",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "7 maj 2026",
+      "headline": "Cykeletikett – att inte göra rätt kan blir dyrt",
+      "summary": "Cykelsäsongen är nu i full gång men många missar svängtecken och ett och annat rödljus. Hör tips från Cykelfrämjandet om vad man ska tänka på och hur man bäst använder en cykelbox.",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/cykeletikett-att-inte-gora-ratt-kan-blir-dyrt"
     },
     {
       "id": "lokalt_3db72472",
@@ -255,15 +277,15 @@
       "link": "https://www.bbc.com/news/articles/crmpjjl02l2o?at_medium=RSS&at_campaign=rss"
     },
     {
-      "id": "lokalt_598958a4",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
+      "id": "skatt_8eb58ba1",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
       "date": "6 maj 2026",
-      "headline": "Nyheter från dagen: 6 maj",
-      "summary": "Här är några utvalda nyheter från SVT Stockholm onsdag 6 maj.",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/nyheter-fran-dagen-6-maj-8the4d"
+      "headline": "Prövningstillstånd meddelat i mål om stöd och service till vissa funktionshindrade",
+      "summary": "Den fråga i målet som har lett till att Högsta förvaltningsdomstolen meddelat prövningstillstånd gäller förutsättningarna för en kammarrätt att på yrkande av en kommun besluta om inhibition av förvaltningsrättens avgöran…",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/05/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/"
     },
     {
       "id": "naringsliv_de0d3c3d",
@@ -275,6 +297,149 @@
       "summary": "Under Guldbron har en av Stockholms mest omtalade krogsatsningar vuxit fram. Här kombineras storslagen miljö med ambitiös matlagning – och ute­serveringen lär bli sommarens hetaste.",
       "hue": 150,
       "link": "https://www.svd.se/a/k0M1G6/recension-av-slussporten-snyggt-och-vallagat"
+    },
+    {
+      "id": "skatt_c1cc5034",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "4 maj 2026",
+      "headline": "Remiss av promemorian En myndighet för redovisning och revision",
+      "summary": "Här kan du ta del av till vilka instanser som regeringen har remitterat promemorian En myndighet för redovisning och revision.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/remisser/2026/05/remiss-av-promemorian-en-myndighet-for-redovisning-och-revision/"
+    },
+    {
+      "id": "skatt_f4703952",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "4 maj 2026",
+      "headline": "En myndighet för redovisning och revision",
+      "summary": "Regeringen har aviserat att Bokföringsnämndens uppgifter ska föras över till, och inordnas i, Revisorsinspektionen.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/rattsliga-dokument/departementsserien-och-promemorior/2026/05/en-myndighet-for-redovisning-och-revision/"
+    },
+    {
+      "id": "skatt_3c1d4ca6",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "4 maj 2026",
+      "headline": "Dom i mål om föräldrapenning",
+      "summary": "Dom i mål om föräldrapenning.",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/"
+    },
+    {
+      "id": "skatt_3af46f02",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "30 apr 2026",
+      "headline": "Regeringen tar nästa steg för att renodla Utbetalningsmyndighetens verksamhet",
+      "summary": "Regeringen har i dag beslutat om en lagrådsremiss med förslag som innebär att Utbetalningsmyndighetens verksamhet renodlas till kärnuppgiften att förebygga, förhindra och upptäcka felaktiga utbetalningar.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/04/regeringen-tar-nasta-steg-for-att-renodla-utbetalningsmyndighetens-verksamhet/"
+    },
+    {
+      "id": "skatt_cb29735d",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "30 apr 2026",
+      "headline": "Avveckling av Utbetalningsmyndighetens system med transaktionskonto",
+      "summary": "I denna lagrådsremiss föreslås lagändringar för att avveckla Utbetalningsmyndighetens system med transaktionskonto.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/rattsliga-dokument/lagradsremiss/2026/04/avveckling-av-utbetalningsmyndighetens-system-med-transaktionskonto/"
+    },
+    {
+      "id": "skatt_f6ccb84e",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "PwC Tax Matters",
+      "date": "30 apr 2026",
+      "headline": "Trender inom internationell källskatt",
+      "summary": "Källskatt är ett ständigt aktuellt område, men under det senaste året har flera internationella avgöranden och nationella tillämpningar skärpt riskbilden för multinationella koncerner. Frågor om vem som är verklig mottag…",
+      "hue": 24,
+      "link": "https://blogg.pwc.se/taxmatters/trender-internationell-kallskatt"
+    },
+    {
+      "id": "skatt_50997290",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "29 apr 2026",
+      "headline": "Dom i mål om laglighetsprövning enligt kommunallagen",
+      "summary": "En regions beslut att inom ramen för ett valfrihetssystem och i enlighet med ingånget avtal ta ut ett vite från en leverantör utgör inte myndighetsutövning mot enskild.",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-laglighetsprovning-enligt-kommunallagen/"
+    },
+    {
+      "id": "skatt_fbf2162b",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "29 apr 2026",
+      "headline": "Prövningstillstånd delvis meddelat i mål om stöd och service till vissa funktionshindrade",
+      "summary": "Högsta förvaltningsdomstolen meddelar prövningstillstånd såvitt avser frågan om insatsen ledsagarservice enligt 9 § 3 lagen (1993:387) om stöd och service till vissa funktionshindrade kan omfatta ledsagning vid universit…",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/"
+    },
+    {
+      "id": "skatt_27a221bf",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "28 apr 2026",
+      "headline": "Dom i mål om förhandsbesked om inkomstskatt",
+      "summary": "Ett friskvårdsbidrag som används för inköp av en konsertbiljett har inte ansetts vara en skattefri personalvårdsförmån.",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-forhandsbesked-om-inkomstskatt1/"
+    },
+    {
+      "id": "skatt_51094b2f",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "PwC Tax Matters",
+      "date": "20 apr 2026",
+      "headline": "Återbetalning av IEEPA-tullar: så går det till",
+      "summary": "Under 2025 införde USA:s president Donald Trump omfattande tullar med stöd av International Emergency Economic Powers Act (IEEPA), bland annat tullar på 25 procent på import från Kanada och Mexiko, 10–145 procent på impo…",
+      "hue": 24,
+      "link": "https://blogg.pwc.se/taxmatters/aterbetalningar-ieepa-tullar"
+    },
+    {
+      "id": "skatt_ade76d59",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "PwC Tax Matters",
+      "date": "17 apr 2026",
+      "headline": "EU Inc. – ny bolagsform för företag som vill växa i EU",
+      "summary": "Den 18 mars 2026 presenterade EU-kommissionen sitt förslag till en helt ny, enhetlig bolagsform kallad ”EU Inc.”. Förslaget beskrivs som en ”28:e regim”, ett frivilligt alternativ till de 27 medlemsstaternas nationella b…",
+      "hue": 24,
+      "link": "https://blogg.pwc.se/taxmatters/eu-inc-ny-bolagsform"
+    },
+    {
+      "id": "skatt_003ea378",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "PwC Tax Matters",
+      "date": "16 apr 2026",
+      "headline": "Pelare II – Promemoria om Side-by-side-paketet har skickats på remiss",
+      "summary": "I januari publicerade OECD/IF Side-by-side-paketet. Nu har regeringen skickat en promemoria på remiss med förslag på hur paketet ska implementeras i svensk rätt genom ändringar i lagen om tilläggsskatt. Promemorian inneh…",
+      "hue": 24,
+      "link": "https://blogg.pwc.se/taxmatters/pelare-ii-side-by-side-remiss"
+    },
+    {
+      "id": "skatt_9eac6208",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "PwC Tax Matters",
+      "date": "13 apr 2026",
+      "headline": "Omvandling eller efterskänkande av fordringar utan beskattning",
+      "summary": "När ett koncernbolags finansiella situation behöver stärkas upp uppstår ofta frågan om detta kan göras utan att det samtidigt utlöser beskattning. I ett nytt förhandsbesked från Skatterättsnämnden sätts denna fråga på si…",
+      "hue": 24,
+      "link": "https://blogg.pwc.se/taxmatters/omvandling-efterskankande-fordringar"
     },
     {
       "id": "teknik_e5f03a4a",
@@ -387,6 +552,6 @@
       "link": "https://www.sverigesradio.se/artikel/9187579"
     }
   ],
-  "generated_at": "2026-05-07T09:22:40.599429+00:00",
-  "count": 35
+  "generated_at": "2026-05-07T10:49:31.975447+00:00",
+  "count": 50
 }
