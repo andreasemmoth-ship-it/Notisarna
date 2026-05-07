@@ -133,7 +133,7 @@ def fetch_og_image(url: str) -> str:
     if not url:
         return ''
     try:
-        req = Request(url, headers={'User-Agent': 'Notisarna-bot/1.0'})
+        req = Request(url, headers={'User-Agent': 'Notiserna-bot/1.0'})
         with urlopen(req, timeout=3) as resp:
             html = resp.read(65_536).decode('utf-8', errors='ignore')
         m = _OG_RE.search(html)
@@ -145,7 +145,7 @@ def fetch_og_image(url: str) -> str:
 
 
 def fetch_url(url: str) -> bytes | None:
-    req = Request(url, headers={'User-Agent': 'Notisarna-bot/1.0'})
+    req = Request(url, headers={'User-Agent': 'Notiserna-bot/1.0'})
     try:
         with urlopen(req, timeout=20) as resp:
             return resp.read()

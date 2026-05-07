@@ -123,7 +123,7 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive }) {
     <header className="nav">
       <div className="nav__brand">
         <div className="nav__logo">N</div>
-        <div className="nav__name">Notisarna</div>
+        <div className="nav__name">Notiserna</div>
       </div>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all'); }}
@@ -308,7 +308,7 @@ function App() {
   const [feeds,        setFeeds]        = useState(RSS_FEEDS);
   const [news,         setNews]         = useState([]);
   const [loading,      setLoading]      = useState(true);
-  const [updatedAt,    setUpdatedAt]    = useState('');
+  const [updatedAt,    setUpdatedAt]    = useState(null);
   const [saveStatus,   setSaveStatus]   = useState('idle'); // 'idle'|'saving'|'ok'|'error'
   const [saveError,    setSaveError]    = useState('');
   const [archived,     setArchived]     = useState(new Set()); // Set of article ids
@@ -375,13 +375,20 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch('news.json')
-      .then(r => r.json())
-      .then(data => {
-        setNews(data.articles || []);
-        setUpdatedAt(data.generated_at || '');
+    db.from('news_articles')
+      .select('*')
+      .order('published_at', { ascending: false })
+      .limit(200)
+      .then(({ data, error }) => {
+        if (error) { console.error('Supabase news:', error.message); return; }
+        const articles = (data || []).map(row => ({
+          ...row,
+          categoryKey: row.category_key,
+          date: row.date_sv,
+        }));
+        setNews(articles);
+        if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at);
       })
-      .catch(err => console.error('Kunde inte ladda news.json:', err))
       .finally(() => setLoading(false));
   }, []);
 
@@ -420,7 +427,7 @@ function App() {
         <div className="hello__inner">
           <div className="hello__brand">
             <div className="hello__logo">N</div>
-            <div className="hello__wordmark">Notisarna</div>
+            <div className="hello__wordmark">Notiserna</div>
           </div>
           <h1 className="hello__greet">
             <span className="hello__greet-line">{getGreeting()}, Andreas.</span>
@@ -497,8 +504,8 @@ function App() {
       <footer className="foot">
         <div className="foot__rule" />
         <div className="foot__row">
-          <span>© Notisarna 2026</span>
-          <span>{updatedAt ? `Uppdaterad ${formatUpdated(updatedAt)}` : 'Uppdateras varje timme'}</span>
+          <span>© Notiserna 2026</span>
+          <span>{updatedAt ? `Uppdaterad ${formatUpdated(updatedAt)}` : 'Uppdateras var 15:e minut'}</span>
         </div>
       </footer>
 
