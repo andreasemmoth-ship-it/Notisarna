@@ -1,6 +1,127 @@
 {
   "articles": [
     {
+      "id": "naringsliv_e3b68059",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Stigande gaspriser pressar industrin – svensk biogasproduktion tar fart",
+      "summary": "Industrin i södra och västra Sverige pressas av stigande gaspriser, samtidigt som vårt beroende av importerad gas blir allt tydligare. Nordion, som ansvarar för det svenska gasnätet, ser hur konflikten i Iran driver på s…",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/stigande-gaspriser-pressar-industrin-svensk-biogasproduktion-tar-fart/",
+      "image": "https://static.bonniernews.se/ba/9e0f06dd-3e4e-4965-9782-20a130958260.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70",
+      "featured": true
+    },
+    {
+      "id": "naringsliv_805898bc",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Uppgifter: USA och Iran diskuterar längre stridspaus",
+      "summary": "Iran och USA diskuterar en preliminär plan där båda parter åter öppnar Hormuzsundet och avstår från attacker under 30 dagar, i syfte att skapa utrymme för ett mer omfattande avtal.",
+      "hue": 150,
+      "link": "https://www.di.se/live/uppgifter-usa-och-iran-diskuterar-langre-stridspaus/",
+      "image": "https://static.bonniernews.se/ba/1c57a84c-3823-4b80-b5f6-a7f3f4d57ca1.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_b39f71b7",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Iran: Explosioner på ö i Hormuz",
+      "summary": "Iransk tv rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet uppger att det handlar om nedskjutning av drönare.",
+      "hue": 150,
+      "link": "https://www.di.se/live/iran-explosioner-pa-o-i-hormuz/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_2b30c128",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Krigsuppgifter sänkte fredshopp på Wall Street",
+      "summary": "Wall Street föll tillbaka från rekordnivåer efter att nya krigsuppgifter fick investerare att vrida på sig och oljepriserna att stärkas.",
+      "hue": 150,
+      "link": "https://www.di.se/live/krigsuppgifter-sankte-fredshopp-pa-wall-street/",
+      "image": "https://static.bonniernews.se/ba/a4a85334-4c34-4535-ad27-f45ef1ff44c0.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_1c9def6a",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "”Detta kan bli början på vår undergång”",
+      "summary": "Problemet är inte att datorerna håller på att bli mänskliga – utan att vi människor har missförstått något grundläggande.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/7pP87W/ai-utvecklingen-manniskor-har-borjat-se-sig-som-datorer",
+      "image": "https://svd.vgc.no/v2/images/62259b32-ff24-305c-9a47-71413eaccf3d?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=803d7752f9eb8249d64fd5a45eff1bd095bcd124"
+    },
+    {
+      "id": "naringsliv_8da77d4b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Svenska läkaren: Hade kontakt varje timme",
+      "summary": "Passagerarna på MV Hondius stoppades från att gå i land på Kap Verde. Nu berättar WHO:s representant på ön, svenska Ann Lindstrand, om ödesdygnen, första orden om utbrottet och beslutet.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/Ok63Qq/mv-hondius-stoppad-fran-landstigning-pa-kap-verde",
+      "image": "https://svd.vgc.no/v2/images/9469506f-7ff4-3dbe-aee4-ef4843675f18?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e21c6e9e2dc96950fa6e167d13aa5f4e8ee1c3e4"
+    },
+    {
+      "id": "naringsliv_71705b6d",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Iran: Smällar hördes på ö i Hormuz",
+      "summary": "Iransk tv rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet uppger att det handlar om nedskjutning av drönare.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/Gx0Qzx/iran-explosioner-pa-o-i-hormuz",
+      "image": "https://static.svd.se/assets/assets/images/logo-sharing-backup.png"
+    },
+    {
+      "id": "naringsliv_948f4ae4",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Källor: Allierade ger grönt ljus för Trumps projekt",
+      "summary": "Saudiarabien och Kuwait uppges vända i frågan och ge USA tillgång till militära baser och luftrum. Det banar vägen för att USA återigen ska kunna eskortera fartyg genom Hormuzsundet, rapporterar WSJ.",
+      "hue": 150,
+      "link": "https://www.di.se/live/kallor-allierade-ger-gront-ljus-for-trumps-projekt/",
+      "image": "https://static.bonniernews.se/ba/95c0dfc9-6558-4957-9c9b-a26a6ad539c5.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_d5c4a6c8",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Trump i nytt tullkrav mot EU",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/5pbnxX/trump-i-nytt-tullhot-mot-eu",
+      "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d"
+    },
+    {
+      "id": "teknik_96707e0d",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "Ars Technica",
+      "date": "7 maj 2026",
+      "headline": "Mozilla says 271 vulnerabilities found by Mythos have \"almost no false positives\"",
+      "summary": "The developer of Firefox says it has \"completely bought in\" on AI-assisted bug discovery.",
+      "hue": 220,
+      "link": "https://arstechnica.com/information-technology/2026/05/mozilla-says-271-vulnerabilities-found-by-mythos-have-almost-no-false-positives/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/03/GettyImages-2167753513-1152x648.jpg"
+    },
+    {
       "id": "varlden_7940a855",
       "category": "Världen",
       "categoryKey": "varlden",
@@ -10,8 +131,7 @@
       "summary": "Finance Minister Lars Klingbeil blamed the US president's \"irresponsible war in Iran\" for harming the Germany economy.",
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/cwy2d0v3p2po?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3a50/live/05bdb9e0-4a38-11f1-a70d-c72ff4101914.jpg",
-      "featured": true
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3a50/live/05bdb9e0-4a38-11f1-a70d-c72ff4101914.jpg"
     },
     {
       "id": "naringsliv_770beedb",
@@ -24,54 +144,6 @@
       "hue": 150,
       "link": "https://www.svd.se/a/9pbEAq/brand-i-lagenhet-i-stockholm",
       "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d"
-    },
-    {
-      "id": "naringsliv_0fcabc1a",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Arbetslivet bygger på ett stort missförstånd",
-      "summary": "Straff, belöningar och bonusar: moroten och piskan ses ofta som det bästa sättet att motivera i skolan och på jobbet. Psykologen Edward Deci ifrågasatte allt vi tror oss veta om motivation.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Oky4o1/dags-att-overge-moroten-och-piskan",
-      "image": "https://svd.vgc.no/v2/images/05bf4fa9-7ed9-3813-a6cb-833a9d983bd0?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=7d2041965d36d2f30ff726830f56d2afbc3f4f1c"
-    },
-    {
-      "id": "naringsliv_05091ab4",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Nedskärningarnas nya offer: mellanchefen",
-      "summary": "Mellanchefen har länge haft en av arbetslivets mest otacksamma roller – möjligen bara utmanad av HR-chefen. Nu är rollen också på väg att bli en av de mest utsatta.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/j0Ozlq/nedskarningarnas-nya-offer-mellanchefen-hos-techbolagen",
-      "image": "https://svd.vgc.no/v2/images/43195313-8814-3abe-992c-aefac0327dfd?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=89515660faf3a17674582cbb5b0e14e54ede809c"
-    },
-    {
-      "id": "naringsliv_7908ab86",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Miss försvårar för svenska bolånekunder",
-      "summary": "Bankernas bolåneräntor engagerar. Men en granskning av hur bankerna beräknar sina snitträntor visar att de inte är helt jämförbara. ”Som att jämföra äpplen med päron”, säger Ola Söderlind, hushållsekonom på jämförelsesaj…",
-      "hue": 150,
-      "link": "https://www.svd.se/a/y5zqlJ/bankernas-snittrantor-for-bolan-ar-inte-jamforbara",
-      "image": "https://svd.vgc.no/v2/images/be09aee1-5142-3fbc-9a3f-08ec832e60ed?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=f0cf2b2b14ac6bde1cb5995d3cd62a0afca25424"
-    },
-    {
-      "id": "naringsliv_f7590eea",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Fondrally för pensionsspararna – superspurtarna lyfte 20 procent",
-      "summary": "Våryran slog till på statens fondtorg när nio av tio pensionsfonder steg brant under april. Bland superspurtarna märks Blackrocks teknologifond, Fidelitys Asienfond och Goldman Sachs Kinafond som alla rusade med drygt 20…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/fondrally-for-pensionsspararna-superspurtarna-lyfte-20-procent/",
-      "image": "https://static.bonniernews.se/ba/d74615ba-1cc5-4aec-8f22-f1ac040ace5f.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
       "id": "varlden_85e848f4",
@@ -98,42 +170,6 @@
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.68/2b33b78c72803de56a37ac6e1b75cf71b9585a78e5eed07fd8d5f1c8d6023fc0"
     },
     {
-      "id": "naringsliv_8ce4c978",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "BP planerar starta omorganisation i juni",
-      "summary": "Det brittiska energibolaget BP:s vd Meg O’Neill sade i ett telefonsamtal med anställda på torsdagen att bolaget planerar att omorganisera verksamheten i två huvudsegment, uppströms och nedströms, med start i juni.",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/bp-planerar-starta-omorganisation-i-juni/",
-      "image": "https://static.bonniernews.se/ba/bdfa6b5f-ab50-46c7-9127-b63c59ab29b5.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_d5b7fa43",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "”Total brist på respekt för EU-rätten”",
-      "summary": "Regeringen har stoppat genomförandet av EU:s nya regler om öppenhet när det gäller löner. Men vändningen kommer så sent att den framstår som oseriös. Den skapar också osäkerhet och extra kostnader för företagen, skriver …",
-      "hue": 150,
-      "link": "https://www.svd.se/a/M75yoB/lonetransparens-regeringens-hantering-av-eu-ratten-ar-skandalos-skriver-jurister",
-      "image": "https://svd.vgc.no/v2/images/719a3b72-495c-3540-a2b8-a7e9ae0ffcf6?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=f4536371131fac86bc8d39d49cf830465f6df560"
-    },
-    {
-      "id": "naringsliv_9ccdae0c",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Avanzas teknikstrul löst – orsak ännu oklar",
-      "summary": "Nätmäklaren Avanza drabbades återigen av teknikstrul på torsdagen. Närmare 19-tiden meddelar kommunikationschef Elias Nilsson att problemen är åtgärdade.",
-      "hue": 150,
-      "link": "https://www.di.se/live/avanzas-teknikstrul-lost-orsak-annu-oklar/",
-      "image": "https://static.bonniernews.se/ba/546de947-20da-405c-ae68-9cae385d576c.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
       "id": "lokalt_1454853f",
       "category": "Lokalt",
       "categoryKey": "lokalt",
@@ -144,30 +180,6 @@
       "hue": 60,
       "link": "https://www.svt.se/nyheter/lokalt/stockholm/nyheter-fran-dagen-7-maj-vmasgt",
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/2f93ba843f7e400a13c86112e65490896499522866cbeab7a04aa887efed39b6"
-    },
-    {
-      "id": "naringsliv_92ceafd1",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Genomgång: Tusenlappar på spel i partiernas ISK-förslag",
-      "summary": "Sparvillkoren för ISK och kapitalförsäkringar tar stor plats på valsedlarna i höst. Väljarna har en rad förslag att ta ställning till – Di har räknat på skattenotan i de olika alternativen.",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/genomgang-tusenlappar-pa-spel-i-partiernas-isk-forslag/",
-      "image": "https://static.bonniernews.se/ba/f6adee3d-a3a1-4427-ade1-fbfdbcbe6f1f.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_efacd4f1",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Wall Street vänder ned efter nya krigsuppgifter",
-      "summary": "Wall Street tappar dagens uppgångar efter uppgifter om nya iranska passageregler i Hormuzsundet. Samtidigt rapporterar WSJ att CIA bedömer att Iran kan stå emot USA:s blockad betydligt längre än väntat.",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/wall-street-vander-ned-efter-nya-krigsuppgifter/",
-      "image": "https://static.bonniernews.se/ba/3580edb8-7468-4365-ad6e-17ec8bc79d46.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
       "id": "lokalt_fef2bdf3",
@@ -278,30 +290,6 @@
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/1e4594146178da32a273e775bf7a805242fc940ba7e26b57cfa89493c2e6b842"
     },
     {
-      "id": "skatt_abef10ce",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "7 maj 2026",
-      "headline": "Utökade befogenheter för Skatteverket inom folkbokföringsverksamheten",
-      "summary": "Regeringen föreslår att ett nytt brott ska införas: främjande av oriktig folkbokföring. Straffansvar ska inträda när någon genom en uppsåtlig handling i väsentlig mån främjar att en oriktig uppgift kan läggas till grund …",
-      "hue": 24,
-      "link": "https://www.regeringen.se/rattsliga-dokument/proposition/2026/05/prop.-202526261",
-      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
-    },
-    {
-      "id": "skatt_8cfb9750",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "7 maj 2026",
-      "headline": "Nytt lagförslag ska minska risken för identitetsmissbruk",
-      "summary": "Regeringen vill förbättra folkbokföringen och minska risken för identitetsmissbruk. En ny proposition innehåller lagförslag som ger Skatteverket och Migrationsverket större möjligheter att använda biometriska uppgifter v…",
-      "hue": 24,
-      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/nytt-lagforslag-ska-minska-risken-for-identitetsmissbruk/",
-      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
-    },
-    {
       "id": "teknik_b207ca97",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -324,18 +312,6 @@
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/cd7pd0rqwreo?at_medium=RSS&at_campaign=rss",
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/da69/live/1e350b00-48b1-11f1-90e6-350a323e11ac.jpg"
-    },
-    {
-      "id": "teknik_e1f8c3aa",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "Ars Technica",
-      "date": "7 maj 2026",
-      "headline": "Former NASA chief takes helm of national security space firm",
-      "summary": "\"The spacecraft can also be refueled, and it can refuel others.\"",
-      "hue": 220,
-      "link": "https://arstechnica.com/space/2026/05/former-nasa-chief-takes-helm-of-national-security-space-firm/",
-      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/rendering-1-1152x627.png"
     },
     {
       "id": "skatt_3cd7c10e",
@@ -396,6 +372,30 @@
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
       "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+    },
+    {
+      "id": "skatt_3af46f02",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "30 apr 2026",
+      "headline": "Regeringen tar nästa steg för att renodla Utbetalningsmyndighetens verksamhet",
+      "summary": "Regeringen har i dag beslutat om en lagrådsremiss med förslag som innebär att Utbetalningsmyndighetens verksamhet renodlas till kärnuppgiften att förebygga, förhindra och upptäcka felaktiga utbetalningar.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/04/regeringen-tar-nasta-steg-for-att-renodla-utbetalningsmyndighetens-verksamhet/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
+    },
+    {
+      "id": "skatt_cb29735d",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "30 apr 2026",
+      "headline": "Avveckling av Utbetalningsmyndighetens system med transaktionskonto",
+      "summary": "I denna lagrådsremiss föreslås lagändringar för att avveckla Utbetalningsmyndighetens system med transaktionskonto.",
+      "hue": 24,
+      "link": "https://www.regeringen.se/rattsliga-dokument/lagradsremiss/2026/04/avveckling-av-utbetalningsmyndighetens-system-med-transaktionskonto/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
     },
     {
       "id": "skatt_f6ccb84e",
@@ -482,6 +482,54 @@
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
     },
     {
+      "id": "teknik_55aa7a3f",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Mira Murati’s deposition pulled back the curtain on Sam Altman’s ouster",
+      "summary": "The week leading up to Thanksgiving 2023 was the AI industry's biggest soap opera moment. OpenAI CEO Sam Altman was abruptly ousted from his role at the ChatGPT-maker. The explanation? That Altman was \"not consistently c…",
+      "hue": 220,
+      "link": "https://www.theverge.com/ai-artificial-intelligence/926383/mira-murati-sam-altman-musk-trial-ouster",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/VRG_Illo_mira-murati_stock_01.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
+    },
+    {
+      "id": "teknik_853231d7",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Apple&#8217;s AirPods with cameras for AI are apparently close to production",
+      "summary": "AirPods Pro 3 | Photo by Amelia Holowaty Krales / The Verge Apple's rumored AirPods with cameras are nearing a stage where the company will test early mass production, Bloomberg's Mark Gurman reports . Currently, Apple t…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/926376/apple-airpods-cameras-ai-production",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/257943_Airpods_Pro3_AKrales_0145.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
+    },
+    {
+      "id": "teknik_fb430d7b",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "SpaceX has a $55 billion plan to build AI chips in Texas",
+      "summary": "Elon Musk's plans to get into the AI chip manufacturing business are going to be costly. As the New York Times and CNBC report, SpaceX is planning to invest at least $55 billion into its \"Terafab\" chip plant in Austin, T…",
+      "hue": 220,
+      "link": "https://www.theverge.com/ai-artificial-intelligence/926356/spacex-terafab-plant-cost-ai-chips",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2269580650.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.756615395926%2C100%2C78.486769208148&amp;w=1200"
+    },
+    {
+      "id": "teknik_408418b9",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Peak Design is taking up to 50 percent off some of our favorite bags right now",
+      "summary": "Peak Design’s Everyday Backpack Zip features a unique wraparound zipper that provides quick access to your belongings. | Image: Peak Design To celebrate founder Peter Dering’s birthday, Peak Design is taking up to 50 per…",
+      "hue": 220,
+      "link": "https://www.theverge.com/gadgets/925427/peak-design-peter-dering-birthday-sale-2026-camera-backpack-sling-deal",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/peakdesigneverydaybagzipp.webp?quality=90&amp;strip=all&amp;crop=0%2C10.793302289671%2C100%2C78.413395420658&amp;w=1200"
+    },
+    {
       "id": "teknik_7b334587",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -492,54 +540,6 @@
       "hue": 220,
       "link": "https://www.theverge.com/games/926286/valve-steam-controller-reservations-queue-scalpers",
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/268455_Steam_Controller_AKrales_0082.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
-    },
-    {
-      "id": "teknik_92118df8",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "ChatGPT&#8217;s &#8216;Trusted Contact&#8217; will alert loved ones of safety concerns",
-      "summary": "OpenAI is launching an optional safety feature for ChatGPT that allows adult users to assign an emergency contact for mental health and safety concerns. Friends, family members, or caregivers designated as a \"Trusted Con…",
-      "hue": 220,
-      "link": "https://www.theverge.com/ai-artificial-intelligence/925874/chatgpt-trusted-contact-emergency-self-harm-notification",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25462005/STK155_OPEN_AI_CVirginia_B.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
-    },
-    {
-      "id": "teknik_5257f51d",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Live updates from Elon Musk and Sam Altman’s court battle over the future of OpenAI",
-      "summary": "Sam Altman and Elon Musk are facing off in a high-stakes trial that could alter the future of OpenAI and its most well-known product, ChatGPT . In 2024, Musk filed a lawsuit accusing OpenAI of abandoning its founding mis…",
-      "hue": 220,
-      "link": "https://www.theverge.com/tech/917225/sam-altman-elon-musk-openai-lawsuit",
-      "image": ""
-    },
-    {
-      "id": "teknik_99a9466a",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Did Microsoft just tease a new Xbox UI?",
-      "summary": "Microsoft showed off a \"consistent\" Xbox UI across handhelds, consoles, and cloud gaming during its Xbox keynote at the Game Developers Conference in March. At the time it was difficult to see if there was anything new a…",
-      "hue": 220,
-      "link": "https://www.theverge.com/news/926170/new-xbox-ui-dashboard-console-handheld-cloud",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/xboxuiteaser.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.717271201674%2C100%2C78.565457596651&amp;w=1200"
-    },
-    {
-      "id": "teknik_247142e9",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "A hacker ran me over with a robot lawn mower",
-      "summary": "A Yarbo lawnmower with a trimmer attachment. | Image: Yarbo I'm lying in the dirt. It's coming for me. Then, with a lurch, it's climbing up my chest. If Andreas Makris doesn't stop the 200-pound robot lawn mower in time,…",
-      "hue": 220,
-      "link": "https://www.theverge.com/tech/925696/yarbo-robot-lawn-mower-hack-remote-control-camera-access-mqtt",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/yarbo-lawnmower.webp?quality=90&amp;strip=all&amp;crop=0%2C0.13712291199202%2C100%2C99.725754176016&amp;w=1200"
     },
     {
       "id": "kultur_9ac8e2d0",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-07T19:15:17.419074+00:00",
+  "generated_at": "2026-05-07T20:41:35.344723+00:00",
   "count": 50
 }
