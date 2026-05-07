@@ -123,7 +123,7 @@ function Nav({ onOpenRss, query, setQuery }) {
 }
 
 // ----- RSS settings drawer -----
-function RssDrawer({ open, onClose, feeds, setFeeds }) {
+function RssDrawer({ open, onClose, feeds, setFeeds, saveStatus, saveError }) {
   const [newName, setNewName] = useState('');
   const [newUrl,  setNewUrl]  = useState('');
   const [newCat,  setNewCat]  = useState('skatt');
@@ -171,6 +171,15 @@ function RssDrawer({ open, onClose, feeds, setFeeds }) {
             <div className="drawer__eyebrow">Inställningar</div>
             <h2>Koppla RSS-flöden</h2>
             <p>Välj vilka källor som ska läsas in per kategori.</p>
+            {saveStatus === 'saving' && (
+              <p className="save-status save-status--saving">Sparar…</p>
+            )}
+            {saveStatus === 'ok' && (
+              <p className="save-status save-status--ok">Sparat!</p>
+            )}
+            {saveStatus === 'error' && (
+              <p className="save-status save-status--error">Fel: {saveError}</p>
+            )}
           </div>
           <button className="icon-btn" onClick={onClose}><Icon name="close" size={18} /></button>
         </header>
@@ -273,27 +282,38 @@ function App() {
   const [active,    setActive]    = useState('all');
   const [query,     setQuery]     = useState('');
   const [drawer,    setDrawer]    = useState(false);
-  const [feeds,     setFeeds]     = useState(RSS_FEEDS);
-  const [news,      setNews]      = useState([]);
-  const [loading,   setLoading]   = useState(true);
-  const [updatedAt, setUpdatedAt] = useState('');
+  const [feeds,      setFeeds]      = useState(RSS_FEEDS);
+  const [news,       setNews]       = useState([]);
+  const [loading,    setLoading]    = useState(true);
+  const [updatedAt,  setUpdatedAt]  = useState('');
+  const [saveStatus, setSaveStatus] = useState('idle'); // 'idle'|'saving'|'ok'|'error'
+  const [saveError,  setSaveError]  = useState('');
 
-  // Load persisted feed config from Supabase (falls back to RSS_FEEDS if empty)
   useEffect(() => {
     db.from('feed_config').select('feeds').eq('id', 1).single()
-      .then(({ data }) => {
+      .then(({ data, error }) => {
+        if (error) { console.error('Supabase load:', error.code, error.message); return; }
         if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds);
-      })
-      .catch(() => {});
+      });
   }, []);
 
-  // Saves feeds to Supabase and updates local state — passed to RssDrawer as setFeeds
   const setAndSaveFeeds = useCallback((updater) => {
     setFeeds(prev => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
+      setSaveStatus('saving');
+      setSaveError('');
       db.from('feed_config')
         .upsert({ id: 1, feeds: next, updated_at: new Date().toISOString() })
-        .then(({ error }) => { if (error) console.error('Supabase:', error.message); });
+        .then(({ error }) => {
+          if (error) {
+            console.error('Supabase:', error.message);
+            setSaveError(error.message);
+            setSaveStatus('error');
+          } else {
+            setSaveStatus('ok');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+          }
+        });
       return next;
     });
   }, []);
@@ -399,7 +419,8 @@ function App() {
         </div>
       </footer>
 
-      <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds} />
+      <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
+                 saveStatus={saveStatus} saveError={saveError} />
     </div>
   );
 }

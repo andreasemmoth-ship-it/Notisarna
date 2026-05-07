@@ -19,6 +19,9 @@ jobs:
           python-version: '3.12'
 
       - name: Fetch news
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: python fetch_news.py
 
       - name: Commit and push if changed

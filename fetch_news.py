@@ -4,6 +4,7 @@
 import email.utils
 import hashlib
 import json
+import os
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -74,6 +75,27 @@ CONTENT_NS = 'http://purl.org/rss/1.0/modules/content/'
 
 _TAG_RE = re.compile(r'<[^>]+>')
 _WS_RE = re.compile(r'\s+')
+
+
+def load_feeds_from_supabase() -> dict | None:
+    """Fetch feed config from Supabase feed_config table. Returns None on failure."""
+    url = os.environ.get('SUPABASE_URL')
+    key = os.environ.get('SUPABASE_ANON_KEY')
+    if not url or not key:
+        return None
+    try:
+        req = Request(
+            f'{url}/rest/v1/feed_config?id=eq.1&select=feeds',
+            headers={'apikey': key, 'Authorization': f'Bearer {key}'},
+        )
+        with urlopen(req, timeout=10) as resp:
+            rows = json.loads(resp.read())
+        if rows and rows[0].get('feeds'):
+            print('Loaded feed config from Supabase.')
+            return rows[0]['feeds']
+    except Exception as exc:
+        print(f'Supabase fetch failed, using defaults: {exc}')
+    return None
 
 
 def sv_date(dt: datetime) -> str:
@@ -181,9 +203,23 @@ def parse_feed(
 
 
 def main() -> None:
+    supabase_config = load_feeds_from_supabase()
+
+    # Merge Supabase config into FEEDS (keeps label/hue from defaults)
+    feeds_to_use: dict = {}
+    for cat_key, cat in FEEDS.items():
+        if supabase_config and cat_key in supabase_config:
+            sources = [
+                (f['name'], f['url'], f.get('enabled', True))
+                for f in supabase_config[cat_key]
+            ]
+            feeds_to_use[cat_key] = {**cat, 'sources': sources}
+        else:
+            feeds_to_use[cat_key] = cat
+
     articles: list[dict] = []
 
-    for cat_key, cat in FEEDS.items():
+    for cat_key, cat in feeds_to_use.items():
         for name, url, enabled in cat['sources']:
             if not enabled:
                 continue
