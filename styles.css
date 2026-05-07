@@ -309,7 +309,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted);
   margin-bottom: 12px;
 }
-.add-feed__row { display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 8px; }
+.add-feed__row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .add-feed__row input, .add-feed__row select {
   padding: 9px 12px; background: var(--surface); border: 1px solid var(--line);
   border-radius: 8px; font-size: 13px;
