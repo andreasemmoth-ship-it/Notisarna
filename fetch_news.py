@@ -75,6 +75,11 @@ CONTENT_NS = 'http://purl.org/rss/1.0/modules/content/'
 
 _TAG_RE = re.compile(r'<[^>]+>')
 _WS_RE = re.compile(r'\s+')
+_OG_RE  = re.compile(
+    r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']'
+    r'|<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+    re.IGNORECASE,
+)
 
 
 def load_feeds_from_supabase() -> dict | None:
@@ -122,6 +127,21 @@ def parse_date(s: str) -> datetime | None:
 def clean(text: str) -> str:
     text = _TAG_RE.sub(' ', text or '')
     return _WS_RE.sub(' ', text).strip()
+
+
+def fetch_og_image(url: str) -> str:
+    if not url:
+        return ''
+    try:
+        req = Request(url, headers={'User-Agent': 'Notisarna-bot/1.0'})
+        with urlopen(req, timeout=3) as resp:
+            html = resp.read(65_536).decode('utf-8', errors='ignore')
+        m = _OG_RE.search(html)
+        if m:
+            return (m.group(1) or m.group(2) or '').strip()
+    except Exception:
+        pass
+    return ''
 
 
 def fetch_url(url: str) -> bytes | None:
@@ -228,7 +248,9 @@ def main() -> None:
             if data is None:
                 continue
             items = parse_feed(data, name, cat_key, cat['label'], cat['hue'])
-            print(f'  → {len(items)} artiklar')
+            for article in items:
+                article['image'] = fetch_og_image(article.get('link', ''))
+            print(f'  → {len(items)} artiklar ({sum(1 for a in items if a["image"])} med bild)')
             articles.extend(items)
 
     articles.sort(key=lambda a: a['_ts'], reverse=True)
