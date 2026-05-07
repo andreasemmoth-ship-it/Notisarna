@@ -31,6 +31,8 @@ const Icon = ({ name, size = 16 }) => {
     rss:      <><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></>,
     plus:     <><path d="M12 5v14"/><path d="M5 12h14"/></>,
     close:    <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
+    check:    <path d="M20 6 9 17l-5-5"/>,
+    pencil:   <><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></>,
     trash:    <><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
   };
   return (
@@ -124,6 +126,7 @@ function RssDrawer({ open, onClose, feeds, setFeeds }) {
   const [newName, setNewName] = useState('');
   const [newUrl,  setNewUrl]  = useState('');
   const [newCat,  setNewCat]  = useState('skatt');
+  const [editing, setEditing] = useState(null); // { cat, idx, name, url }
 
   const addFeed = () => {
     if (!newName.trim() || !newUrl.trim()) return;
@@ -143,6 +146,19 @@ function RssDrawer({ open, onClose, feeds, setFeeds }) {
 
   const remove = (cat, idx) => {
     setFeeds(prev => ({ ...prev, [cat]: prev[cat].filter((_, i) => i !== idx) }));
+  };
+
+  const startEdit = (cat, idx, name, url) => setEditing({ cat, idx, name, url });
+  const cancelEdit = () => setEditing(null);
+  const saveEdit = () => {
+    if (!editing || !editing.name.trim() || !editing.url.trim()) return;
+    setFeeds(prev => ({
+      ...prev,
+      [editing.cat]: prev[editing.cat].map((f, i) =>
+        i === editing.idx ? { ...f, name: editing.name.trim(), url: editing.url.trim() } : f
+      ),
+    }));
+    setEditing(null);
   };
 
   return (
@@ -187,21 +203,53 @@ function RssDrawer({ open, onClose, feeds, setFeeds }) {
                 {(feeds[cat.key] || []).length === 0 && (
                   <li className="feed-row feed-row--empty">Inga flöden ännu.</li>
                 )}
-                {(feeds[cat.key] || []).map((f, idx) => (
-                  <li key={idx} className={`feed-row ${f.enabled ? 'is-on' : ''}`}>
-                    <button className={`tgl ${f.enabled ? 'is-on' : ''}`}
-                            onClick={() => toggle(cat.key, idx)}>
-                      <span className="tgl__knob" />
-                    </button>
-                    <div className="feed-row__text">
-                      <div className="feed-row__name">{f.name}</div>
-                      <div className="feed-row__url">{f.url}</div>
-                    </div>
-                    <button className="icon-btn icon-btn--quiet" onClick={() => remove(cat.key, idx)}>
-                      <Icon name="trash" size={14} />
-                    </button>
-                  </li>
-                ))}
+                {(feeds[cat.key] || []).map((f, idx) => {
+                  const isEditing = editing && editing.cat === cat.key && editing.idx === idx;
+                  return (
+                    <li key={idx} className={`feed-row ${f.enabled && !isEditing ? 'is-on' : ''}`}>
+                      {isEditing ? (
+                        <div className="feed-row__edit">
+                          <input
+                            value={editing.name}
+                            onChange={e => setEditing({ ...editing, name: e.target.value })}
+                            placeholder="Namn"
+                          />
+                          <input
+                            value={editing.url}
+                            onChange={e => setEditing({ ...editing, url: e.target.value })}
+                            placeholder="URL"
+                            className="feed-row__edit-url"
+                          />
+                          <button className="icon-btn" title="Spara" onClick={saveEdit}>
+                            <Icon name="check" size={14} />
+                          </button>
+                          <button className="icon-btn icon-btn--quiet" title="Avbryt" onClick={cancelEdit}>
+                            <Icon name="close" size={14} />
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <button className={`tgl ${f.enabled ? 'is-on' : ''}`}
+                                  onClick={() => toggle(cat.key, idx)}>
+                            <span className="tgl__knob" />
+                          </button>
+                          <div className="feed-row__text">
+                            <div className="feed-row__name">{f.name}</div>
+                            <div className="feed-row__url">{f.url}</div>
+                          </div>
+                          <button className="icon-btn icon-btn--quiet" title="Redigera"
+                                  onClick={() => startEdit(cat.key, idx, f.name, f.url)}>
+                            <Icon name="pencil" size={14} />
+                          </button>
+                          <button className="icon-btn icon-btn--quiet" title="Ta bort"
+                                  onClick={() => remove(cat.key, idx)}>
+                            <Icon name="trash" size={14} />
+                          </button>
+                        </>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           ))}

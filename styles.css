@@ -305,6 +305,9 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .feed-row__text { flex: 1; min-width: 0; }
 .feed-row__name { font-size: 14px; font-weight: 500; color: var(--ink); }
 .feed-row__url { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.feed-row__edit { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+.feed-row__edit input { padding: 5px 8px; border: 1px solid var(--line); border-radius: 6px; font-size: 13px; background: var(--surface); color: var(--ink); flex: 0 0 120px; }
+.feed-row__edit input.feed-row__edit-url { flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
 
 /* Toggle */
 .tgl {
