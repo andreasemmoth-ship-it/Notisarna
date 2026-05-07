@@ -219,6 +219,25 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 }
 .dot-sep { opacity: 0.5; }
 
+/* ===== Card footer (read-more + bookmark) ===== */
+.card__footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; }
+.bookmark-btn {
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 6px;
+  color: var(--muted); transition: color 0.15s, background 0.15s;
+}
+.bookmark-btn:hover { color: var(--ink); background: var(--bg); }
+.bookmark-btn.is-saved { color: var(--ink); }
+.bookmark-btn.is-saved svg { fill: currentColor; }
+
+/* ===== Archive ===== */
+.archive-header { padding: 24px 0 8px; }
+.archive-header h2 { font-family: 'Instrument Serif', serif; font-size: 28px; font-weight: 500; }
+.archive-header p { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+
+/* ===== Nav active link ===== */
+.nav__links a.is-active { color: var(--ink); }
+
 /* ===== Read more ===== */
 .read-more {
   display: inline-flex; align-items: center; gap: 6px;
@@ -228,7 +247,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   transition: gap 0.18s ease, border-color 0.18s;
 }
 .read-more:hover { gap: 10px; border-color: var(--ink); }
-.read-more--small { font-size: 12.5px; margin-top: 4px; }
+.read-more--small { font-size: 12.5px; }
 
 /* ===== Empty ===== */
 .empty { text-align: center; padding: 80px 24px; color: var(--muted); }

@@ -35,6 +35,7 @@ const Icon = ({ name, size = 16 }) => {
     check:    <path d="M20 6 9 17l-5-5"/>,
     pencil:   <><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></>,
     trash:    <><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
+    bookmark: <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -45,7 +46,7 @@ const Icon = ({ name, size = 16 }) => {
 };
 
 // ----- Cards -----
-function HeroCard({ item }) {
+function HeroCard({ item, isArchived, onToggleArchive }) {
   return (
     <article className="hero-card">
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -62,16 +63,23 @@ function HeroCard({ item }) {
         </div>
         <h1 className="hero-card__title">{item.headline}</h1>
         <p className="hero-card__summary">{item.summary}</p>
-        <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-           rel="noopener noreferrer" className="read-more">
-          Läs hela artikeln <Icon name="arrow" size={15} />
-        </a>
+        <div className="card__footer">
+          <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
+             rel="noopener noreferrer" className="read-more">
+            Läs hela artikeln <Icon name="arrow" size={15} />
+          </a>
+          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                  onClick={() => onToggleArchive(item)}
+                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+            <Icon name="bookmark" size={16} />
+          </button>
+        </div>
       </div>
     </article>
   );
 }
 
-function NewsCard({ item }) {
+function NewsCard({ item, isArchived, onToggleArchive }) {
   return (
     <article className="news-card">
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -87,17 +95,24 @@ function NewsCard({ item }) {
         </div>
         <h3 className="news-card__title">{item.headline}</h3>
         <p className="news-card__summary">{item.summary}</p>
-        <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-           rel="noopener noreferrer" className="read-more read-more--small">
-          Läs mer <Icon name="arrow" size={13} />
-        </a>
+        <div className="card__footer">
+          <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
+             rel="noopener noreferrer" className="read-more read-more--small">
+            Läs mer <Icon name="arrow" size={13} />
+          </a>
+          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                  onClick={() => onToggleArchive(item)}
+                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+            <Icon name="bookmark" size={14} />
+          </button>
+        </div>
       </div>
     </article>
   );
 }
 
 // ----- Header / nav -----
-function Nav({ onOpenRss, query, setQuery }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive }) {
   return (
     <header className="nav">
       <div className="nav__brand">
@@ -105,9 +120,11 @@ function Nav({ onOpenRss, query, setQuery }) {
         <div className="nav__name">Notisarna</div>
       </div>
       <nav className="nav__links">
-        <a href="#" onClick={e => e.preventDefault()}>Flöde</a>
+        <a href="#" onClick={e => { e.preventDefault(); onSetActive('all'); }}
+           className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
         <a href="#" onClick={e => e.preventDefault()}>Bevakade</a>
-        <a href="#" onClick={e => e.preventDefault()}>Arkiv</a>
+        <a href="#" onClick={e => { e.preventDefault(); onSetActive('arkiv'); }}
+           className={active === 'arkiv' ? 'is-active' : ''}>Arkiv</a>
       </nav>
       <div className="nav__right">
         <div className="nav__search">
@@ -282,12 +299,14 @@ function App() {
   const [active,    setActive]    = useState('all');
   const [query,     setQuery]     = useState('');
   const [drawer,    setDrawer]    = useState(false);
-  const [feeds,      setFeeds]      = useState(RSS_FEEDS);
-  const [news,       setNews]       = useState([]);
-  const [loading,    setLoading]    = useState(true);
-  const [updatedAt,  setUpdatedAt]  = useState('');
-  const [saveStatus, setSaveStatus] = useState('idle'); // 'idle'|'saving'|'ok'|'error'
-  const [saveError,  setSaveError]  = useState('');
+  const [feeds,        setFeeds]        = useState(RSS_FEEDS);
+  const [news,         setNews]         = useState([]);
+  const [loading,      setLoading]      = useState(true);
+  const [updatedAt,    setUpdatedAt]    = useState('');
+  const [saveStatus,   setSaveStatus]   = useState('idle'); // 'idle'|'saving'|'ok'|'error'
+  const [saveError,    setSaveError]    = useState('');
+  const [archived,     setArchived]     = useState(new Set()); // Set of article ids
+  const [archiveItems, setArchiveItems] = useState([]);
 
   useEffect(() => {
     db.from('feed_config').select('feeds').eq('id', 1).single()
@@ -296,6 +315,37 @@ function App() {
         if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds);
       });
   }, []);
+
+  useEffect(() => {
+    db.from('archived_articles').select('id, article, saved_at').order('saved_at', { ascending: false })
+      .then(({ data, error }) => {
+        if (error) { console.error('Archive load:', error.message); return; }
+        if (data?.length) {
+          setArchiveItems(data.map(r => ({ ...r.article, savedAt: r.saved_at })));
+          setArchived(new Set(data.map(r => r.id)));
+        }
+      });
+  }, []);
+
+  const toggleArchive = useCallback((item) => {
+    const isSaved = archived.has(item.id);
+    if (isSaved) {
+      db.from('archived_articles').delete().eq('id', item.id)
+        .then(({ error }) => {
+          if (error) { console.error('Archive delete:', error.message); return; }
+          setArchived(prev => { const s = new Set(prev); s.delete(item.id); return s; });
+          setArchiveItems(prev => prev.filter(a => a.id !== item.id));
+        });
+    } else {
+      db.from('archived_articles')
+        .upsert({ id: item.id, article: item, saved_at: new Date().toISOString() })
+        .then(({ error }) => {
+          if (error) { console.error('Archive save:', error.message); return; }
+          setArchived(prev => new Set([...prev, item.id]));
+          setArchiveItems(prev => [{ ...item, savedAt: new Date().toISOString() }, ...prev.filter(a => a.id !== item.id)]);
+        });
+    }
+  }, [archived]);
 
   const setAndSaveFeeds = useCallback((updater) => {
     setFeeds(prev => {
@@ -357,7 +407,8 @@ function App() {
       '--muted':   THEME.muted,
       '--line':    THEME.line,
     }}>
-      <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery} />
+      <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
+           active={active} onSetActive={setActive} />
 
       <section className="hello">
         <div className="hello__inner">
@@ -372,44 +423,70 @@ function App() {
         </div>
       </section>
 
-      <div className="filter-bar">
-        <div className="filter-bar__inner">
-          {CATEGORIES.map(c => (
-            <button key={c.key}
-                    className={`pill ${active === c.key ? 'is-active' : ''}`}
-                    onClick={() => setActive(c.key)}>
-              {c.label}
-              <span className="pill__count">
-                {c.key === 'all'
-                  ? news.length
-                  : news.filter(n => n.categoryKey === c.key).length}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <main className="content">
-        {loading && (
-          <div className="empty"><p>Hämtar nyheter…</p></div>
-        )}
-        {!loading && filtered.length === 0 && (
-          <div className="empty">
-            <h3>Inga artiklar matchar</h3>
-            <p>Prova att rensa sökningen eller välj en annan kategori.</p>
-          </div>
-        )}
-
-        {!loading && showHero && <HeroCard item={featured} />}
-
-        {!loading && (
-          <div className="grid">
-            {(showHero ? rest : filtered).map(item => (
-              <NewsCard key={item.id} item={item} />
+      {active !== 'arkiv' && (
+        <div className="filter-bar">
+          <div className="filter-bar__inner">
+            {CATEGORIES.map(c => (
+              <button key={c.key}
+                      className={`pill ${active === c.key ? 'is-active' : ''}`}
+                      onClick={() => setActive(c.key)}>
+                {c.label}
+                <span className="pill__count">
+                  {c.key === 'all'
+                    ? news.length
+                    : news.filter(n => n.categoryKey === c.key).length}
+                </span>
+              </button>
             ))}
           </div>
-        )}
-      </main>
+        </div>
+      )}
+
+      {active === 'arkiv' ? (
+        <main className="content">
+          <div className="archive-header">
+            <h2>Arkiv</h2>
+            <p>{archiveItems.length} sparade artiklar</p>
+          </div>
+          {archiveItems.length === 0 ? (
+            <div className="empty">
+              <h3>Arkivet är tomt</h3>
+              <p>Klicka på bokmärkesikonen på en artikel för att spara den här.</p>
+            </div>
+          ) : (
+            <div className="grid">
+              {archiveItems.map(item => (
+                <NewsCard key={item.id} item={item} isArchived={true} onToggleArchive={toggleArchive} />
+              ))}
+            </div>
+          )}
+        </main>
+      ) : (
+        <main className="content">
+          {loading && (
+            <div className="empty"><p>Hämtar nyheter…</p></div>
+          )}
+          {!loading && filtered.length === 0 && (
+            <div className="empty">
+              <h3>Inga artiklar matchar</h3>
+              <p>Prova att rensa sökningen eller välj en annan kategori.</p>
+            </div>
+          )}
+
+          {!loading && showHero && (
+            <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive} />
+          )}
+
+          {!loading && (
+            <div className="grid">
+              {(showHero ? rest : filtered).map(item => (
+                <NewsCard key={item.id} item={item}
+                          isArchived={archived.has(item.id)} onToggleArchive={toggleArchive} />
+              ))}
+            </div>
+          )}
+        </main>
+      )}
 
       <footer className="foot">
         <div className="foot__rule" />
