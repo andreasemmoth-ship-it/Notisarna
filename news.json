@@ -1,16 +1,221 @@
 {
   "articles": [
     {
-      "id": "naringsliv_62742daf",
+      "id": "naringsliv_6900ab9b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Man häktas för mordbrand på Stora Essingen",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/j0OB6e/man-haktas-for-mordbrand-pa-stora-essingen",
+      "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d",
+      "featured": true
+    },
+    {
+      "id": "skatt_477c9c10",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "7 maj 2026",
+      "headline": "Dom i mål om utländskt adoptionsbesluts giltighet i Sverige",
+      "summary": "Fråga om ett utländskt adoptionsbesluts giltighet i Sverige",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-utlandskt-adoptionsbesluts-giltighet-i-sverige/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+    },
+    {
+      "id": "naringsliv_1b42ec23",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "7 maj 2026",
-      "headline": "Intrums storägare avvaktar villkoren: ”Vårt ansvar att utvärdera”",
-      "summary": "Intrums största ägare Nordic Capital vet ännu inte om det ska delta i kredithanteringsbolagets stora nyemission. ”Som ägare är det standardpraxis och vårt ansvar att utvärdera de slutliga villkoren innan beslut fattas”, …",
+      "headline": "Små uppgångar väntas på Wall Street",
+      "summary": "Börserna på Wall Street ser ut att fortsätta gårdagens uppgångar i den inledande handeln på torsdagen. Investerare väntar spänt på uppdateringar om det möjliga fredsavtalet mellan USA och Iran.",
       "hue": 150,
-      "link": "https://www.di.se/nyheter/intrums-storagare-avvaktar-villkoren-vart-ansvar-att-utvardera/",
-      "featured": true
+      "link": "https://www.di.se/live/sma-uppgangar-vantas-pa-wall-street-ah6XG/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_8698e96a",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Branschen jublar – nu kan vinbarer öppna utan matkrav",
+      "summary": "Riksdagen river upp matkravet för serveringstillstånd – ett historiskt beslut som förändrar spelplanen för Sveriges krogar och barer, anser branschen. ”Gigantiskt mycket större än gårdsförsäljningen”, säger vinentreprenö…",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/branschen-jublar-nu-kan-vinbarer-oppna-utan-matkrav/",
+      "image": "https://static.bonniernews.se/ba/6ae843b5-c3ec-42c8-9edd-e20a5abd4b91.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "lokalt_9a00a963",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "7 maj 2026",
+      "headline": "En person häktad för mordbrand på Stora Essingen",
+      "summary": "Tidigare i veckan begärde åklagaren en man i 30-årsåldern häktad misstänkt för mordbrand i en villa på Stora Essingen i Stockholm i slutet av april. Tingsrätten beslutade då att häkta honom enbart för skadegörelse. I dag…",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/en-person-haktad-for-mordbrand-pa-stora-essingen",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/1e4594146178da32a273e775bf7a805242fc940ba7e26b57cfa89493c2e6b842"
+    },
+    {
+      "id": "naringsliv_e7db027e",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Stärk Sveriges säkerhet genom energieffektivisering",
+      "summary": "Genom att justera bolåneregler, återinföra riktade stöd och använda skattesystemet mer strategiskt kan vi frigöra en betydande effektiviseringspotential. Det skulle inte bara sänka kostnaderna för enskilda hushåll, utan …",
+      "hue": 150,
+      "link": "https://www.di.se/debatt/stark-sveriges-sakerhet-genom-energieffektivisering/",
+      "image": "https://static.bonniernews.se/ba/2ae52d1a-d27b-4b8f-b109-413854e6c83d.jpeg?crop=799:449&amp;auto=webp&amp;width=799&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_29418305",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Flera sprängningar i staden: ”Risk för spiral”",
+      "summary": "Efter sex sprängningar på drygt en månad ser polisen i Södertälje risk för en ny lokal våldsspiral. ”När sådana här händelsekedjor sätts igång är risken stor att det fortsätter”, säger biträdande lokalpolisområdeschef Jo…",
+      "hue": 150,
+      "link": "https://www.svd.se/a/ln4Ax9/sex-sprangningar-i-sodertalje-pa-drygt-en-manad-polisen-om-risk-for-nya-dad",
+      "image": "https://svd.vgc.no/v2/images/6f793591-3e8a-347d-95e3-bac804f8c0be?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e53c71f6e5163b71a0b30de0bbb912087b79d72a"
+    },
+    {
+      "id": "naringsliv_53e74b3d",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "”Cykelpirater” härjar mitt inne i Stockholm",
+      "summary": "En serie väskstölder mot cyklister sprider oro i Stockholm. På bara en vecka har sju personer blivit bestulna på sina väskor på Kungsholmen.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/k0M2RQ/polisen-varnar-for-nya-vagen-av-cykelpirater-i-stockholm",
+      "image": "https://svd.vgc.no/v2/images/b4d6c0f9-8bb7-3d0f-bf2f-fb2e03e315a9?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=70be42735d95488254b4068bc5acd81bf3c03403"
+    },
+    {
+      "id": "naringsliv_b5b5470d",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Lägre produktivitet än väntat i USA",
+      "summary": "Produktiviteten i USA steg 0,8 procent under första kvartalet, enligt preliminär statistik från USA:s arbetsmarknadsdepartement.",
+      "hue": 150,
+      "link": "https://www.di.se/live/lagre-produktivitet-an-vantat-i-usa/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_eab62e9b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Uppgifter: Mystiska oljeaffärer utreds",
+      "summary": "Justitiedepartementet i USA utreder en rad misstänkta mångmiljardaffärer på oljemarknaden, enligt källor till ABC News.",
+      "hue": 150,
+      "link": "https://www.di.se/live/uppgifter-mystiska-oljeaffarer-utreds/",
+      "image": "https://static.bonniernews.se/ba/2f82b930-0547-4639-b445-2efa539aafb4.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_0f7dae42",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Lysande – inte bara för tekniknördar",
+      "summary": "Allmänbildande, tankeväckande och vacker – Tekniska museets stora satsning ”Drömlandet” är en bred skildring av Sveriges moderna historia.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/lnM857/dromlandet-pa-tekniska-museet-recenseras",
+      "image": "https://svd.vgc.no/v2/images/f70ab5e7-145c-3697-b7bb-d5d067e4e1d4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=49de193b399084f20905b1d18388763ca9d5383b"
+    },
+    {
+      "id": "varlden_1055c4eb",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Three women linked to Islamic State arrested in Australia on return from Syria",
+      "summary": "Three women who allegedly supported IS were arrested after they flew home to Australia for the first time in years.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/czj2emlv2kjo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/ba4f/live/c30e7860-0c92-11f1-ab92-c5c4ffbfd0e0.jpg"
+    },
+    {
+      "id": "skatt_abef10ce",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "7 maj 2026",
+      "headline": "Utökade befogenheter för Skatteverket inom folkbokföringsverksamheten",
+      "summary": "Regeringen föreslår att ett nytt brott ska införas: främjande av oriktig folkbokföring. Straffansvar ska inträda när någon genom en uppsåtlig handling i väsentlig mån främjar att en oriktig uppgift kan läggas till grund …",
+      "hue": 24,
+      "link": "https://www.regeringen.se/rattsliga-dokument/proposition/2026/05/prop.-202526261",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
+    },
+    {
+      "id": "skatt_8cfb9750",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "7 maj 2026",
+      "headline": "Nytt lagförslag ska minska risken för identitetsmissbruk",
+      "summary": "Regeringen vill förbättra folkbokföringen och minska risken för identitetsmissbruk. En ny proposition innehåller lagförslag som ger Skatteverket och Migrationsverket större möjligheter att använda biometriska uppgifter v…",
+      "hue": 24,
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/nytt-lagforslag-ska-minska-risken-for-identitetsmissbruk/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
+    },
+    {
+      "id": "teknik_b207ca97",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "Ars Technica",
+      "date": "7 maj 2026",
+      "headline": "Is your Porsche Taycan too slow at the Nürbugring? You need this Manthey Kit.",
+      "summary": "Nordschleife-specialist Manthey has developed an upgrade package for the Porsche EV.",
+      "hue": 220,
+      "link": "https://arstechnica.com/cars/2026/05/is-your-porsche-taycan-too-slow-at-the-nurbugring-you-need-this-manthey-kit/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/MH10574__2_A3_RGB-1-1152x648.jpg"
+    },
+    {
+      "id": "naringsliv_d0164121",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Judisk oro i London: ”Måste byta regering”",
+      "summary": "Konflikten i Mellanöstern och ett uppmärksammat knivdåd skuggar torsdagens brittiska lokalval. I norra London anklagas regeringen för att göda antisemitism.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/Ok6Q71/judisk-oro-i-london-maste-byta-regering",
+      "image": "https://svd.vgc.no/v2/images/2abe59ce-32a9-3fd7-8f07-c7eb4a08c5fa?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=8d7fcf26a395f3bd52d66eaefb8f268189adc594"
+    },
+    {
+      "id": "varlden_3a8eafa9",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "US judge releases Jeffrey Epstein's purported suicide note",
+      "summary": "Epstein's former cellmate claims he found the note, which has not been verified by the BBC.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cd7pd0rqwreo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/da69/live/1e350b00-48b1-11f1-90e6-350a323e11ac.jpg"
+    },
+    {
+      "id": "teknik_e1f8c3aa",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "Ars Technica",
+      "date": "7 maj 2026",
+      "headline": "Former NASA chief takes helm of national security space firm",
+      "summary": "\"The spacecraft can also be refueled, and it can refuel others.\"",
+      "hue": 220,
+      "link": "https://arstechnica.com/space/2026/05/former-nasa-chief-takes-helm-of-national-security-space-firm/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/rendering-1-1152x627.png"
     },
     {
       "id": "skatt_3cd7c10e",
@@ -21,51 +226,20 @@
       "headline": "Ny överdirektör för Skatteverket utsedd",
       "summary": "Regeringen har i dag utsett Gunilla Åsenius till överdirektör vid Skatteverket. Gunilla Åsenius är i dag rättschef på Polismyndigheten. Hon tillträder som överdirektör den 15 juni.",
       "hue": 24,
-      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/ny-overdirektor-for-skatteverket-utsedd/"
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/ny-overdirektor-for-skatteverket-utsedd/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
     },
     {
-      "id": "naringsliv_f45d6686",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
+      "id": "varlden_447343d0",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
       "date": "7 maj 2026",
-      "headline": "Spådomen bådar gott för börsen",
-      "summary": "Lönsamheten var urstark och orderingången bådar gott inför framtiden, visar Di:s stora rapportgenomgång. Dessutom spår proffsen att den trista trenden för såväl översta som sista raden nu är över. Det talar för att place…",
-      "hue": 150,
-      "link": "https://www.di.se/analys/spadomen-badar-gott-for-borsen/"
-    },
-    {
-      "id": "naringsliv_88795a55",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Stenafartyg passerade genom Hormuzsundet: ”En lättnad”",
-      "summary": "Tankfartyget CS Anthem, som ingår i flottan hos ett Stenaägt bolag, är ett av de två fartyg som passerade Hormuzsundet med amerikansk eskort innan den amerikanska militären pausade aktionen. Det bekräftar Stena Bulks vd …",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/stenafartyg-passerade-genom-hormuzsundet-en-lattnad/"
-    },
-    {
-      "id": "naringsliv_487741a5",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Johan Pehrson blir ambassadör i Portugal",
-      "summary": "",
-      "hue": 150,
-      "link": "https://www.svd.se/a/bOXn4d/johan-pehrson-blir-ambassador-i-portugal"
-    },
-    {
-      "id": "naringsliv_99cc54c1",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Essitys vd: ”Inget beslut taget”",
-      "summary": "Hygienjätten Essity överväger att knoppa av Consumer Tissue-verksamheten som stod för en tredjedel av koncernens omsättning i fjol. Översynen kan ta uppemot ett år och än är inget beslut taget, understryker vd:n Ulrika K…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/essitys-vd-inget-beslut-taget/"
+      "headline": "'My heart is in a million pieces': Vigils in Australia for five-year-old allegedly killed in Outback",
+      "summary": "Kumanjayi Little Baby was found dead after going missing from an Aboriginal town camp in Alice Springs.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cdeplz29p7go?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/70a8/live/63808420-49ae-11f1-b51c-cde45b9e941e.jpg"
     },
     {
       "id": "lokalt_310c4194",
@@ -76,51 +250,8 @@
       "headline": "Fyra nya misstänkta i bussmordet i Tyresö",
       "summary": "Ytterligare fyra personer är misstänkta gällande bussmordet i Tyresö den 25 mars.",
       "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/fyra-nya-misstankta-i-bussmordet-i-tyreso"
-    },
-    {
-      "id": "naringsliv_76e10788",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Replik från Anne Ramberg",
-      "summary": "Med anledning av Paulina Neudings ledare ”Juristerna blundar för de utsatta” har följande replik inkommit från Anne Ramberg.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Wv6Omd/anne-ramberg-svarar-paulina-neuding"
-    },
-    {
-      "id": "naringsliv_49261d9a",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "EU planerar för begränsning av amerikanska molntjänster",
-      "summary": "EU planerar att införa lagar för att begränsa medlemsländernas användning av amerikanska molnleverantörer. Det skriver CNBC.",
-      "hue": 150,
-      "link": "https://www.di.se/live/eu-planerar-for-begransning-av-amerikanska-molntjanster/"
-    },
-    {
-      "id": "varlden_1055c4eb",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Islamic State-linked women arrive home in Australia from Syria",
-      "summary": "A group of nine women and children has landed in Melbourne while another woman and her child arrived in Sydney.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/czj2emlv2kjo?at_medium=RSS&at_campaign=rss"
-    },
-    {
-      "id": "naringsliv_1d71993b",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Det nya är att han är stolt över det",
-      "summary": "Sverigedemokraterna stoltserar med vad de har gjort och Tidö avslutar mandatperioden med att ifrågasätta regeringsformen. Kvittningskaoset i riksdagen är både historiskt och ironiskt.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/8pPbvG/stora-nyheten-i-kvittningskaoset-sverigedemokraterna-stoltserar-med-vad-de-har-gjort"
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/fyra-nya-misstankta-i-bussmordet-i-tyreso",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.57/0.46/673150e85527948607444244c07b99e24274bb5752f1fedf25b0566d7922329d"
     },
     {
       "id": "varlden_eee46eaf",
@@ -131,29 +262,8 @@
       "headline": "Hantavirus-hit cruise ship on way to Canary Islands after three evacuated",
       "summary": "A British man is among three evacuees sent to the Netherlands after displaying symptoms while aboard the MV Hondius.",
       "hue": 280,
-      "link": "https://www.bbc.com/news/articles/c5y093d5n9ko?at_medium=RSS&at_campaign=rss"
-    },
-    {
-      "id": "varlden_1bed8a60",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Shell latest oil giant to see profits surge due to Iran war impact",
-      "summary": "The energy giant's profits jump by nearly a quarter as it benefits from the recent volatility in the oil price",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/ce3p0x54drwo?at_medium=RSS&at_campaign=rss"
-    },
-    {
-      "id": "naringsliv_b92d30d4",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Buss och spårvagn i krock i Göteborg",
-      "summary": "",
-      "hue": 150,
-      "link": "https://www.svd.se/a/rrzglA/buss-och-sparvagn-i-krock-i-goteborg"
+      "link": "https://www.bbc.com/news/articles/c5y093d5n9ko?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/8fa8/live/9080e1e0-49e5-11f1-9921-0be54b6c608a.jpg"
     },
     {
       "id": "lokalt_33fc423d",
@@ -164,7 +274,8 @@
       "headline": "Cykeletikett – att inte göra rätt kan blir dyrt",
       "summary": "Cykelsäsongen är nu i full gång men många missar svängtecken och ett och annat rödljus. Hör tips från Cykelfrämjandet om vad man ska tänka på och hur man bäst använder en cykelbox.",
       "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/cykeletikett-att-inte-gora-ratt-kan-blir-dyrt"
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/cykeletikett-att-inte-gora-ratt-kan-blir-dyrt",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.55/0.51/6adfab64d341ea0c2259bde43ac250c9388db95f1c0e6970f9d484dbbad6d1ac"
     },
     {
       "id": "lokalt_3db72472",
@@ -175,7 +286,8 @@
       "headline": "Södra länken öppnad igen efter olycka",
       "summary": "En olycka skedde i Södra länken under torsdagsmorgonen, mitt i rusningen. Alla infarter till Södra länken i riktning mot E4/E20 stängdes av och det blev mycket stor påverkan på trafiken.",
       "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/sodra-lanken-stangd-efter-olycka"
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/sodra-lanken-stangd-efter-olycka",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.44/0.39/982fb1f8c3b7ea161729a890fd1cd18eec1b909e934289878a45df72a26363fe"
     },
     {
       "id": "varlden_00c8cda3",
@@ -186,7 +298,8 @@
       "headline": "Iran considering US proposal as Trump says war will be 'over quickly'",
       "summary": "Mediator Pakistan says it is \"endeavouring to convert this ceasefire into a permanent end to this war\".",
       "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cj0pq2q8221o?at_medium=RSS&at_campaign=rss"
+      "link": "https://www.bbc.com/news/articles/cj0pq2q8221o?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/bc82/live/f517c4a0-4a0a-11f1-ac78-2112837ce2aa.jpg"
     },
     {
       "id": "lokalt_e08e0da3",
@@ -197,18 +310,8 @@
       "headline": "Brand i båthall på Ekerö – tio båtar brann upp",
       "summary": "Det har brunnit i en båthall på Ekerö väster om Stockholm på torsdagsmorgonen. Det finns inga uppgifter om skadade personer men tiotalet båtar ska ha brunnit.",
       "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/brand-i-bathall-pa-ekero-tio-batar-brann-ner"
-    },
-    {
-      "id": "lokalt_8ce35d4b",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
-      "date": "7 maj 2026",
-      "headline": "Prisskillnaden på 175 kronor på samma torg – butiksval viktigare än moms",
-      "summary": "Momsen på mat sänktes för drygt en månad sedan – och enligt SVT:s undersökning över hela landet har handlarna sänkt priserna. Men flera stockholmare menar att det ändå inte gjort någon större skillnad i plånboken. – Jag …",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/prisskillnaden-pa-175-kronor-pa-samma-torg-butiksval-viktigare-an-moms"
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/brand-i-bathall-pa-ekero-tio-batar-brann-ner",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/2f93ba843f7e400a13c86112e65490896499522866cbeab7a04aa887efed39b6"
     },
     {
       "id": "teknik_fcd33493",
@@ -219,7 +322,8 @@
       "headline": "SpaceX is starting to move on from the world's most successful rocket",
       "summary": "Vandenberg Space Force Base in California is set to become SpaceX's busiest launch site—for now.",
       "hue": 220,
-      "link": "https://arstechnica.com/space/2026/05/spacex-is-starting-to-move-on-from-the-worlds-most-successful-rocket/"
+      "link": "https://arstechnica.com/space/2026/05/spacex-is-starting-to-move-on-from-the-worlds-most-successful-rocket/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/GettyImages-2211835635-1152x648.jpg"
     },
     {
       "id": "teknik_d17a7a6d",
@@ -230,7 +334,8 @@
       "headline": "Anthropic raises Claude Code usage limits, credits new deal with SpaceX",
       "summary": "Deal follows others with Microsoft, Amazon, and more.",
       "hue": 220,
-      "link": "https://arstechnica.com/ai/2026/05/anthropic-raises-claude-code-usage-limits-credits-new-deal-with-spacex/"
+      "link": "https://arstechnica.com/ai/2026/05/anthropic-raises-claude-code-usage-limits-credits-new-deal-with-spacex/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/Dario-Amodei-Code-with-Claude-SF-2026-1152x648.jpg"
     },
     {
       "id": "teknik_c512bd30",
@@ -241,40 +346,8 @@
       "headline": "TSMC taps wind power as AI chip demand soars, Taiwan feels energy crunch",
       "summary": "TSMC backs renewables during record demand for energy-hungry chip manufacturing.",
       "hue": 220,
-      "link": "https://arstechnica.com/gadgets/2026/05/tsmc-taps-wind-power-as-ai-chip-demand-soars-taiwan-feels-energy-crunch/"
-    },
-    {
-      "id": "teknik_142bd012",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "Ars Technica",
-      "date": "6 maj 2026",
-      "headline": "Court strikes down FCC anti-discrimination rule opposed by Internet providers",
-      "summary": "Chairman Brendan Carr celebrates FCC court loss in case over Biden-era rule.",
-      "hue": 220,
-      "link": "https://arstechnica.com/tech-policy/2026/05/court-strikes-down-fcc-anti-discrimination-rule-opposed-by-internet-providers/"
-    },
-    {
-      "id": "teknik_e67b536e",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "Ars Technica",
-      "date": "6 maj 2026",
-      "headline": "Spooked by Mythos, Trump suddenly realized AI safety testing might be good",
-      "summary": "Trump forced to admit Biden was right on AI safety testing.",
-      "hue": 220,
-      "link": "https://arstechnica.com/tech-policy/2026/05/everything-that-could-go-wrong-with-trumps-ai-safety-tests-according-to-experts/"
-    },
-    {
-      "id": "varlden_9593d7c1",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "6 maj 2026",
-      "headline": "Israel strikes Beirut for first time since Hezbollah ceasefire",
-      "summary": "Israel says it targeted a senior Hezbollah figure in the capital, the first strike of its kind since mid-April.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/crmpjjl02l2o?at_medium=RSS&at_campaign=rss"
+      "link": "https://arstechnica.com/gadgets/2026/05/tsmc-taps-wind-power-as-ai-chip-demand-soars-taiwan-feels-energy-crunch/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/Hai-Long-wind-turbine-1152x648.jpg"
     },
     {
       "id": "skatt_8eb58ba1",
@@ -285,18 +358,8 @@
       "headline": "Prövningstillstånd meddelat i mål om stöd och service till vissa funktionshindrade",
       "summary": "Den fråga i målet som har lett till att Högsta förvaltningsdomstolen meddelat prövningstillstånd gäller förutsättningarna för en kammarrätt att på yrkande av en kommun besluta om inhibition av förvaltningsrättens avgöran…",
       "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/05/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/"
-    },
-    {
-      "id": "naringsliv_de0d3c3d",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "4 maj 2026",
-      "headline": "Riskfylld satsning visade sig vara ett genidrag",
-      "summary": "Under Guldbron har en av Stockholms mest omtalade krogsatsningar vuxit fram. Här kombineras storslagen miljö med ambitiös matlagning – och ute­serveringen lär bli sommarens hetaste.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/k0M1G6/recension-av-slussporten-snyggt-och-vallagat"
+      "link": "https://www.domstol.se/nyheter/2026/05/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_c1cc5034",
@@ -307,7 +370,8 @@
       "headline": "Remiss av promemorian En myndighet för redovisning och revision",
       "summary": "Här kan du ta del av till vilka instanser som regeringen har remitterat promemorian En myndighet för redovisning och revision.",
       "hue": 24,
-      "link": "https://www.regeringen.se/remisser/2026/05/remiss-av-promemorian-en-myndighet-for-redovisning-och-revision/"
+      "link": "https://www.regeringen.se/remisser/2026/05/remiss-av-promemorian-en-myndighet-for-redovisning-och-revision/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
     },
     {
       "id": "skatt_f4703952",
@@ -318,7 +382,8 @@
       "headline": "En myndighet för redovisning och revision",
       "summary": "Regeringen har aviserat att Bokföringsnämndens uppgifter ska föras över till, och inordnas i, Revisorsinspektionen.",
       "hue": 24,
-      "link": "https://www.regeringen.se/rattsliga-dokument/departementsserien-och-promemorior/2026/05/en-myndighet-for-redovisning-och-revision/"
+      "link": "https://www.regeringen.se/rattsliga-dokument/departementsserien-och-promemorior/2026/05/en-myndighet-for-redovisning-och-revision/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
     },
     {
       "id": "skatt_3c1d4ca6",
@@ -329,29 +394,8 @@
       "headline": "Dom i mål om föräldrapenning",
       "summary": "Dom i mål om föräldrapenning.",
       "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/"
-    },
-    {
-      "id": "skatt_3af46f02",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "30 apr 2026",
-      "headline": "Regeringen tar nästa steg för att renodla Utbetalningsmyndighetens verksamhet",
-      "summary": "Regeringen har i dag beslutat om en lagrådsremiss med förslag som innebär att Utbetalningsmyndighetens verksamhet renodlas till kärnuppgiften att förebygga, förhindra och upptäcka felaktiga utbetalningar.",
-      "hue": 24,
-      "link": "https://www.regeringen.se/pressmeddelanden/2026/04/regeringen-tar-nasta-steg-for-att-renodla-utbetalningsmyndighetens-verksamhet/"
-    },
-    {
-      "id": "skatt_cb29735d",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "30 apr 2026",
-      "headline": "Avveckling av Utbetalningsmyndighetens system med transaktionskonto",
-      "summary": "I denna lagrådsremiss föreslås lagändringar för att avveckla Utbetalningsmyndighetens system med transaktionskonto.",
-      "hue": 24,
-      "link": "https://www.regeringen.se/rattsliga-dokument/lagradsremiss/2026/04/avveckling-av-utbetalningsmyndighetens-system-med-transaktionskonto/"
+      "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_f6ccb84e",
@@ -362,7 +406,8 @@
       "headline": "Trender inom internationell källskatt",
       "summary": "Källskatt är ett ständigt aktuellt område, men under det senaste året har flera internationella avgöranden och nationella tillämpningar skärpt riskbilden för multinationella koncerner. Frågor om vem som är verklig mottag…",
       "hue": 24,
-      "link": "https://blogg.pwc.se/taxmatters/trender-internationell-kallskatt"
+      "link": "https://blogg.pwc.se/taxmatters/trender-internationell-kallskatt",
+      "image": "https://blogg.pwc.se/hubfs/manniskor-promerar.jpg"
     },
     {
       "id": "skatt_50997290",
@@ -373,7 +418,8 @@
       "headline": "Dom i mål om laglighetsprövning enligt kommunallagen",
       "summary": "En regions beslut att inom ramen för ett valfrihetssystem och i enlighet med ingånget avtal ta ut ett vite från en leverantör utgör inte myndighetsutövning mot enskild.",
       "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-laglighetsprovning-enligt-kommunallagen/"
+      "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-laglighetsprovning-enligt-kommunallagen/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_fbf2162b",
@@ -384,18 +430,8 @@
       "headline": "Prövningstillstånd delvis meddelat i mål om stöd och service till vissa funktionshindrade",
       "summary": "Högsta förvaltningsdomstolen meddelar prövningstillstånd såvitt avser frågan om insatsen ledsagarservice enligt 9 § 3 lagen (1993:387) om stöd och service till vissa funktionshindrade kan omfatta ledsagning vid universit…",
       "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/"
-    },
-    {
-      "id": "skatt_27a221bf",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "HFD nyheter",
-      "date": "28 apr 2026",
-      "headline": "Dom i mål om förhandsbesked om inkomstskatt",
-      "summary": "Ett friskvårdsbidrag som används för inköp av en konsertbiljett har inte ansetts vara en skattefri personalvårdsförmån.",
-      "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-forhandsbesked-om-inkomstskatt1/"
+      "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_51094b2f",
@@ -406,7 +442,8 @@
       "headline": "Återbetalning av IEEPA-tullar: så går det till",
       "summary": "Under 2025 införde USA:s president Donald Trump omfattande tullar med stöd av International Emergency Economic Powers Act (IEEPA), bland annat tullar på 25 procent på import från Kanada och Mexiko, 10–145 procent på impo…",
       "hue": 24,
-      "link": "https://blogg.pwc.se/taxmatters/aterbetalningar-ieepa-tullar"
+      "link": "https://blogg.pwc.se/taxmatters/aterbetalningar-ieepa-tullar",
+      "image": "https://blogg.pwc.se/hubfs/containrar_hamn.jpg"
     },
     {
       "id": "skatt_ade76d59",
@@ -417,7 +454,8 @@
       "headline": "EU Inc. – ny bolagsform för företag som vill växa i EU",
       "summary": "Den 18 mars 2026 presenterade EU-kommissionen sitt förslag till en helt ny, enhetlig bolagsform kallad ”EU Inc.”. Förslaget beskrivs som en ”28:e regim”, ett frivilligt alternativ till de 27 medlemsstaternas nationella b…",
       "hue": 24,
-      "link": "https://blogg.pwc.se/taxmatters/eu-inc-ny-bolagsform"
+      "link": "https://blogg.pwc.se/taxmatters/eu-inc-ny-bolagsform",
+      "image": "https://blogg.pwc.se/hubfs/GettyImages-1226652015_workshop_650.jpg"
     },
     {
       "id": "skatt_003ea378",
@@ -428,7 +466,8 @@
       "headline": "Pelare II – Promemoria om Side-by-side-paketet har skickats på remiss",
       "summary": "I januari publicerade OECD/IF Side-by-side-paketet. Nu har regeringen skickat en promemoria på remiss med förslag på hur paketet ska implementeras i svensk rätt genom ändringar i lagen om tilläggsskatt. Promemorian inneh…",
       "hue": 24,
-      "link": "https://blogg.pwc.se/taxmatters/pelare-ii-side-by-side-remiss"
+      "link": "https://blogg.pwc.se/taxmatters/pelare-ii-side-by-side-remiss",
+      "image": "https://blogg.pwc.se/hubfs/man-med-data.jpg"
     },
     {
       "id": "skatt_9eac6208",
@@ -439,7 +478,20 @@
       "headline": "Omvandling eller efterskänkande av fordringar utan beskattning",
       "summary": "När ett koncernbolags finansiella situation behöver stärkas upp uppstår ofta frågan om detta kan göras utan att det samtidigt utlöser beskattning. I ett nytt förhandsbesked från Skatterättsnämnden sätts denna fråga på si…",
       "hue": 24,
-      "link": "https://blogg.pwc.se/taxmatters/omvandling-efterskankande-fordringar"
+      "link": "https://blogg.pwc.se/taxmatters/omvandling-efterskankande-fordringar",
+      "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
+    },
+    {
+      "id": "teknik_74fc754d",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Inside Dreame’s wild launch event — packed with products no one can buy",
+      "summary": "The San Francisco Palace of Fine Arts hosted the Dreame Next 2026 Tech Summit last week. | Photo by Kelsey McClellan / The Verge Hundreds of influencers , media folks, and a few C-list celebs (sorry, Woz) filled the cave…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/922511/inside-dreames-wild-launch-event-dreame-next-2026",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/268500_Dreame_NEXT_2026_KMcClellan_0071.jpg?quality=90&amp;strip=all&amp;crop=0%2C15.095986038394%2C100%2C69.808027923211&amp;w=1200"
     },
     {
       "id": "teknik_e5f03a4a",
@@ -450,7 +502,8 @@
       "headline": "Musk’s biggest loyalist became his biggest liability",
       "summary": "I sat down in the Musk v. Altman trial courtroom today, painfully aware that no one was going to ask Shivon Zilis the question on everyone's minds: Girl, what the fuck are you doing ? Zilis, who testified under oath that…",
       "hue": 220,
-      "link": "https://www.theverge.com/ai-artificial-intelligence/925665/musk-altman-trial-shivon-zilis-testimony"
+      "link": "https://www.theverge.com/ai-artificial-intelligence/925665/musk-altman-trial-shivon-zilis-testimony",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/STPK222_SHIVON_ZILIS2.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
     },
     {
       "id": "teknik_15488898",
@@ -461,7 +514,8 @@
       "headline": "Nintendo announces a new Star Fox for the Switch 2",
       "summary": "It turns out Fox McCloud's appearance in the Super Mario Galaxy Movie was a tease of things to come: Nintendo just surprise announced the first new Star Fox game in a decade. The game is called, simply, Star Fox , and it…",
       "hue": 220,
-      "link": "https://www.theverge.com/entertainment/925601/star-fox-nintendo-switch-2"
+      "link": "https://www.theverge.com/entertainment/925601/star-fox-nintendo-switch-2",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/DirectSF_1.jpg?quality=90&amp;strip=all&amp;crop=0%2C3.4613147178592%2C100%2C93.077370564282&amp;w=1200"
     },
     {
       "id": "teknik_6ad4e48c",
@@ -472,7 +526,8 @@
       "headline": "Google shuts down Project Mariner",
       "summary": "Google has pulled the plug on Project Mariner, an experimental feature designed to perform tasks for you across the web, as reported earlier by Wired 's Maxwell Zeff . The Project Mariner landing page now contains a mess…",
       "hue": 220,
-      "link": "https://www.theverge.com/tech/925559/google-project-mariner-shut-down"
+      "link": "https://www.theverge.com/tech/925559/google-project-mariner-shut-down",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/project-mariner-logo.png?quality=90&amp;strip=all&amp;crop=0%2C12.533882885894%2C100%2C74.932234228213&amp;w=1200"
     },
     {
       "id": "teknik_ccd4fe1f",
@@ -483,18 +538,8 @@
       "headline": "How David Sacks crashed and burned in the White House",
       "summary": "AI and Crypto Czar David O. Sacks speaks during a meeting of the White House Task Force on Artificial Intelligence Education at the White House. | Matt McClain/The Washington Post via Getty Images Hello and welcome to Re…",
       "hue": 220,
-      "link": "https://www.theverge.com/column/925487/david-sacks-trump-administration-ai-model-review"
-    },
-    {
-      "id": "teknik_d6ae9f95",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "The latest Tile Pro is down to $25 — its best price of the year",
-      "summary": "The black and white versions of the latest Tile Pro is $10 off, marking its best price of the year. | Image: Tile If you’re struggling to find a Mother’s Day gift under $30, location trackers are a good investment, helpi…",
-      "hue": 220,
-      "link": "https://www.theverge.com/gadgets/925294/tile-pro-mothers-day-gift-bluetooth-tracker-deal-sale"
+      "link": "https://www.theverge.com/column/925487/david-sacks-trump-administration-ai-model-review",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2268643920.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
     },
     {
       "id": "kultur_9ac8e2d0",
@@ -505,7 +550,8 @@
       "headline": "Hela soppan kring Kvartal, SOM-institutet och förtroendet för public service",
       "summary": "Bild på Kvartals reklam i Stockholms tunnelbana, med SR-sengångaren och Kvartal-kaninen. Kvartal granskade förtroendesiffrorna för public service,&nbsp;men kritiker sågar resultatet. Förra veckan var det full kampanj frå…",
       "hue": 320,
-      "link": "https://www.sverigesradio.se/artikel/9208145"
+      "link": "https://www.sverigesradio.se/artikel/9208145",
+      "image": ""
     },
     {
       "id": "kultur_e80e4dd6",
@@ -516,7 +562,8 @@
       "headline": "Vindkraftslobbyn källa till Ekot-inslag om desinformation",
       "summary": "Ezra Brismo/TT Polisen vill inte att det ska&nbsp;läggas Palmepussel med AI och bråk om pressetik i Norge. Ensidigt i Ekot om vindkraft och desinformation Sverige är det land i Europa som är värst drabbat av desinformati…",
       "hue": 320,
-      "link": "https://www.sverigesradio.se/artikel/9204359"
+      "link": "https://www.sverigesradio.se/artikel/9204359",
+      "image": ""
     },
     {
       "id": "kultur_ca851145",
@@ -527,7 +574,8 @@
       "headline": "Gjorde DN en trollfabriks-höna av en offentlighetsprincip-fjäder?",
       "summary": "Partiarbete i det dolda, eller bara helt vanligt utnyttjande av grundlagsstadgad rättighet? VLT vägrar rätta artikel om inställd pesach, och så&nbsp;hopp om en ny vår för pressfriheten i Ungern. Skumma förehavanden på 68…",
       "hue": 320,
-      "link": "https://www.sverigesradio.se/artikel/9197801"
+      "link": "https://www.sverigesradio.se/artikel/9197801",
+      "image": ""
     },
     {
       "id": "kultur_741ff081",
@@ -538,7 +586,8 @@
       "headline": "SVT:s nedskärningar – nödvändiga eller förhandlingstaktik?",
       "summary": "Medierna i P1 fick 30 minuter med SVT:s vd Anne Lagercrantz. Filip Dikmens parfymserie görs om och skjuts upp, avgående Medieombudsmannen om sin tid på posten&nbsp;och&nbsp;fotbollsjournalisten som gick över gränsen. Var…",
       "hue": 320,
-      "link": "https://www.sverigesradio.se/artikel/9188301"
+      "link": "https://www.sverigesradio.se/artikel/9188301",
+      "image": ""
     },
     {
       "id": "kultur_543f5760",
@@ -549,9 +598,10 @@
       "headline": "Epoch Times – Falungong-megafon eller helt vanlig nyhetstidning? (Repris)",
       "summary": "Ett specialavsnitt som sändes första gången 3 januari 2026. Tidningen har anklagats för att sprida konspirationsteorier och&nbsp;ha slagsida till höger. Men vad ligger egentligen bakom anklagelserna? Och hur starka är ko…",
       "hue": 320,
-      "link": "https://www.sverigesradio.se/artikel/9187579"
+      "link": "https://www.sverigesradio.se/artikel/9187579",
+      "image": ""
     }
   ],
-  "generated_at": "2026-05-07T10:49:31.975447+00:00",
+  "generated_at": "2026-05-07T13:17:50.356199+00:00",
   "count": 50
 }
