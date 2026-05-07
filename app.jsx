@@ -1,5 +1,6 @@
 /* global React, ReactDOM, RSS_FEEDS, CATEGORIES */
-const { useState, useMemo, useEffect } = React;
+const { useState, useMemo, useEffect, useCallback } = React;
+const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
 const THEME = {
   accent:  '#0a0a0a',
@@ -277,6 +278,26 @@ function App() {
   const [loading,   setLoading]   = useState(true);
   const [updatedAt, setUpdatedAt] = useState('');
 
+  // Load persisted feed config from Supabase (falls back to RSS_FEEDS if empty)
+  useEffect(() => {
+    db.from('feed_config').select('feeds').eq('id', 1).single()
+      .then(({ data }) => {
+        if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds);
+      })
+      .catch(() => {});
+  }, []);
+
+  // Saves feeds to Supabase and updates local state — passed to RssDrawer as setFeeds
+  const setAndSaveFeeds = useCallback((updater) => {
+    setFeeds(prev => {
+      const next = typeof updater === 'function' ? updater(prev) : updater;
+      db.from('feed_config')
+        .upsert({ id: 1, feeds: next, updated_at: new Date().toISOString() })
+        .then(({ error }) => { if (error) console.error('Supabase:', error.message); });
+      return next;
+    });
+  }, []);
+
   useEffect(() => {
     fetch('news.json')
       .then(r => r.json())
@@ -378,7 +399,7 @@ function App() {
         </div>
       </footer>
 
-      <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setFeeds} />
+      <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds} />
     </div>
   );
 }
