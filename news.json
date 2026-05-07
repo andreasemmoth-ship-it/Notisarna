@@ -1,6 +1,43 @@
 {
   "articles": [
     {
+      "id": "naringsliv_081c6279",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Explosioner på ö i Hormuz – uppgifter om USA-attack",
+      "summary": "Iranska medier rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet hävdar att det handlar om nedskjutning av drönare. Men i USA uppger Fox News att USA har anfallit Iran.",
+      "hue": 150,
+      "link": "https://www.di.se/live/explosioner-pa-o-i-hormuz-uppgifter-om-usa-attack/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png",
+      "featured": true
+    },
+    {
+      "id": "naringsliv_505b1fed",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Ledamot i Stayble lämnar med omedelbar verkan",
+      "summary": "Erik Kinnman lämnar styrelsen i Stayble Therapeutics, på egen begäran och med omedelbar verkan.",
+      "hue": 150,
+      "link": "https://www.di.se/live/ledamot-i-stayble-lamnar-med-omedelbar-verkan/",
+      "image": "https://static.bonniernews.se/ba/8f0fbef3-4c9c-4300-8f4d-cf6e350d2961.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "varlden_74362427",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Trump gives 4 July ultimatum to EU to approve trade deal with US",
+      "summary": "The US president said the European Union must enact the trade deal agreed last year and drop tariffs on American goods to zero.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cp3pyk4nw3lo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/2a75/live/be129770-4a4e-11f1-bd52-e755d604ece4.jpg"
+    },
+    {
       "id": "naringsliv_e3b68059",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -10,8 +47,31 @@
       "summary": "Industrin i södra och västra Sverige pressas av stigande gaspriser, samtidigt som vårt beroende av importerad gas blir allt tydligare. Nordion, som ansvarar för det svenska gasnätet, ser hur konflikten i Iran driver på s…",
       "hue": 150,
       "link": "https://www.di.se/nyheter/stigande-gaspriser-pressar-industrin-svensk-biogasproduktion-tar-fart/",
-      "image": "https://static.bonniernews.se/ba/9e0f06dd-3e4e-4965-9782-20a130958260.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70",
-      "featured": true
+      "image": "https://static.bonniernews.se/ba/df56a44c-a823-448b-9090-ecc6ed407a48.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_cabfbfbb",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Flera döda i israeliska attacker i Libanon",
+      "summary": "Minst tolv personer har dödats i en serie israeliska attacker mot Libanon, uppger landets hälsomyndigheter.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/vr65Ol/flera-doda-i-israeliska-attacker-i-libanon",
+      "image": "https://svd.vgc.no/v2/images/fbef6236-100a-3257-9b90-3f13f5cf829e?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=abc3abbc2acadab5a2785f35cd624b6f057a2c73"
+    },
+    {
+      "id": "naringsliv_d392f8f1",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Källa: USA har attackerat ö i Hormuz",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/43b716/fox-news-usa-har-attackerat-o-i-hormuz",
+      "image": "https://svd.vgc.no/v2/images/9a75d5fe-198b-30e0-9ed6-5944f3b7b739?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=dfd55651436aa4ae9b056b363c191b351ef5d263"
     },
     {
       "id": "naringsliv_805898bc",
@@ -24,18 +84,6 @@
       "hue": 150,
       "link": "https://www.di.se/live/uppgifter-usa-och-iran-diskuterar-langre-stridspaus/",
       "image": "https://static.bonniernews.se/ba/1c57a84c-3823-4b80-b5f6-a7f3f4d57ca1.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_b39f71b7",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Iran: Explosioner på ö i Hormuz",
-      "summary": "Iransk tv rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet uppger att det handlar om nedskjutning av drönare.",
-      "hue": 150,
-      "link": "https://www.di.se/live/iran-explosioner-pa-o-i-hormuz/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
     },
     {
       "id": "naringsliv_2b30c128",
@@ -74,42 +122,6 @@
       "image": "https://svd.vgc.no/v2/images/9469506f-7ff4-3dbe-aee4-ef4843675f18?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e21c6e9e2dc96950fa6e167d13aa5f4e8ee1c3e4"
     },
     {
-      "id": "naringsliv_71705b6d",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Iran: Smällar hördes på ö i Hormuz",
-      "summary": "Iransk tv rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet uppger att det handlar om nedskjutning av drönare.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Gx0Qzx/iran-explosioner-pa-o-i-hormuz",
-      "image": "https://static.svd.se/assets/assets/images/logo-sharing-backup.png"
-    },
-    {
-      "id": "naringsliv_948f4ae4",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Källor: Allierade ger grönt ljus för Trumps projekt",
-      "summary": "Saudiarabien och Kuwait uppges vända i frågan och ge USA tillgång till militära baser och luftrum. Det banar vägen för att USA återigen ska kunna eskortera fartyg genom Hormuzsundet, rapporterar WSJ.",
-      "hue": 150,
-      "link": "https://www.di.se/live/kallor-allierade-ger-gront-ljus-for-trumps-projekt/",
-      "image": "https://static.bonniernews.se/ba/95c0dfc9-6558-4957-9c9b-a26a6ad539c5.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_d5c4a6c8",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Trump i nytt tullkrav mot EU",
-      "summary": "",
-      "hue": 150,
-      "link": "https://www.svd.se/a/5pbnxX/trump-i-nytt-tullhot-mot-eu",
-      "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d"
-    },
-    {
       "id": "teknik_96707e0d",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -132,18 +144,6 @@
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/cwy2d0v3p2po?at_medium=RSS&at_campaign=rss",
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3a50/live/05bdb9e0-4a38-11f1-a70d-c72ff4101914.jpg"
-    },
-    {
-      "id": "naringsliv_770beedb",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Brand i lägenhet i Stockholm",
-      "summary": "",
-      "hue": 150,
-      "link": "https://www.svd.se/a/9pbEAq/brand-i-lagenhet-i-stockholm",
-      "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d"
     },
     {
       "id": "varlden_85e848f4",
@@ -300,18 +300,6 @@
       "hue": 220,
       "link": "https://arstechnica.com/cars/2026/05/is-your-porsche-taycan-too-slow-at-the-nurbugring-you-need-this-manthey-kit/",
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/MH10574__2_A3_RGB-1-1152x648.jpg"
-    },
-    {
-      "id": "varlden_3a8eafa9",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "US judge releases Jeffrey Epstein's purported suicide note",
-      "summary": "Epstein's former cellmate claims he found the note, which has not been verified by the BBC.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cd7pd0rqwreo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/da69/live/1e350b00-48b1-11f1-90e6-350a323e11ac.jpg"
     },
     {
       "id": "skatt_3cd7c10e",
@@ -482,6 +470,30 @@
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
     },
     {
+      "id": "naringsliv_3cee0a58",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "28 feb 2026",
+      "headline": "Senaste nytt om konflikterna i Mellanöstern",
+      "summary": "SvD:s liverapport om kriget i Iran och konflikterna i Mellanöstern – öppen för alla läsare.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/GxM6aJ/israel-och-usa-har-attackerat-iran-explosioner-i-huvudstaden-teheran",
+      "image": "https://svd.vgc.no/v2/images/9a75d5fe-198b-30e0-9ed6-5944f3b7b739?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=dfd55651436aa4ae9b056b363c191b351ef5d263"
+    },
+    {
+      "id": "teknik_46f9fb68",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Canvas is down as ShinyHunters threatens to leak schools’ data",
+      "summary": "The Instructure-owned learning management platform, Canvas, is down after recently confirming a massive data breach that impacted student names , email addresses, ID numbers, and messages. Students attempting to access t…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/926458/canvas-shinyhunters-breach",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25332725/STK419_DEEPFAKE_CVIRGINIA_L.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
+    },
+    {
       "id": "teknik_55aa7a3f",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -528,18 +540,6 @@
       "hue": 220,
       "link": "https://www.theverge.com/gadgets/925427/peak-design-peter-dering-birthday-sale-2026-camera-backpack-sling-deal",
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/peakdesigneverydaybagzipp.webp?quality=90&amp;strip=all&amp;crop=0%2C10.793302289671%2C100%2C78.413395420658&amp;w=1200"
-    },
-    {
-      "id": "teknik_7b334587",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Valve is fighting Steam Controller scalpers with a new reservations system",
-      "summary": "Valve's new Steam Controller sold out quickly when it went on sale on Monday, and the company is going to open a \"reservations queue\" on Friday at 1PM ET for anyone who missed that initial run. When the controller initia…",
-      "hue": 220,
-      "link": "https://www.theverge.com/games/926286/valve-steam-controller-reservations-queue-scalpers",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/04/268455_Steam_Controller_AKrales_0082.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
     },
     {
       "id": "kultur_9ac8e2d0",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-07T20:41:35.344723+00:00",
+  "generated_at": "2026-05-07T21:39:34.360352+00:00",
   "count": 50
 }
