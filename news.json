@@ -1,6 +1,43 @@
 {
   "articles": [
     {
+      "id": "naringsliv_4125b4aa",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Hantavirusutbrottets ursprung okänt",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/rrzE5a/hantavirusutbrottets-ursprung-okant",
+      "image": "https://svd.vgc.no/v2/images/35b8d18c-2683-37d3-aea1-8b7d2a84c6a8?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=53ffd337361460c3c4aa88168cdba5ea7ef87908",
+      "featured": true
+    },
+    {
+      "id": "naringsliv_d975d4cb",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Trump hotar om nya Iranattacker",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/Ok6rzE/trump-hotar-om-nya-iranattacker",
+      "image": "https://svd.vgc.no/v2/images/f2fb12a7-bc48-3f99-a345-a6789a06b528?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=9da426604c322516840968e16c3a3373ba099aa2"
+    },
+    {
+      "id": "varlden_74362427",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Trump gives EU ultimatum deadline to approve trade deal with US",
+      "summary": "Trump's deadline to the European Union came as a trade court ruled his global tariff policy violated US law.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cp3pyk4nw3lo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/5bde/live/e5f4b280-4a64-11f1-ba67-71539f117a06.jpg"
+    },
+    {
       "id": "naringsliv_410790b0",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -10,8 +47,7 @@
       "summary": "Från cabernet sauvignon till chenin blanc – det är dags att hälsa på druvsläkten cabernet.",
       "hue": 150,
       "link": "https://www.svd.se/a/2p935r/sommarens-givna-rose-viner-fran-druvslakten-cabernet",
-      "image": "https://svd.vgc.no/v2/images/86a0a8b2-04f2-3e56-afee-e04ce6e4625d?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=555978b8036455890079a7d1600bb41dbf312ad8",
-      "featured": true
+      "image": "https://svd.vgc.no/v2/images/86a0a8b2-04f2-3e56-afee-e04ce6e4625d?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=555978b8036455890079a7d1600bb41dbf312ad8"
     },
     {
       "id": "naringsliv_bd09a9fb",
@@ -36,18 +72,6 @@
       "hue": 150,
       "link": "https://www.svd.se/a/Ok63E1/camilla-grebe-koper-det-for-att-slippa-grata-i-koket",
       "image": "https://svd.vgc.no/v2/images/fbe9057a-ea22-3930-996c-5011e71fa9ba?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=882344027bdfec993dc3a31009f8b5ea3680edd6"
-    },
-    {
-      "id": "naringsliv_62229b44",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Trumps globala tullar döms ut på nytt",
-      "summary": "USA:s internationella handelsdomstol dömer ut president Donald Trumps globala tullar på 10 procent.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/rrzE88/trumps-globala-tullar-doms-ut-pa-nytt",
-      "image": "https://svd.vgc.no/v2/images/5a159735-9b7c-3681-a0ee-3107d4069dad?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=f0deca8764e306ba581c190dcec302626ddf146e"
     },
     {
       "id": "teknik_856e9806",
@@ -84,18 +108,6 @@
       "hue": 150,
       "link": "https://www.di.se/live/ledamot-i-stayble-lamnar-med-omedelbar-verkan/",
       "image": "https://static.bonniernews.se/ba/8f0fbef3-4c9c-4300-8f4d-cf6e350d2961.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "varlden_74362427",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Trump gives 4 July ultimatum to EU to approve trade deal with US",
-      "summary": "The US president said the European Union must enact the trade deal agreed last year and drop tariffs on American goods to zero.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cp3pyk4nw3lo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/2a75/live/be129770-4a4e-11f1-bd52-e755d604ece4.jpg"
     },
     {
       "id": "naringsliv_e3b68059",
@@ -359,7 +371,7 @@
       "summary": "Dom i mål om föräldrapenning.",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_3af46f02",
@@ -470,18 +482,6 @@
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
     },
     {
-      "id": "naringsliv_3cee0a58",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "28 feb 2026",
-      "headline": "Senaste nytt om konflikterna i Mellanöstern",
-      "summary": "SvD:s liverapport om kriget i Iran och konflikterna i Mellanöstern – öppen för alla läsare.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/GxM6aJ/israel-och-usa-har-attackerat-iran-explosioner-i-huvudstaden-teheran",
-      "image": "https://svd.vgc.no/v2/images/9a75d5fe-198b-30e0-9ed6-5944f3b7b739?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=dfd55651436aa4ae9b056b363c191b351ef5d263"
-    },
-    {
       "id": "teknik_46f9fb68",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -500,7 +500,7 @@
       "source": "The Verge",
       "date": "",
       "headline": "Mira Murati’s deposition pulled back the curtain on Sam Altman’s ouster",
-      "summary": "The week leading up to Thanksgiving 2023 was the AI industry's biggest soap opera moment. OpenAI CEO Sam Altman was abruptly ousted from his role at the ChatGPT-maker. The explanation? That Altman was \"not consistently c…",
+      "summary": "The week leading up to Thanksgiving 2023 was the AI industry's biggest soap opera moment. OpenAI CEO Sam Altman was abruptly ousted from his role at the ChatGPT maker. The explanation? That Altman was \"not consistently c…",
       "hue": 220,
       "link": "https://www.theverge.com/ai-artificial-intelligence/926383/mira-murati-sam-altman-musk-trial-ouster",
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/VRG_Illo_mira-murati_stock_01.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
@@ -535,7 +535,7 @@
       "categoryKey": "teknik",
       "source": "The Verge",
       "date": "",
-      "headline": "Peak Design is taking up to 50 percent off some of our favorite bags right now",
+      "headline": "Peak Design is taking up to 50 percent off some of our favorite camera bags",
       "summary": "Peak Design’s Everyday Backpack Zip features a unique wraparound zipper that provides quick access to your belongings. | Image: Peak Design To celebrate founder Peter Dering’s birthday, Peak Design is taking up to 50 per…",
       "hue": 220,
       "link": "https://www.theverge.com/gadgets/925427/peak-design-peter-dering-birthday-sale-2026-camera-backpack-sling-deal",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-07T22:43:51.642511+00:00",
+  "generated_at": "2026-05-07T23:37:15.631990+00:00",
   "count": 50
 }
