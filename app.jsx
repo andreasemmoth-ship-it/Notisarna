@@ -50,8 +50,11 @@ function HeroCard({ item, isArchived, onToggleArchive }) {
   return (
     <article className="hero-card">
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
-        <span className="media-stripe" />
-        <span className="media-label">[ {item.category} bild ]</span>
+        {item.image
+          ? <img src={item.image} alt="" className="media-img"
+                 onError={e => { e.target.style.display = 'none'; }} />
+          : <><span className="media-stripe" /><span className="media-label">[ {item.category} bild ]</span></>
+        }
       </div>
       <div className="hero-card__body">
         <div className="hero-card__meta">
@@ -83,8 +86,11 @@ function NewsCard({ item, isArchived, onToggleArchive }) {
   return (
     <article className="news-card">
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
-        <span className="media-stripe" />
-        <span className="media-label">[ {item.category.toLowerCase()} ]</span>
+        {item.image
+          ? <img src={item.image} alt="" className="media-img"
+                 onError={e => { e.target.style.display = 'none'; }} />
+          : <><span className="media-stripe" /><span className="media-label">[ {item.category.toLowerCase()} ]</span></>
+        }
         <span className="cat-tag cat-tag--overlay" data-hue={item.hue}>{item.category}</span>
       </div>
       <div className="news-card__body">
