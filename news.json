@@ -1,6 +1,139 @@
 {
   "articles": [
     {
+      "id": "naringsliv_9ccdae0c",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Avanzas teknikstrul löst – orsak ännu oklar",
+      "summary": "Nätmäklaren Avanza drabbades återigen av teknikstrul på torsdagen. Närmare 19-tiden meddelar kommunikationschef Elias Nilsson att problemen är åtgärdade.",
+      "hue": 150,
+      "link": "https://www.di.se/live/avanzas-teknikstrul-lost-orsak-annu-oklar/",
+      "image": "https://static.bonniernews.se/ba/546de947-20da-405c-ae68-9cae385d576c.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70",
+      "featured": true
+    },
+    {
+      "id": "lokalt_1454853f",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "7 maj 2026",
+      "headline": "Nyheter från dagen: 7 maj",
+      "summary": "Detta har hänt i Stockholm torsdagen den 7 maj.",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/nyheter-fran-dagen-7-maj-vmasgt",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/2f93ba843f7e400a13c86112e65490896499522866cbeab7a04aa887efed39b6"
+    },
+    {
+      "id": "varlden_85e848f4",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Hantavirus outbreak on cruise ship not start of pandemic, UN health agency says",
+      "summary": "Ther World Health Organization says it is not in the same situation as with Covid-19 because hantavirus spreads differently.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cnvpzgn26edo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/98ce/live/b935e910-4a16-11f1-a7ce-b934bcb15ff4.jpg"
+    },
+    {
+      "id": "naringsliv_92ceafd1",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Genomgång: Tusenlappar på spel i partiernas ISK-förslag",
+      "summary": "Sparvillkoren för ISK och kapitalförsäkringar tar stor plats på valsedlarna i höst. Väljarna har en rad förslag att ta ställning till – Di har räknat på skattenotan i de olika alternativen.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/genomgang-tusenlappar-pa-spel-i-partiernas-isk-forslag/",
+      "image": "https://static.bonniernews.se/ba/f6adee3d-a3a1-4427-ade1-fbfdbcbe6f1f.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_efacd4f1",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Wall Street vänder ned efter nya krigsuppgifter",
+      "summary": "Wall Street tappar dagens uppgångar efter uppgifter om nya iranska passageregler i Hormuzsundet. Samtidigt rapporterar WSJ att CIA bedömer att Iran kan stå emot USA:s blockad betydligt längre än väntat.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/wall-street-vander-ned-efter-nya-krigsuppgifter/",
+      "image": "https://static.bonniernews.se/ba/3580edb8-7468-4365-ad6e-17ec8bc79d46.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "lokalt_fef2bdf3",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "7 maj 2026",
+      "headline": "Polisen varnar för ”cykelpirater” på Kungsholmen",
+      "summary": "Under den senaste veckan stals flera väskor från cyklister i centrala Stockholm. Nu varnar polisen för en ny sorts tjuvar.",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/polisen-varnar-for-cykelpirater-pa-kungsholmen",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/fb6542d6f75376a2cce8c3352f06cb3672b3ee71a084568eefd4bdf73e409b91"
+    },
+    {
+      "id": "naringsliv_d48e74c8",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Därför är risken för en hantapandemi ”jätteliten”",
+      "summary": "Oro för hantaviruset sprider sig, men risken för en pandemi bedöms som mycket låg. – Jag tror att risken är jätteliten, säger professor Jonas Klingström.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/zOMrbq/darfor-ar-risken-for-en-hantapandemi-jatteliten",
+      "image": "https://svd.vgc.no/v2/images/b343be45-f6b9-3b73-98b7-f0a6c67754d9?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=629de2f9ba9e67efc3be4a9b2be5dbeae405565f"
+    },
+    {
+      "id": "naringsliv_9b52fd22",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "7 maj 2026",
+      "headline": "Attenborough får 100-årspresent med sting",
+      "summary": "Sir David Attenborough fyller på fredagen 100 år. En av hans presenter är att en liten geting blir uppkallad efter honom.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/rrzWbl/attenborough-far-100-arspresent-med-sting",
+      "image": "https://svd.vgc.no/v2/images/1c390a9f-8ceb-36c2-8b1b-f411d744872e?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=c2a75a88c77b367c3e0ea883dac16e851c975b67"
+    },
+    {
+      "id": "naringsliv_45b8e633",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Cevian fortsätter minska i Nordea",
+      "summary": "Aktivistfonden Cevian har fortsatt att minska sitt ägande i Nordea.",
+      "hue": 150,
+      "link": "https://www.di.se/live/cevian-fortsatter-minska-i-nordea/",
+      "image": "https://static.bonniernews.se/ba/e683b2a3-b863-4727-946e-501c985b1f6a.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "varlden_9130d1c7",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Rosenberg: Russia's Victory Day parade with no tanks a sign Ukraine war not going to plan",
+      "summary": "For the first time in nearly two decades, there will be no military hardware, just soldiers during Saturday's parade in Moscow.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cwy2gj2jlr8o?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/aa5f/live/de8d56e0-4a06-11f1-9595-b54f38a93bc1.jpg"
+    },
+    {
+      "id": "naringsliv_87709734",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "7 maj 2026",
+      "headline": "Regeringen går vidare med statlig e-legitimation",
+      "summary": "Sveriges regering går vidare med ett lagförslag för att införa en statlig e-legitimation. Den kommer att börja utfärdas i december i år. Syftet är ett den nya e-legitimationen ska stärka samhällets tillgång till elektron…",
+      "hue": 150,
+      "link": "https://www.di.se/live/regeringen-gar-vidare-med-statlig-e-legitimation/",
+      "image": "https://static.bonniernews.se/ba/c4dd76cc-1201-4879-9d68-64afe41b1065.jpeg?crop=1058:595&amp;auto=webp&amp;width=1058&amp;quality=70"
+    },
+    {
       "id": "naringsliv_caeaf1dd",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -10,8 +143,7 @@
       "summary": "Om Ukraina snabbt får tillgång till svenska Gripenplan kan de förändra läget i kriget mot Ryssland, enligt landets försvarsminister Mychajlo Fedorov. – De kan bli en ”gamechanger”, säger Fedorov till TT.",
       "hue": 150,
       "link": "https://www.svd.se/a/wrR8Vn/besked-pa-vag-om-gripenaffar-med-ukraina",
-      "image": "https://svd.vgc.no/v2/images/f3897e82-373a-36cd-bec5-8ab8554fda57?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e1c0cafb19e5d50c6733a6fa1b07e4e640038fb1",
-      "featured": true
+      "image": "https://svd.vgc.no/v2/images/f3897e82-373a-36cd-bec5-8ab8554fda57?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e1c0cafb19e5d50c6733a6fa1b07e4e640038fb1"
     },
     {
       "id": "naringsliv_3e775f1e",
@@ -20,94 +152,10 @@
       "source": "SVD Näringsliv",
       "date": "7 maj 2026",
       "headline": "Fler bekräftade virusfall – detta har hänt",
-      "summary": "Fem av åtta misstänka fall av hantavirus har bekräftats sedan ett utbrott konstaterats på kryssningsfartyget MV Hondius. Av dem tre dödsfall. Så har dygnen på det virusdrabbade fartyget sett ut.",
+      "summary": "Fem av åtta misstänka fall av hantavirus har bekräftats sedan ett utbrott konstaterats på kryssningsfartyget MV Hondius. Av de åtta personerna har tre avlidit. Så har dygnen på det virusdrabbade fartyget sett ut.",
       "hue": 150,
       "link": "https://www.svd.se/a/j0Ozwo/fler-bekraftade-virusfall-detta-har-hant",
       "image": "https://svd.vgc.no/v2/images/0d04b4db-8ae5-37a4-bdb4-281e2c47ba4f?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=3cefa120fd4cf08a3fda11058083f428ecb882dc"
-    },
-    {
-      "id": "naringsliv_11bba9e5",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Genmabs omsättning steg – resultatet sjönk",
-      "summary": "Det danska läkemedelsbolaget Genmab redovisar ett rörelseresultat på 180 miljoner dollar för det första kvartalet 2026.",
-      "hue": 150,
-      "link": "https://www.di.se/live/genmabs-omsattning-steg-resultatet-sjonk/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
-    },
-    {
-      "id": "naringsliv_15cfec13",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Sur börsdag i Stockholm – Silex rusade i debuten",
-      "summary": "Stockholmsbörsen, likt övriga Europa, pressades under torsdagen trots att rekordbörserna i USA fortsatte uppåt. Silex rusade i debuten medan Intrum föll kraftigt.",
-      "hue": 150,
-      "link": "https://www.di.se/live/sur-borsdag-i-stockholm-silex-rusade-i-debuten/",
-      "image": "https://static.bonniernews.se/ba/6acc963d-5a68-4cce-af30-4751cebfc9af.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_da12084b",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Amerikaner kastar sig efter finska AI-vinnaren",
-      "summary": "Amerikanska institutioner har tagit befälet i telekombolaget Nokias ägarlista efter att en amerikan i fjol avlöste den finländska vd:n, och ABB:s förra finanschef i år fattade styrelseklubban. USA-ägandet ökar parallellt…",
-      "hue": 150,
-      "link": "https://www.di.se/live/amerikaner-kastar-sig-efter-finska-ai-vinnaren/",
-      "image": "https://static.bonniernews.se/ba/2fa4b3a7-e616-445a-94ae-6130a8ae8302.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_d85f6c0a",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Inflationsförväntningarna steg i USA",
-      "summary": "De amerikanska hushållens ettåriga inflationsförväntningar steg till 3,6 procent i april, jämfört med 3,4 procent i mars.",
-      "hue": 150,
-      "link": "https://www.di.se/live/inflationsforvantningarna-steg-i-usa/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
-    },
-    {
-      "id": "naringsliv_064e2ea4",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Kvartalssiffran sänkte serieförvärvaren – nu rättas den",
-      "summary": "It-förvärvsbolaget Addnode backade 25 procent på sin kvartalsrapport den 28 april efter att ha rapporterat en organisk försäljningsnedgång på minus 12 procent i en viktig division. På torsdagsmorgonen rättade bolaget sif…",
-      "hue": 150,
-      "link": "https://www.di.se/live/kvartalssiffran-sankte-serieforvarvaren-nu-rattas-den/",
-      "image": "https://static.bonniernews.se/ba/ebade366-95fc-4358-9edd-224fe4aed745.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_79643f1f",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Forskaren: ”Det känns faktiskt inte toppen”",
-      "summary": "Andesviruset på kryssaren MV Hondius har gjort att det internationella smittskyddet har högsta beredskap. ”WHO är på tårna nu”, säger Jonas Klingström, professor i immunologi.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Wv6b1g/hantavirus-pa-mv-hondius-jonas-klingstrom-svarar-pa-fragorna",
-      "image": "https://svd.vgc.no/v2/images/008a14fd-5ca2-3dad-945c-62112ff7f5db?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=24c1e1be88fa5c7fc1a0ee0720984426b18b84db"
-    },
-    {
-      "id": "naringsliv_8e02c2bd",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "7 maj 2026",
-      "headline": "Mitt liv är ett barn­centrerat vansinne",
-      "summary": "Uppfostringsgurun Gina Ford hävdar att föräldrar som överanstränger sig för att göra barnens liv perfekta ofta glömmer bort sig själva. Men det finns också en möjlighet att hon har fel.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Rj13VA/hugo-rehnberg-mitt-liv-ar-ett-barncentrerat-vansinne",
-      "image": "https://svd.vgc.no/v2/images/4c74409c-b0f8-3e82-a781-0a4f3e5025d6?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=2b30d9fea509a91096ee98caa4daa1453477b4d5"
     },
     {
       "id": "varlden_477b8d4b",
@@ -122,16 +170,16 @@
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/a2c4/live/8d288e50-4a15-11f1-a7ce-b934bcb15ff4.jpg"
     },
     {
-      "id": "varlden_85e848f4",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
+      "id": "teknik_34708cef",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "Ars Technica",
       "date": "7 maj 2026",
-      "headline": "Race to trace passengers who left hantavirus cruise ship at island",
-      "summary": "A 69-year-old woman who later died in South Africa is among those who left MV Hondius at St Helena.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cnvpzgn26edo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/98ce/live/b935e910-4a16-11f1-a7ce-b934bcb15ff4.jpg"
+      "headline": "Google unveils screenless Fitbit Air and Google Health app to replace Fitbit",
+      "summary": "The $100 Fitbit Air is available for preorder today.",
+      "hue": 220,
+      "link": "https://arstechnica.com/gadgets/2026/05/google-unveils-screenless-fitbit-air-and-google-health-app-to-replace-fitbit/",
+      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/Lavender-Lifestyle-1152x648.jpg"
     },
     {
       "id": "lokalt_b3197bdc",
@@ -179,7 +227,7 @@
       "summary": "Fråga om ett utländskt adoptionsbesluts giltighet i Sverige",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-utlandskt-adoptionsbesluts-giltighet-i-sverige/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "lokalt_9a00a963",
@@ -290,18 +338,6 @@
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.57/0.46/673150e85527948607444244c07b99e24274bb5752f1fedf25b0566d7922329d"
     },
     {
-      "id": "lokalt_33fc423d",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
-      "date": "7 maj 2026",
-      "headline": "Cykeletikett – att inte göra rätt kan blir dyrt",
-      "summary": "Cykelsäsongen är nu i full gång men många missar svängtecken och ett och annat rödljus. Hör tips från Cykelfrämjandet om vad man ska tänka på och hur man bäst använder en cykelbox.",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/cykeletikett-att-inte-gora-ratt-kan-blir-dyrt",
-      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.55/0.51/6adfab64d341ea0c2259bde43ac250c9388db95f1c0e6970f9d484dbbad6d1ac"
-    },
-    {
       "id": "naringsliv_594a1aa7",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -314,42 +350,6 @@
       "image": "https://svd.vgc.no/v2/images/3c9a6029-c2bd-3a37-8843-1c579a9678ad?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=debb2f60d5b73239af7fa85824a59bbbb4115256"
     },
     {
-      "id": "lokalt_3db72472",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
-      "date": "7 maj 2026",
-      "headline": "Södra länken öppnad igen efter olycka",
-      "summary": "En olycka skedde i Södra länken under torsdagsmorgonen, mitt i rusningen. Alla infarter till Södra länken i riktning mot E4/E20 stängdes av och det blev mycket stor påverkan på trafiken.",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/sodra-lanken-stangd-efter-olycka",
-      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.44/0.39/982fb1f8c3b7ea161729a890fd1cd18eec1b909e934289878a45df72a26363fe"
-    },
-    {
-      "id": "varlden_00c8cda3",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Iran considering US proposal as Trump says war will be 'over quickly'",
-      "summary": "Mediator Pakistan says it is \"endeavouring to convert this ceasefire into a permanent end to this war\".",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cj0pq2q8221o?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/bc82/live/f517c4a0-4a0a-11f1-ac78-2112837ce2aa.jpg"
-    },
-    {
-      "id": "teknik_fcd33493",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "Ars Technica",
-      "date": "6 maj 2026",
-      "headline": "SpaceX is starting to move on from the world's most successful rocket",
-      "summary": "Vandenberg Space Force Base in California is set to become SpaceX's busiest launch site—for now.",
-      "hue": 220,
-      "link": "https://arstechnica.com/space/2026/05/spacex-is-starting-to-move-on-from-the-worlds-most-successful-rocket/",
-      "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/GettyImages-2211835635-1152x648.jpg"
-    },
-    {
       "id": "skatt_8eb58ba1",
       "category": "Skatt & juridik",
       "categoryKey": "skatt",
@@ -359,7 +359,7 @@
       "summary": "Den fråga i målet som har lett till att Högsta förvaltningsdomstolen meddelat prövningstillstånd gäller förutsättningarna för en kammarrätt att på yrkande av en kommun besluta om inhibition av förvaltningsrättens avgöran…",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_c1cc5034",
@@ -395,7 +395,7 @@
       "summary": "Dom i mål om föräldrapenning.",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_f6ccb84e",
@@ -482,6 +482,54 @@
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
     },
     {
+      "id": "teknik_5257f51d",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Live updates from Elon Musk and Sam Altman’s court battle over the future of OpenAI",
+      "summary": "Sam Altman and Elon Musk are facing off in a high-stakes trial that could alter the future of OpenAI and its most well-known product, ChatGPT . In 2024, Musk filed a lawsuit accusing OpenAI of abandoning its founding mis…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/917225/sam-altman-elon-musk-openai-lawsuit",
+      "image": ""
+    },
+    {
+      "id": "teknik_247142e9",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "A hacker ran me over with a robot lawn mower",
+      "summary": "A Yarbo lawnmower with a trimmer attachment. | Image: Yarbo I'm lying in the dirt. It's coming for me. Then, with a lurch, it's climbing up my chest. If Andreas Makris doesn't stop the 200-pound robot lawn mower in time,…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/925696/yarbo-robot-lawn-mower-hack-remote-control-camera-access-mqtt",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/yarbo-lawnmower.webp?quality=90&amp;strip=all&amp;crop=0%2C0.13712291199202%2C100%2C99.725754176016&amp;w=1200"
+    },
+    {
+      "id": "teknik_2a315517",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Inside the return of Xbox",
+      "summary": "Two weeks ago there was a buzz in the air inside Microsoft's studio D building. Hundreds of Xbox employees gathered early on a Thursday morning, packed into the hallways and atrium, to hear from Xbox CEO Asha Sharma . Th…",
+      "hue": 220,
+      "link": "https://www.theverge.com/tech/925966/microsoft-return-to-xbox-town-hall-notepad",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/xboxlogo.jpg?quality=90&amp;strip=all&amp;crop=0%2C3.4613147178592%2C100%2C93.077370564282&amp;w=1200"
+    },
+    {
+      "id": "teknik_e24d8bd6",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "The future of Disney Plus is a confused mess",
+      "summary": "Newly minted CEO Josh D'Amaro says that he wants to turn Disney Plus into \"the immersive, interactive digital centerpiece of the company.\" It used to be that people went to the movies or theme parks to immerse themselves…",
+      "hue": 220,
+      "link": "https://www.theverge.com/streaming/925973/josh-damaro-disney-plus-disney-parks",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/03/Disney-Plus-STK080.webp?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
+    },
+    {
       "id": "teknik_0d4e2122",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -492,54 +540,6 @@
       "hue": 220,
       "link": "https://www.theverge.com/gadgets/925429/xbox-series-forza-horizon-6-controller-magsafe-airtags-deal-sale",
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/xboxseriesxdeal.png?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
-    },
-    {
-      "id": "teknik_acf015a9",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Netflix has its own, impressive AI-powered voice search",
-      "summary": "A small subset of Netflix viewers just got a new way to find movies and TV shows. The streamer recently started to test an AI-powered native voice search feature with some subscribers, prompting them to press the Netflix…",
-      "hue": 220,
-      "link": "https://www.theverge.com/column/925898/netflix-ai-voice-search",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/netflix-ask4.png?quality=90&amp;strip=all&amp;crop=0%2C3.4613147178592%2C100%2C93.077370564282&amp;w=1200"
-    },
-    {
-      "id": "teknik_07d3ac0b",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "BMW iX3 has a lower starting price than comparable gas-powered X3",
-      "summary": "The 2027 BMW iX3 is now available in the US, and its starting price my surprise and delight fans of the Bavarian automaker. The iX3, which is the first vehicle built on BMW's next-gen Neue Klasse platform, starts at $62,…",
-      "hue": 220,
-      "link": "https://www.theverge.com/transportation/925975/bmw-ix3-starting-price-lower-x3-range-estimate",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/12/2026-BMW-iX3-first-drive-055.jpg?quality=90&amp;strip=all&amp;crop=11.4%2C33.140850849141%2C77.2%2C60.620694664476&amp;w=1200"
-    },
-    {
-      "id": "teknik_6d9cf31b",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Apple&#8217;s $599 MacBook Neo could be at risk from rising RAM prices",
-      "summary": "The MacBook Neo might lose its most appealing trait thanks to the ongoing RAM shortage. According to analyst Tim Culpan , Apple could discontinue the budget-priced $599 base configuration of the Neo, leaving only the $69…",
-      "hue": 220,
-      "link": "https://www.theverge.com/gadgets/925997/apple-macbook-neo-price-increase-ram",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/03/268387_Apple_MacBook_Neo_AKrales_0507.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
-    },
-    {
-      "id": "teknik_d49ae248",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Samsung’s flagship laptop is a MacBook Pro clone gone horribly wrong",
-      "summary": "Samsung really captured the aesthetic of the MacBook Pro. The feel and performance, not as much. | Photo: Antonio G. Di Benedetto / The Verge II know I'm not the only person who wants a MacBook Pro for Windows: a sleek, …",
-      "hue": 220,
-      "link": "https://www.theverge.com/tech/925806/samsung-galaxy-book6-ultra-nvidia-rtx-5070-laptop-review",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/268517_Samsung_Galaxy_Book6_Ultra_ADiBenedetto_0001.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
     },
     {
       "id": "kultur_9ac8e2d0",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-07T15:43:20.256338+00:00",
+  "generated_at": "2026-05-07T17:26:51.796094+00:00",
   "count": 50
 }
