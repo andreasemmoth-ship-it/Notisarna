@@ -1,0 +1,212 @@
+#!/usr/bin/env python3
+"""Fetch enabled RSS feeds defined in FEEDS and write news.json."""
+
+import email.utils
+import hashlib
+import json
+import re
+import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from urllib.error import URLError
+from urllib.request import Request, urlopen
+
+FEEDS: dict = {
+    'skatt': {
+        'label': 'Skatt & juridik', 'hue': 24,
+        'sources': [
+            ('Skatteverket', 'https://www.skatteverket.se/rss/nyheter.rss', True),
+            ('HFD', 'https://www.domstol.se/hfd/feed', True),
+            ('PWC Tax Matters', 'https://taxmatters.pwc.se/feed', True),
+        ],
+    },
+    'teknik': {
+        'label': 'Teknik', 'hue': 220,
+        'sources': [
+            ('Ars Technica', 'https://feeds.arstechnica.com/arstechnica/index', True),
+            ('The Verge', 'https://www.theverge.com/rss/index.xml', True),
+            ('Hacker News', 'https://hnrss.org/frontpage', False),
+        ],
+    },
+    'varlden': {
+        'label': 'Världen', 'hue': 280,
+        'sources': [
+            ('Reuters', 'https://feeds.reuters.com/reuters/worldNews', True),
+            ('BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml', True),
+        ],
+    },
+    'naringsliv': {
+        'label': 'Näringsliv', 'hue': 150,
+        'sources': [
+            ('Dagens industri', 'https://www.di.se/rss', True),
+            ('SVD Näringsliv', 'https://www.svd.se/?service=rss&type=section&id=24561', True),
+        ],
+    },
+    'lokalt': {
+        'label': 'Lokalt', 'hue': 60,
+        'sources': [
+            ('SVT Stockholm', 'https://www.svt.se/nyheter/lokalt/stockholm/rss.xml', True),
+            ('Göteborgs-Posten', 'https://www.gp.se/rss', False),
+        ],
+    },
+    'kultur': {
+        'label': 'Kultur', 'hue': 320,
+        'sources': [
+            ('Kulturnytt', 'https://api.sr.se/api/rss/program/2795', True),
+            ('Pitchfork', 'https://pitchfork.com/rss/news/', False),
+        ],
+    },
+}
+
+SV_MONTHS = {
+    1: 'jan', 2: 'feb', 3: 'mar', 4: 'apr', 5: 'maj', 6: 'jun',
+    7: 'jul', 8: 'aug', 9: 'sep', 10: 'okt', 11: 'nov', 12: 'dec',
+}
+MAX_ITEMS = 5
+MAX_SUMMARY = 220
+ATOM_NS = 'http://www.w3.org/2005/Atom'
+CONTENT_NS = 'http://purl.org/rss/1.0/modules/content/'
+
+_TAG_RE = re.compile(r'<[^>]+>')
+_WS_RE = re.compile(r'\s+')
+
+
+def sv_date(dt: datetime) -> str:
+    return f"{dt.day} {SV_MONTHS[dt.month]} {dt.year}"
+
+
+def parse_date(s: str) -> datetime | None:
+    if not s:
+        return None
+    s = s.strip()
+    try:
+        return email.utils.parsedate_to_datetime(s)
+    except Exception:
+        pass
+    for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M:%SZ', '%Y-%m-%dT%H:%M:%S', '%Y-%m-%d'):
+        try:
+            d = datetime.strptime(s[:len(fmt)], fmt)
+            return d.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
+
+
+def clean(text: str) -> str:
+    text = _TAG_RE.sub(' ', text or '')
+    return _WS_RE.sub(' ', text).strip()
+
+
+def fetch_url(url: str) -> bytes | None:
+    req = Request(url, headers={'User-Agent': 'Notisarna-bot/1.0'})
+    try:
+        with urlopen(req, timeout=20) as resp:
+            return resp.read()
+    except Exception as exc:
+        print(f'  SKIP {url}: {exc}')
+        return None
+
+
+def parse_feed(
+    data: bytes,
+    source: str,
+    cat_key: str,
+    cat_label: str,
+    hue: int,
+) -> list[dict]:
+    try:
+        root = ET.fromstring(data)
+    except ET.ParseError as exc:
+        print(f'  XML error: {exc}')
+        return []
+
+    raw: list[tuple[str, str, str, str]] = []
+
+    if 'feed' in root.tag.lower():  # Atom
+        for entry in root.findall(f'{{{ATOM_NS}}}entry')[:MAX_ITEMS]:
+            title = clean(entry.findtext(f'{{{ATOM_NS}}}title', ''))
+            summ_el = (
+                entry.find(f'{{{ATOM_NS}}}summary')
+                or entry.find(f'{{{ATOM_NS}}}content')
+            )
+            summary = clean(summ_el.text or '') if summ_el is not None else ''
+            pub = (
+                entry.findtext(f'{{{ATOM_NS}}}published')
+                or entry.findtext(f'{{{ATOM_NS}}}updated', '')
+            )
+            link_el = (
+                entry.find(f'{{{ATOM_NS}}}link[@rel="alternate"]')
+                or entry.find(f'{{{ATOM_NS}}}link')
+            )
+            link = link_el.get('href', '') if link_el is not None else ''
+            raw.append((title, summary, pub, link))
+    else:  # RSS 2.0
+        channel = root.find('channel') or root
+        for item in channel.findall('item')[:MAX_ITEMS]:
+            title = clean(item.findtext('title', ''))
+            desc = item.findtext('description') or item.findtext(
+                f'{{{CONTENT_NS}}}encoded', ''
+            )
+            summary = clean(desc or '')
+            pub = item.findtext('pubDate', '')
+            link = item.findtext('link', '')
+            raw.append((title, summary, pub, link))
+
+    articles: list[dict] = []
+    for title, summary, pub, link in raw:
+        if not title:
+            continue
+        dt = parse_date(pub)
+        uid = hashlib.md5(f'{cat_key}:{link or title}'.encode()).hexdigest()[:8]
+        if len(summary) > MAX_SUMMARY:
+            summary = summary[:MAX_SUMMARY] + '…'
+        articles.append({
+            'id': f'{cat_key}_{uid}',
+            'category': cat_label,
+            'categoryKey': cat_key,
+            'source': source,
+            'date': sv_date(dt) if dt else '',
+            'headline': title,
+            'summary': summary,
+            'hue': hue,
+            'link': link,
+            '_ts': dt.timestamp() if dt else 0.0,
+        })
+    return articles
+
+
+def main() -> None:
+    articles: list[dict] = []
+
+    for cat_key, cat in FEEDS.items():
+        for name, url, enabled in cat['sources']:
+            if not enabled:
+                continue
+            print(f'Fetching {name} …')
+            data = fetch_url(url)
+            if data is None:
+                continue
+            items = parse_feed(data, name, cat_key, cat['label'], cat['hue'])
+            print(f'  → {len(items)} artiklar')
+            articles.extend(items)
+
+    articles.sort(key=lambda a: a['_ts'], reverse=True)
+
+    for i, article in enumerate(articles):
+        article.pop('_ts')
+        if i == 0:
+            article['featured'] = True
+
+    output = {
+        'articles': articles,
+        'generated_at': datetime.now(timezone.utc).isoformat(),
+        'count': len(articles),
+    }
+
+    with open('news.json', 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    print(f'\nKlar — {len(articles)} artiklar skrivna till news.json')
+
+
+if __name__ == '__main__':
+    main()
