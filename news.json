@@ -1,53 +1,149 @@
 {
   "articles": [
     {
-      "id": "naringsliv_6b6c444b",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Hög brandrisk i stora delar av Sverige",
-      "summary": "SMHI uppmanar människor att ta det försiktigt i skog och mark på grund av stor risk för bränder i nästan hela Sverige.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/aJv7yM/brandrisk-i-stora-delar-av-sverige",
-      "image": "https://svd.vgc.no/v2/images/fd052931-d2d2-370f-8408-9405962eb90c?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=12217c70a754bcb144a600548414147a2f9fb8ba",
-      "featured": true
-    },
-    {
-      "id": "varlden_e3c77f4c",
+      "id": "varlden_502a17ae",
       "category": "Världen",
       "categoryKey": "varlden",
       "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Two Islamic-State linked Australian women charged with crimes against humanity",
-      "summary": "A third woman who also returned to Australia from Syria was charged with joining a terrorist organisation.",
+      "date": "8 maj 2026",
+      "headline": "Trump says US-Iran ceasefire still in place after exchange of fire in Strait of Hormuz",
+      "summary": "Iran accuses the US of violating the truce, alleging it targeted an oil tanker and carried out attacks on coastal areas.",
       "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cdrpx8pl36vo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/207d/live/b6ec8c50-4a79-11f1-b55d-0f258dce1735.jpg"
+      "link": "https://www.bbc.com/news/articles/c626zyywxjno?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3ad9/live/27fe0690-4a7e-11f1-b55d-0f258dce1735.jpg",
+      "featured": true
     },
     {
-      "id": "naringsliv_4125b4aa",
+      "id": "naringsliv_75587bac",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "8 maj 2026",
-      "headline": "Hantavirusutbrottets ursprung okänt",
-      "summary": "",
+      "headline": "TRR: Inga tecken på att AI tar jobben",
+      "summary": "AI tar inte ditt jobb – men påverkar arbetsuppgifterna. Den slutsatsen drar omställningsorganisationen TRR i en ny analys. – Vi kan inte se några tecken på att andelen tjänstemän som sägs upp på grund av AI har ökat de s…",
       "hue": 150,
-      "link": "https://www.svd.se/a/rrzE5a/hantavirusutbrottets-ursprung-okant",
-      "image": "https://svd.vgc.no/v2/images/35b8d18c-2683-37d3-aea1-8b7d2a84c6a8?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=53ffd337361460c3c4aa88168cdba5ea7ef87908"
+      "link": "https://www.svd.se/a/q6JWle/trr-inga-tecken-pa-att-ai-tar-jobben",
+      "image": "https://svd.vgc.no/v2/images/e1ca9403-1dc0-3fb0-a5b0-97e0dfa2743e?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=11212b8002b55efe42c934b4dcd47edb31e25b76"
     },
     {
-      "id": "naringsliv_d975d4cb",
+      "id": "naringsliv_c4cc02e8",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Villapriserna vädrar morgonluft – väcker hopp om nya flyttkedjor",
+      "summary": "Bostadsmarknaden visar tydliga vårtecken med stigande priser på både bostadsrätter och villor i april, första månaden med de nya bolånereglerna. Att även villapriserna nu tar fart ses som ett särskilt positivt tecken. ”D…",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/villapriserna-vadrar-morgonluft-vacker-hopp-om-nya-flyttkedjor/",
+      "image": "https://static.bonniernews.se/ba/34559a42-656a-4359-9649-ae1d0e247029.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_512a62fd",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Miljardären kliver av – efter 1.900 procent",
+      "summary": "Erik Selin började med två tomma händer, och har på några decennier byggt upp börsens största fastighetsbolag. Succéreceptet bygger på en sällsynt investeringsnäsa, ”ränta-på-ränta” och väldigt hög belåning i början. Men…",
+      "hue": 150,
+      "link": "https://www.di.se/analys/miljardaren-kliver-av-efter-1900-procent/",
+      "image": "https://static.bonniernews.se/ba/574e4cad-748c-42c4-af41-44aa31a53001.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+    },
+    {
+      "id": "naringsliv_ae1c1def",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "8 maj 2026",
-      "headline": "Trump hotar om nya Iranattacker",
-      "summary": "",
+      "headline": "Bostadspriserna steg – rekord i innerstan",
+      "summary": "Bostadspriserna steg under april månad. Centrala Stockholm slår nytt prisrekord – igen, visar nya siffror från Svensk Mäklarstatistik. ”Det är ett stort tryck”, säger Marcus Svanberg på LF Fastighetsförmedling.",
       "hue": 150,
-      "link": "https://www.svd.se/a/Ok6rzE/trump-hotar-om-nya-iranattacker",
-      "image": "https://svd.vgc.no/v2/images/f2fb12a7-bc48-3f99-a345-a6789a06b528?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=9da426604c322516840968e16c3a3373ba099aa2"
+      "link": "https://www.svd.se/a/y5g30R/bostadspriser-i-april-stockholms-innerstad-slar-nytt-rekord",
+      "image": "https://svd.vgc.no/v2/images/3cdeb569-b2f4-3883-afe7-a64d6407879a?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=dd3bcbf7fb64a8f3f87fb07acac56c2f0b3d0915"
+    },
+    {
+      "id": "naringsliv_a4788c07",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Större boprislyft i storstädernas kärnor",
+      "summary": "Priserna på bostadsrätter i storstädernas centrala delar lyfter tydligt, visar ny statistik.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/pBdW2o/storre-boprislyft-i-storstadernas-karnor",
+      "image": "https://svd.vgc.no/v2/images/dd4352f0-b705-3fcc-95e8-c23e392c4a55?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=1bc9d1e8c189a613ef7d75c3d31a8c34c28e3f2c"
+    },
+    {
+      "id": "naringsliv_39325ef3",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "SD visar att de inte går att lita på",
+      "summary": "Sverigedemokraterna har med sitt agerande förstört tilliten till riksdagens kvittningssystem. Borgerligheten har ingen anledning att spela med eller skylla på andra.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/Wv6Oe2/sverigedemokraterna-gar-inte-att-lita-pa",
+      "image": "https://svd.vgc.no/v2/images/670f0464-6278-3350-9b8b-a65e50f3a2a3?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=c2a2f806ec4be4d1885f0c7f7267a162c5f5bc97"
+    },
+    {
+      "id": "naringsliv_f1fa5234",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Chock, behandling – sen KBT för oro och trauma",
+      "summary": "”Kommer jag att dö nu?” tänkte Såma Tillakoy när hon mitt i plugget drabbades av Hodgkins lymfom. Behandlingen tog hårt. Att göra cancern till en del av sin historia har hjälpt henne vidare.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/gkd8e5/cancer-i-tonaren-hur-blir-livet-sen",
+      "image": "https://svd.vgc.no/v2/images/96dae89b-8397-325f-98d3-39a7721675f2?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=cfb4c230f520a9fe1908e81d6bae1d9e76bf8974"
+    },
+    {
+      "id": "lokalt_465a2201",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "8 maj 2026",
+      "headline": "Pengarna försvann – vad händer med miljardprojektet Centralstaden?",
+      "summary": "Det planerade jätteprojektet Centralstaden vid Stockholms centralstation skakar i grunden efter att regeringen strukit ombyggnaden av Tomteboda bangård från den nationella infrastrukturplanen. – Projektets framtid är hög…",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/efter-drapslaget-oviss-framtid-for-megaprojektet-centralstaden",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.54/0.21/ee73d5e577b124c41539cc8b477ff35035c524188b7e1a03d819b10b6311667d"
+    },
+    {
+      "id": "naringsliv_ba9e4d96",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Förenade arabemiraten: Svarar på iranska robotar",
+      "summary": "Förenade arabemiraten uppger att landets luftförsvar svarar på robotar och drönare från Iran.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/forenade-arabemiraten-svarar-pa-iranska-robotar/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_29142622",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Dystert på Asienbörserna",
+      "summary": "Nya uppgifter om attacker i Hormuzsundet och nedgångar på Wall Street sätter sina spår i fredagens inledande handel i Asien.",
+      "hue": 150,
+      "link": "https://www.di.se/live/dystert-pa-asienborserna-RoNje/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_ab6b6d37",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Trumps tullar döms ut på nytt",
+      "summary": "USA:s internationella handelsdomstol dömer ut president Donald Trumps globala tullar på 10 procent.",
+      "hue": 150,
+      "link": "https://www.di.se/live/trumps-tullar-doms-ut-pa-nytt/",
+      "image": ""
     },
     {
       "id": "varlden_74362427",
@@ -62,30 +158,6 @@
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/5bde/live/e5f4b280-4a64-11f1-ba67-71539f117a06.jpg"
     },
     {
-      "id": "naringsliv_410790b0",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Från lokal favorit till exportsuccé",
-      "summary": "Från cabernet sauvignon till chenin blanc – det är dags att hälsa på druvsläkten cabernet.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/2p935r/sommarens-givna-rose-viner-fran-druvslakten-cabernet",
-      "image": "https://svd.vgc.no/v2/images/86a0a8b2-04f2-3e56-afee-e04ce6e4625d?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=555978b8036455890079a7d1600bb41dbf312ad8"
-    },
-    {
-      "id": "naringsliv_bd09a9fb",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Krögarduon vet vad golfare vill ha i magen",
-      "summary": "Från korvkungar till husmansklassiker – Stockholms golfkrogar bjuder på mer än bara en paus mellan hålen. Här är fem adresser värda en utflykt.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/K86yEM/golfkrogar-i-stockholm-5-restauranger-att-besoka",
-      "image": "https://svd.vgc.no/v2/images/7cfb3a3d-c302-3eeb-91d2-f9106b75c6d4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=ab3e92ca72c60657a1d9ae36218cb32f2ba13af4"
-    },
-    {
       "id": "teknik_856e9806",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -96,66 +168,6 @@
       "hue": 220,
       "link": "https://arstechnica.com/tech-policy/2026/05/ice-protesters-sue-to-stop-dhs-from-seizing-dna-samples/",
       "image": "https://cdn.arstechnica.net/wp-content/uploads/2026/05/GettyImages-2238676352-1024x648.jpg"
-    },
-    {
-      "id": "naringsliv_081c6279",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Explosioner på ö i Hormuz – uppgifter om USA-attack",
-      "summary": "Iranska medier rapporterar om att flera explosioner hörts på en ö i Hormuzsundet. Statliga nyhetsbyråer i landet hävdar att det handlar om nedskjutning av drönare. Men i USA uppger Fox News att USA har anfallit Iran.",
-      "hue": 150,
-      "link": "https://www.di.se/live/explosioner-pa-o-i-hormuz-uppgifter-om-usa-attack/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
-    },
-    {
-      "id": "naringsliv_505b1fed",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Ledamot i Stayble lämnar med omedelbar verkan",
-      "summary": "Erik Kinnman lämnar styrelsen i Stayble Therapeutics, på egen begäran och med omedelbar verkan.",
-      "hue": 150,
-      "link": "https://www.di.se/live/ledamot-i-stayble-lamnar-med-omedelbar-verkan/",
-      "image": "https://static.bonniernews.se/ba/8f0fbef3-4c9c-4300-8f4d-cf6e350d2961.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_e3b68059",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Stigande gaspriser pressar industrin – svensk biogasproduktion tar fart",
-      "summary": "Industrin i södra och västra Sverige pressas av stigande gaspriser, samtidigt som vårt beroende av importerad gas blir allt tydligare. Nordion, som ansvarar för det svenska gasnätet, ser hur konflikten i Iran driver på s…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/stigande-gaspriser-pressar-industrin-svensk-biogasproduktion-tar-fart/",
-      "image": "https://static.bonniernews.se/ba/df56a44c-a823-448b-9090-ecc6ed407a48.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_805898bc",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Uppgifter: USA och Iran diskuterar längre stridspaus",
-      "summary": "Iran och USA diskuterar en preliminär plan där båda parter åter öppnar Hormuzsundet och avstår från attacker under 30 dagar, i syfte att skapa utrymme för ett mer omfattande avtal.",
-      "hue": 150,
-      "link": "https://www.di.se/live/uppgifter-usa-och-iran-diskuterar-langre-stridspaus/",
-      "image": "https://static.bonniernews.se/ba/1c57a84c-3823-4b80-b5f6-a7f3f4d57ca1.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_2b30c128",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "7 maj 2026",
-      "headline": "Krigsuppgifter sänkte fredshopp på Wall Street",
-      "summary": "Wall Street föll tillbaka från rekordnivåer efter att nya krigsuppgifter fick investerare att vrida på sig och oljepriserna att stärkas.",
-      "hue": 150,
-      "link": "https://www.di.se/live/krigsuppgifter-sankte-fredshopp-pa-wall-street/",
-      "image": "https://static.bonniernews.se/ba/a4a85334-4c34-4535-ad27-f45ef1ff44c0.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
       "id": "teknik_96707e0d",
@@ -300,18 +312,6 @@
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-utlandskt-adoptionsbesluts-giltighet-i-sverige/",
       "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
-    },
-    {
-      "id": "lokalt_9a00a963",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
-      "date": "7 maj 2026",
-      "headline": "En person häktad för mordbrand på Stora Essingen",
-      "summary": "Tidigare i veckan begärde åklagaren en man i 30-årsåldern häktad misstänkt för mordbrand i en villa på Stora Essingen i Stockholm i slutet av april. Tingsrätten beslutade då att häkta honom enbart för skadegörelse. I dag…",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/en-person-haktad-for-mordbrand-pa-stora-essingen",
-      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/1e4594146178da32a273e775bf7a805242fc940ba7e26b57cfa89493c2e6b842"
     },
     {
       "id": "skatt_3cd7c10e",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-08T01:25:39.647227+00:00",
+  "generated_at": "2026-05-08T04:34:48.781391+00:00",
   "count": 50
 }
