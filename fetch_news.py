@@ -6,7 +6,7 @@ import hashlib
 import json
 import os
 import re
-import xml.etree.ElementTree as ET
+import defusedxml.ElementTree as ET
 from datetime import datetime, timezone
 from urllib.error import URLError
 from urllib.request import Request, urlopen
