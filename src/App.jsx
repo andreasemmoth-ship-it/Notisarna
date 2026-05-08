@@ -40,16 +40,20 @@ function placeholderBg(hue) {
 
 const Icon = ({ name, size = 16 }) => {
   const paths = {
-    search:   <><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>,
-    arrow:    <><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></>,
-    rss:      <><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></>,
-    plus:     <><path d="M12 5v14"/><path d="M5 12h14"/></>,
-    close:    <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
-    check:    <path d="M20 6 9 17l-5-5"/>,
-    pencil:   <><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></>,
-    trash:    <><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
-    bookmark: <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>,
-    logout:   <><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></>,
+    search:        <><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>,
+    arrow:         <><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></>,
+    rss:           <><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></>,
+    plus:          <><path d="M12 5v14"/><path d="M5 12h14"/></>,
+    close:         <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
+    check:         <path d="M20 6 9 17l-5-5"/>,
+    pencil:        <><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></>,
+    trash:         <><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
+    bookmark:      <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>,
+    logout:        <><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></>,
+    'chevron-down':<path d="m6 9 6 6 6-6"/>,
+    'chevron-up':  <path d="m18 15-6-6-6 6"/>,
+    rows:          <><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></>,
+    grid:          <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -94,10 +98,39 @@ function LoginForm() {
   )
 }
 
-// ----- Cards -----
-function HeroCard({ item, isArchived, onToggleArchive }) {
+// ----- Briefing card -----
+function BriefingCard({ briefing, open, onToggle }) {
+  if (!briefing) return null
+  const today = new Date().toLocaleDateString('sv-SE', { weekday: 'long', day: 'numeric', month: 'long' })
+  const lines = briefing.split('\n').map(l => l.trim()).filter(Boolean)
+
   return (
-    <article className="hero-card">
+    <div className="briefing-card">
+      <button className="briefing-card__head" onClick={onToggle}>
+        <span className="briefing-card__sun">☀</span>
+        <div className="briefing-card__head-text">
+          <span className="briefing-card__label">AI-morgonbriefing</span>
+          <span className="briefing-card__date">{today}</span>
+        </div>
+        <span className="briefing-card__chevron">
+          <Icon name={open ? 'chevron-up' : 'chevron-down'} size={16} />
+        </span>
+      </button>
+      {open && (
+        <div className="briefing-card__body">
+          {lines.map((line, i) => (
+            <p key={i} className="briefing-card__line">{line}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ----- Cards -----
+function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
+  return (
+    <article className={`hero-card ${isRead ? 'is-read' : ''}`}>
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
         {item.image
           ? <img src={item.image} alt="" className="media-img"
@@ -112,12 +145,14 @@ function HeroCard({ item, isArchived, onToggleArchive }) {
           <span>{item.source}</span>
           <span className="dot-sep">·</span>
           <span>{item.date}</span>
+          {isRead && <span className="read-badge"><Icon name="check" size={11} /> Läst</span>}
         </div>
         <h1 className="hero-card__title">{item.headline}</h1>
         <p className="hero-card__summary">{item.summary}</p>
         <div className="card__footer">
           <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-             rel="noopener noreferrer" className="read-more">
+             rel="noopener noreferrer" className="read-more"
+             onClick={() => onRead(item.id)}>
             Läs hela artikeln <Icon name="arrow" size={15} />
           </a>
           <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
@@ -131,9 +166,9 @@ function HeroCard({ item, isArchived, onToggleArchive }) {
   )
 }
 
-function NewsCard({ item, isArchived, onToggleArchive }) {
+function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
   return (
-    <article className="news-card">
+    <article className={`news-card ${isRead ? 'is-read' : ''}`}>
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
         {item.image
           ? <img src={item.image} alt="" className="media-img"
@@ -147,12 +182,14 @@ function NewsCard({ item, isArchived, onToggleArchive }) {
           <span>{item.source}</span>
           <span className="dot-sep">·</span>
           <span>{item.date}</span>
+          {isRead && <span className="read-badge"><Icon name="check" size={10} /> Läst</span>}
         </div>
         <h3 className="news-card__title">{item.headline}</h3>
         <p className="news-card__summary">{item.summary}</p>
         <div className="card__footer">
           <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-             rel="noopener noreferrer" className="read-more read-more--small">
+             rel="noopener noreferrer" className="read-more read-more--small"
+             onClick={() => onRead(item.id)}>
             Läs mer <Icon name="arrow" size={13} />
           </a>
           <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
@@ -163,6 +200,30 @@ function NewsCard({ item, isArchived, onToggleArchive }) {
         </div>
       </div>
     </article>
+  )
+}
+
+function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
+  return (
+    <div className={`compact-row ${isRead ? 'is-read' : ''}`}>
+      <span className="compact-row__cat">{item.category}</span>
+      <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
+         rel="noopener noreferrer" className="compact-row__title"
+         onClick={() => onRead(item.id)}>
+        {item.headline}
+      </a>
+      <span className="compact-row__meta">
+        {item.source}<span className="dot-sep"> · </span>{item.date}
+      </span>
+      <div className="compact-row__actions">
+        {isRead && <span className="compact-row__check"><Icon name="check" size={12} /></span>}
+        <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                onClick={() => onToggleArchive(item)}
+                title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+          <Icon name="bookmark" size={14} />
+        </button>
+      </div>
+    </div>
   )
 }
 
@@ -429,18 +490,22 @@ function App() {
 
   const handleLogout = useCallback(() => db.auth.signOut(), [])
 
-  const [active,       setActive]       = useState('all')
-  const [query,        setQuery]        = useState('')
-  const [drawer,       setDrawer]       = useState(false)
-  const [feeds,        setFeeds]        = useState(RSS_FEEDS)
-  const [categories,   setCategories]   = useState(CATEGORIES)
-  const [news,         setNews]         = useState([])
-  const [loading,      setLoading]      = useState(true)
-  const [updatedAt,    setUpdatedAt]    = useState(null)
-  const [saveStatus,   setSaveStatus]   = useState('idle')
-  const [saveError,    setSaveError]    = useState('')
-  const [archived,     setArchived]     = useState(new Set())
-  const [archiveItems, setArchiveItems] = useState([])
+  const [active,        setActive]        = useState('all')
+  const [query,         setQuery]         = useState('')
+  const [drawer,        setDrawer]        = useState(false)
+  const [feeds,         setFeeds]         = useState(RSS_FEEDS)
+  const [categories,    setCategories]    = useState(CATEGORIES)
+  const [news,          setNews]          = useState([])
+  const [loading,       setLoading]       = useState(true)
+  const [updatedAt,     setUpdatedAt]     = useState(null)
+  const [saveStatus,    setSaveStatus]    = useState('idle')
+  const [saveError,     setSaveError]     = useState('')
+  const [archived,      setArchived]      = useState(new Set())
+  const [archiveItems,  setArchiveItems]  = useState([])
+  const [readArticles,  setReadArticles]  = useState(new Set())
+  const [viewMode,      setViewMode]      = useState(() => localStorage.getItem('viewMode') || 'grid')
+  const [briefing,      setBriefing]      = useState(null)
+  const [briefingOpen,  setBriefingOpen]  = useState(true)
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -467,6 +532,28 @@ function App() {
         }
       })
   }, [])
+
+  useEffect(() => {
+    db.from('read_articles').select('article_id')
+      .then(({ data, error }) => {
+        if (error) { console.error('Read load:', error.message); return }
+        if (data?.length) setReadArticles(new Set(data.map(r => r.article_id)))
+      })
+  }, [])
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10)
+    db.from('briefings').select('content').eq('date', today).single()
+      .then(({ data }) => { if (data?.content) setBriefing(data.content) })
+  }, [])
+
+  const markAsRead = useCallback((id) => {
+    if (readArticles.has(id)) return
+    setReadArticles(prev => new Set([...prev, id]))
+    db.from('read_articles')
+      .upsert({ article_id: String(id), read_at: new Date().toISOString() })
+      .then(({ error }) => { if (error) console.error('Mark read:', error.message) })
+  }, [readArticles])
 
   const toggleArchive = useCallback((item) => {
     const isSaved = archived.has(item.id)
@@ -536,6 +623,11 @@ function App() {
     saveConfig(feeds, newCats)
   }, [categories, feeds, saveConfig])
 
+  const changeViewMode = useCallback((mode) => {
+    setViewMode(mode)
+    localStorage.setItem('viewMode', mode)
+  }, [])
+
   const fetchNews = useCallback(() => {
     db.from('news_articles')
       .select('*')
@@ -577,9 +669,20 @@ function App() {
     return list
   }, [news, active, query])
 
+  const markAllAsRead = useCallback(() => {
+    const unread = filtered.filter(i => !readArticles.has(i.id))
+    if (!unread.length) return
+    setReadArticles(prev => new Set([...prev, ...unread.map(i => i.id)]))
+    const rows = unread.map(i => ({ article_id: String(i.id), read_at: new Date().toISOString() }))
+    db.from('read_articles').upsert(rows)
+      .then(({ error }) => { if (error) console.error('Mark all read:', error.message) })
+  }, [filtered, readArticles])
+
   const featured = filtered.find(i => i.featured) || filtered[0]
   const rest      = filtered.filter(i => i !== featured)
   const showHero  = featured && active === 'all' && !query
+
+  const unreadCount = filtered.filter(i => !readArticles.has(i.id)).length
 
   if (!authReady) return null
   if (!session)   return <LoginForm />
@@ -624,6 +727,23 @@ function App() {
                 </span>
               </button>
             ))}
+            <div className="filter-bar__tools">
+              {unreadCount > 0 && (
+                <button className="btn btn--ghost btn--sm" onClick={markAllAsRead} title="Markera alla som lästa">
+                  <Icon name="check" size={13} /> Markera alla lästa ({unreadCount})
+                </button>
+              )}
+              <div className="view-toggle">
+                <button className={`view-btn ${viewMode === 'grid' ? 'is-active' : ''}`}
+                        onClick={() => changeViewMode('grid')} title="Rutnät">
+                  <Icon name="grid" size={15} />
+                </button>
+                <button className={`view-btn ${viewMode === 'compact' ? 'is-active' : ''}`}
+                        onClick={() => changeViewMode('compact')} title="Kompakt lista">
+                  <Icon name="rows" size={15} />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -642,13 +762,16 @@ function App() {
           ) : (
             <div className="grid">
               {archiveItems.map(item => (
-                <NewsCard key={item.id} item={item} isArchived={true} onToggleArchive={toggleArchive} />
+                <NewsCard key={item.id} item={item} isArchived={true} onToggleArchive={toggleArchive}
+                          isRead={readArticles.has(item.id)} onRead={markAsRead} />
               ))}
             </div>
           )}
         </main>
       ) : (
         <main className="content">
+          <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />
+
           {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
           {!loading && filtered.length === 0 && (
             <div className="empty">
@@ -656,14 +779,29 @@ function App() {
               <p>Prova att rensa sökningen eller välj en annan kategori.</p>
             </div>
           )}
-          {!loading && showHero && (
-            <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive} />
+
+          {!loading && viewMode === 'grid' && (
+            <>
+              {showHero && (
+                <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive}
+                          isRead={readArticles.has(featured.id)} onRead={markAsRead} />
+              )}
+              <div className="grid">
+                {(showHero ? rest : filtered).map(item => (
+                  <NewsCard key={item.id} item={item}
+                            isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
+                            isRead={readArticles.has(item.id)} onRead={markAsRead} />
+                ))}
+              </div>
+            </>
           )}
-          {!loading && (
-            <div className="grid">
-              {(showHero ? rest : filtered).map(item => (
-                <NewsCard key={item.id} item={item}
-                          isArchived={archived.has(item.id)} onToggleArchive={toggleArchive} />
+
+          {!loading && viewMode === 'compact' && (
+            <div className="compact-list">
+              {filtered.map(item => (
+                <CompactCard key={item.id} item={item}
+                             isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
+                             isRead={readArticles.has(item.id)} onRead={markAsRead} />
               ))}
             </div>
           )}

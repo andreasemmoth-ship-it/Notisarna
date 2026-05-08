@@ -421,3 +421,108 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   color: #c0392b;
   text-align: center;
 }
+
+/* ===== Filter bar tools (view toggle + mark-all) ===== */
+.filter-bar__inner { align-items: center; }
+.filter-bar__tools { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.btn--sm { padding: 6px 11px; font-size: 12px; }
+
+.view-toggle { display: flex; gap: 2px; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 2px; }
+.view-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 28px; border-radius: 6px;
+  color: var(--muted); transition: all 0.15s;
+}
+.view-btn:hover { color: var(--ink); }
+.view-btn.is-active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+/* ===== Read / unread ===== */
+.read-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 10px; color: #16a34a; font-weight: 500;
+  background: #f0fdf4; padding: 1px 6px; border-radius: 4px;
+  border: 1px solid #bbf7d0;
+}
+.news-card.is-read .news-card__title,
+.hero-card.is-read .hero-card__title { color: var(--muted); }
+.news-card.is-read { opacity: 0.75; }
+.hero-card.is-read { opacity: 0.8; }
+
+/* ===== Compact list view ===== */
+.compact-list {
+  display: flex; flex-direction: column; gap: 3px;
+}
+.compact-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto auto;
+  align-items: center; gap: 16px;
+  padding: 11px 16px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--line);
+  transition: background 0.15s;
+}
+.compact-row:hover { background: color-mix(in oklch, var(--bg) 60%, var(--surface)); }
+.compact-row.is-read { opacity: 0.65; }
+.compact-row__cat {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.compact-row__title {
+  font-size: 14px; font-weight: 500; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 0.15s;
+}
+.compact-row__title:hover { color: oklch(0.35 0.01 60); }
+.compact-row.is-read .compact-row__title { color: var(--muted); }
+.compact-row__meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; color: var(--muted); white-space: nowrap;
+}
+.compact-row__actions { display: flex; align-items: center; gap: 4px; }
+.compact-row__check { color: #16a34a; display: flex; align-items: center; }
+
+/* ===== AI Briefing card ===== */
+.briefing-card {
+  margin-bottom: 36px;
+  background: oklch(0.97 0.025 85);
+  border: 1px solid oklch(0.88 0.04 85);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.briefing-card__head {
+  width: 100%; display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; cursor: pointer;
+  transition: background 0.15s;
+}
+.briefing-card__head:hover { background: oklch(0.94 0.03 85); }
+.briefing-card__sun { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.briefing-card__head-text { flex: 1; text-align: left; }
+.briefing-card__label {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em;
+  color: oklch(0.45 0.06 75);
+}
+.briefing-card__date {
+  display: block;
+  font-size: 13px; font-weight: 500; color: oklch(0.25 0.04 70);
+  margin-top: 1px;
+}
+.briefing-card__chevron { color: oklch(0.5 0.04 75); flex-shrink: 0; }
+.briefing-card__body {
+  padding: 4px 20px 20px 56px;
+  display: flex; flex-direction: column; gap: 6px;
+  border-top: 1px solid oklch(0.88 0.04 85);
+}
+.briefing-card__line {
+  font-size: 14px; line-height: 1.55; color: oklch(0.25 0.04 70);
+  text-wrap: pretty;
+}
+
+/* ===== Responsive additions ===== */
+@media (max-width: 880px) {
+  .compact-row { grid-template-columns: 70px 1fr auto; }
+  .compact-row__meta { display: none; }
+  .filter-bar__tools { gap: 6px; }
+  .btn--sm span { display: none; }
+}
