@@ -156,12 +156,14 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive }) {
 }
 
 // ----- RSS settings drawer -----
-function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, onRemoveCategory, saveStatus, saveError }) {
-  const [newName,    setNewName]    = useState('');
-  const [newUrl,     setNewUrl]     = useState('');
-  const [newCat,     setNewCat]     = useState('skatt');
-  const [newCatName, setNewCatName] = useState('');
-  const [editing,    setEditing]    = useState(null);
+function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, onRemoveCategory, onRenameCategory, saveStatus, saveError }) {
+  const [newName,     setNewName]     = useState('');
+  const [newUrl,      setNewUrl]      = useState('');
+  const [newCat,      setNewCat]      = useState('skatt');
+  const [newCatName,  setNewCatName]  = useState('');
+  const [editing,     setEditing]     = useState(null);
+  const [showCatEdit, setShowCatEdit] = useState(false);
+  const [editingCat,  setEditingCat]  = useState(null);
 
   const handleAddCategory = () => {
     if (!newCatName.trim()) return;
@@ -171,6 +173,12 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
     const hue = HUE_PALETTE.find(h => !usedHues.has(h)) ?? Math.floor(Math.random() * 360);
     onAddCategory({ key, label: newCatName.trim(), hue });
     setNewCatName('');
+  };
+
+  const saveCatRename = () => {
+    if (!editingCat?.label.trim()) return;
+    onRenameCategory(editingCat.key, editingCat.label.trim());
+    setEditingCat(null);
   };
 
   const addFeed = () => {
@@ -230,31 +238,66 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
 
         <div className="drawer__body">
           <section className="add-feed">
-            <h4>Lägg till kategori</h4>
+            <h4>Kategorier</h4>
             <div className="add-feed__row">
-              <input placeholder="Kategorinamn (t.ex. Sverige)" value={newCatName}
+              <input placeholder="Nytt kategorinamn (t.ex. Sverige)" value={newCatName}
                      onChange={e => setNewCatName(e.target.value)}
                      onKeyDown={e => e.key === 'Enter' && handleAddCategory()} />
               <button className="btn btn--primary" onClick={handleAddCategory}>
                 <Icon name="plus" size={14} /> Skapa
               </button>
             </div>
-            <ul className="feed-list" style={{ marginTop: '0.5rem' }}>
-              {categories.filter(c => c.key !== 'all').map(cat => (
-                <li key={cat.key} className="feed-row">
-                  <div className="feed-row__text">
-                    <div className="feed-row__name">{cat.label}</div>
-                    {DEFAULT_CAT_KEYS.has(cat.key) && <div className="feed-row__url">Standard</div>}
-                  </div>
-                  {!DEFAULT_CAT_KEYS.has(cat.key) && (
-                    <button className="icon-btn icon-btn--quiet" title="Ta bort kategori"
-                            onClick={() => onRemoveCategory(cat.key)}>
-                      <Icon name="trash" size={14} />
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <button className="btn btn--ghost" style={{ marginTop: '0.5rem' }}
+                    onClick={() => setShowCatEdit(v => !v)}>
+              <Icon name="pencil" size={14} /> {showCatEdit ? 'Stäng redigering' : 'Redigera kategorier'}
+            </button>
+            {showCatEdit && (
+              <ul className="feed-list" style={{ marginTop: '0.5rem' }}>
+                {categories.filter(c => c.key !== 'all').map(cat => {
+                  const isDefault = DEFAULT_CAT_KEYS.has(cat.key);
+                  const isEditingThis = editingCat?.key === cat.key;
+                  return (
+                    <li key={cat.key} className="feed-row">
+                      {isEditingThis ? (
+                        <div className="feed-row__edit">
+                          <input
+                            value={editingCat.label}
+                            autoFocus
+                            onChange={e => setEditingCat({ ...editingCat, label: e.target.value })}
+                            onKeyDown={e => { if (e.key === 'Enter') saveCatRename(); if (e.key === 'Escape') setEditingCat(null); }}
+                          />
+                          <button className="icon-btn" title="Spara" onClick={saveCatRename}>
+                            <Icon name="check" size={14} />
+                          </button>
+                          <button className="icon-btn icon-btn--quiet" title="Avbryt" onClick={() => setEditingCat(null)}>
+                            <Icon name="close" size={14} />
+                          </button>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="feed-row__text">
+                            <div className="feed-row__name">{cat.label}</div>
+                            {isDefault && <div className="feed-row__url">Standard</div>}
+                          </div>
+                          {!isDefault && (
+                            <>
+                              <button className="icon-btn icon-btn--quiet" title="Byt namn"
+                                      onClick={() => setEditingCat({ key: cat.key, label: cat.label })}>
+                                <Icon name="pencil" size={14} />
+                              </button>
+                              <button className="icon-btn icon-btn--quiet" title="Ta bort"
+                                      onClick={() => onRemoveCategory(cat.key)}>
+                                <Icon name="trash" size={14} />
+                              </button>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </section>
 
           <section className="add-feed">
@@ -452,6 +495,12 @@ function App() {
     if (active === key) setActive('all');
   }, [categories, feeds, active, saveConfig]);
 
+  const handleRenameCategory = useCallback((key, newLabel) => {
+    const newCats = categories.map(c => c.key === key ? { ...c, label: newLabel } : c);
+    setCategories(newCats);
+    saveConfig(feeds, newCats);
+  }, [categories, feeds, saveConfig]);
+
   const fetchNews = useCallback(() => {
     db.from('news_articles')
       .select('*')
@@ -599,7 +648,7 @@ function App() {
 
       <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
                  categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
-                 saveStatus={saveStatus} saveError={saveError} />
+                 onRenameCategory={handleRenameCategory} saveStatus={saveStatus} saveError={saveError} />
     </div>
   );
 }
