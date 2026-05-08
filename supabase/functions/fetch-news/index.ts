@@ -208,12 +208,19 @@ Deno.serve(async () => {
     })
   }
 
-  // Rensa artiklar äldre än 7 dagar
+  const { count: dbCount } = await db.from('news_articles').select('*', { count: 'exact', head: true })
+
+  const oldestDate = articles.reduce((min, a) => {
+    if (!a.published_at) return min
+    return !min || (a.published_at as string) < min ? (a.published_at as string) : min
+  }, '' as string)
+
+  // Rensa artiklar äldre än 30 dagar
   await db.from('news_articles')
     .delete()
-    .lt('published_at', new Date(Date.now() - 7 * 86400_000).toISOString())
+    .lt('published_at', new Date(Date.now() - 30 * 86400_000).toISOString())
 
-  return new Response(JSON.stringify({ count: articles.length, ok: true }), {
+  return new Response(JSON.stringify({ parsed: articles.length, dbCount, oldestDate, ok: true }), {
     headers: { 'Content-Type': 'application/json' },
   })
 })

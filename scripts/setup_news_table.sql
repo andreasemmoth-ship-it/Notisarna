@@ -20,6 +20,18 @@ create table if not exists news_articles (
 create index if not exists news_articles_category_key on news_articles(category_key);
 create index if not exists news_articles_published_at  on news_articles(published_at desc);
 
+-- Tillåt publik läsning (RLS är aktiverat men saknar läspolicy)
+alter table news_articles enable row level security;
+create policy "public read" on news_articles for select using (true);
+
+-- Tillåt publik läsning av feed_config och arkiv
+alter table feed_config enable row level security;
+create policy "public read" on feed_config for select using (true);
+create policy "public write" on feed_config for all using (true);
+
+alter table archived_articles enable row level security;
+create policy "public all" on archived_articles for all using (true);
+
 -- Steg 1: Aktivera pg_cron och pg_net under Database → Extensions i Supabase-dashboarden.
 -- Steg 2: Kör nedanstående SQL i SQL Editor för att schemalägga Edge Function var 15:e minut.
 
