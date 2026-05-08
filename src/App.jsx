@@ -54,6 +54,7 @@ const Icon = ({ name, size = 16 }) => {
     'chevron-up':  <path d="m18 15-6-6-6 6"/>,
     rows:          <><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></>,
     grid:          <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
+    'book-open':   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -128,7 +129,7 @@ function BriefingCard({ briefing, open, onToggle }) {
 }
 
 // ----- Cards -----
-function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
+function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <article className={`hero-card ${isRead ? 'is-read' : ''}`}>
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -155,18 +156,25 @@ function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
              onClick={() => onRead(item.id)}>
             Läs hela artikeln <Icon name="arrow" size={15} />
           </a>
-          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
-                  onClick={() => onToggleArchive(item)}
-                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
-            <Icon name="bookmark" size={16} />
-          </button>
+          <div className="card__actions">
+            {item.link && (
+              <button className="reader-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+                <Icon name="book-open" size={16} />
+              </button>
+            )}
+            <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                    onClick={() => onToggleArchive(item)}
+                    title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+              <Icon name="bookmark" size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </article>
   )
 }
 
-function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
+function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <article className={`news-card ${isRead ? 'is-read' : ''}`}>
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -192,18 +200,25 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
              onClick={() => onRead(item.id)}>
             Läs mer <Icon name="arrow" size={13} />
           </a>
-          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
-                  onClick={() => onToggleArchive(item)}
-                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
-            <Icon name="bookmark" size={14} />
-          </button>
+          <div className="card__actions">
+            {item.link && (
+              <button className="reader-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+                <Icon name="book-open" size={14} />
+              </button>
+            )}
+            <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                    onClick={() => onToggleArchive(item)}
+                    title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+              <Icon name="bookmark" size={14} />
+            </button>
+          </div>
         </div>
       </div>
     </article>
   )
 }
 
-function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
+function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <div className={`compact-row ${isRead ? 'is-read' : ''}`}>
       <span className="compact-row__cat">{item.category}</span>
@@ -217,6 +232,11 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
       </span>
       <div className="compact-row__actions">
         {isRead && <span className="compact-row__check"><Icon name="check" size={12} /></span>}
+        {item.link && (
+          <button className="reader-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+            <Icon name="book-open" size={14} />
+          </button>
+        )}
         <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
                 onClick={() => onToggleArchive(item)}
                 title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
@@ -227,8 +247,156 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead }) {
   )
 }
 
+// ----- Reader modal -----
+function ReaderModal({ item, onClose }) {
+  const [state,   setState]   = useState('loading')
+  const [data,    setData]    = useState(null)
+  const [errMsg,  setErrMsg]  = useState('')
+
+  useEffect(() => {
+    fetch(
+      `${SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`,
+      { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    )
+      .then(r => r.json())
+      .then(json => {
+        if (json.error) { setErrMsg(json.error); setState('error') }
+        else { setData(json); setState('ok') }
+      })
+      .catch(err => { setErrMsg(String(err)); setState('error') })
+  }, [item.link])
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  return (
+    <div className="reader-overlay" onClick={onClose}>
+      <div className="reader-modal" onClick={e => e.stopPropagation()}>
+        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
+          <Icon name="close" size={18} />
+        </button>
+
+        {state === 'loading' && (
+          <div className="reader-loading">
+            <div className="reader-spinner" />
+            <p>Hämtar artikel…</p>
+          </div>
+        )}
+
+        {state === 'error' && (
+          <div className="reader-error">
+            <h2>Kunde inte hämta artikeln</h2>
+            <p>Sidan kan vara bakom en betalvägg eller blockera externa hämtningar.</p>
+            <p className="reader-error__detail">{errMsg}</p>
+            <a href={item.link} target="_blank" rel="noopener noreferrer" className="btn btn--primary">
+              Öppna originalsidan <Icon name="arrow" size={14} />
+            </a>
+          </div>
+        )}
+
+        {state === 'ok' && data && (
+          <article className="reader-content">
+            <h1 className="reader-title">{data.title || item.headline}</h1>
+            {data.byline && <p className="reader-byline">{data.byline}</p>}
+            <div className="reader-body" dangerouslySetInnerHTML={{ __html: data.content }} />
+            <div className="reader-footer">
+              <a href={item.link} target="_blank" rel="noopener noreferrer" className="btn btn--ghost btn--sm">
+                Öppna originalsidan <Icon name="arrow" size={13} />
+              </a>
+            </div>
+          </article>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ----- Login modal -----
+function LoginModal({ onClose, isAnon }) {
+  const [tab,      setTab]      = useState('in')
+  const [email,    setEmail]    = useState('')
+  const [password, setPassword] = useState('')
+  const [error,    setError]    = useState('')
+  const [loading,  setLoading]  = useState(false)
+  const [done,     setDone]     = useState(false)
+
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  const submit = async e => {
+    e.preventDefault()
+    setLoading(true); setError('')
+    if (tab === 'in') {
+      const { error } = await db.auth.signInWithPassword({ email, password })
+      if (error) { setError(error.message); setLoading(false) }
+      else onClose()
+    } else {
+      // updateUser bevarar samma user_id → all anon-data följer med automatiskt
+      const { error } = await db.auth.updateUser({ email, password })
+      if (error) { setError(error.message); setLoading(false) }
+      else setDone(true)
+    }
+  }
+
+  return (
+    <div className="reader-overlay" onClick={onClose}>
+      <div className="login-modal" onClick={e => e.stopPropagation()}>
+        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
+          <Icon name="close" size={18} />
+        </button>
+
+        {done ? (
+          <div className="login-modal__done">
+            <div className="login-modal__logo">N</div>
+            <h2>Konto skapat!</h2>
+            <p>Bekräfta din e-post — sedan är allt ditt läst/oläst och arkiv sparat permanent.</p>
+          </div>
+        ) : (
+          <>
+            <div className="login-modal__logo">N</div>
+            {isAnon && (
+              <div className="login-modal__tabs">
+                <button className={tab === 'in' ? 'is-active' : ''} onClick={() => { setTab('in'); setError('') }}>
+                  Logga in
+                </button>
+                <button className={tab === 'up' ? 'is-active' : ''} onClick={() => { setTab('up'); setError('') }}>
+                  Spara konto
+                </button>
+              </div>
+            )}
+            {tab === 'up' && (
+              <p className="login-modal__hint">Ditt läst/oläst och arkiv sparas till kontot automatiskt.</p>
+            )}
+            <form onSubmit={submit} className="login-form" style={{ marginTop: '1.25rem', width: '100%' }}>
+              <input type="email" placeholder="E-post" value={email}
+                     onChange={e => setEmail(e.target.value)} required autoFocus />
+              <input type="password" placeholder="Lösenord" value={password}
+                     onChange={e => setPassword(e.target.value)} required />
+              {error && <p className="login-error">{error}</p>}
+              <button type="submit" className="btn btn--primary" style={{ width: '100%' }} disabled={loading}>
+                {loading ? 'Väntar…' : tab === 'in' ? 'Logga in' : 'Spara mina inställningar'}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
 // ----- Nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, onOpenLogin }) {
   return (
     <header className="nav">
       <div className="nav__brand">
@@ -238,7 +406,6 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout }) {
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
            className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
-        <a href="#" onClick={e => e.preventDefault()}>Bevakade</a>
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('arkiv') }}
            className={active === 'arkiv' ? 'is-active' : ''}>Arkiv</a>
       </nav>
@@ -247,12 +414,20 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout }) {
           <Icon name="search" size={14} />
           <input placeholder="Sök…" value={query} onChange={e => setQuery(e.target.value)} />
         </div>
-        <button className="btn btn--ghost" onClick={onOpenRss}>
-          <Icon name="rss" size={14} /> Källor
-        </button>
-        <button className="btn btn--ghost" onClick={onLogout} title="Logga ut">
-          <Icon name="logout" size={14} />
-        </button>
+        {isAnon ? (
+          <button className="btn btn--ghost" onClick={onOpenLogin}>
+            Logga in
+          </button>
+        ) : (
+          <>
+            <button className="btn btn--ghost" onClick={onOpenRss}>
+              <Icon name="rss" size={14} /> Källor
+            </button>
+            <button className="btn btn--ghost" onClick={onLogout} title="Logga ut">
+              <Icon name="logout" size={14} />
+            </button>
+          </>
+        )}
       </div>
     </header>
   )
@@ -479,8 +654,15 @@ function App() {
 
   useEffect(() => {
     db.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setAuthReady(true)
+      if (session) {
+        setSession(session)
+        setAuthReady(true)
+      } else {
+        db.auth.signInAnonymously().then(({ data }) => {
+          setSession(data.session)
+          setAuthReady(true)
+        })
+      }
     })
     const { data: { subscription } } = db.auth.onAuthStateChange((_, session) => {
       setSession(session)
@@ -506,6 +688,12 @@ function App() {
   const [viewMode,      setViewMode]      = useState(() => localStorage.getItem('viewMode') || 'grid')
   const [briefing,      setBriefing]      = useState(null)
   const [briefingOpen,  setBriefingOpen]  = useState(true)
+  const [readerItem,    setReaderItem]    = useState(null)
+  const [loginOpen,     setLoginOpen]     = useState(false)
+
+  const openReader  = useCallback((item) => setReaderItem(item), [])
+  const closeReader = useCallback(() => setReaderItem(null), [])
+  const isAnon = session?.user?.is_anonymous ?? false
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -523,6 +711,8 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (!session) return
+    setArchiveItems([]); setArchived(new Set())
     db.from('archived_articles').select('id, article, saved_at').order('saved_at', { ascending: false })
       .then(({ data, error }) => {
         if (error) { console.error('Archive load:', error.message); return }
@@ -531,15 +721,17 @@ function App() {
           setArchived(new Set(data.map(r => r.id)))
         }
       })
-  }, [])
+  }, [session?.user?.id])
 
   useEffect(() => {
+    if (!session) return
+    setReadArticles(new Set())
     db.from('read_articles').select('article_id')
       .then(({ data, error }) => {
         if (error) { console.error('Read load:', error.message); return }
         if (data?.length) setReadArticles(new Set(data.map(r => r.article_id)))
       })
-  }, [])
+  }, [session?.user?.id])
 
   useEffect(() => {
     const today = new Date().toISOString().slice(0, 10)
@@ -551,9 +743,12 @@ function App() {
     if (readArticles.has(id)) return
     setReadArticles(prev => new Set([...prev, id]))
     db.from('read_articles')
-      .upsert({ article_id: String(id), read_at: new Date().toISOString() })
+      .upsert(
+        { article_id: String(id), read_at: new Date().toISOString(), user_id: session?.user?.id },
+        { onConflict: 'article_id,user_id' }
+      )
       .then(({ error }) => { if (error) console.error('Mark read:', error.message) })
-  }, [readArticles])
+  }, [readArticles, session?.user?.id])
 
   const toggleArchive = useCallback((item) => {
     const isSaved = archived.has(item.id)
@@ -566,14 +761,17 @@ function App() {
         })
     } else {
       db.from('archived_articles')
-        .upsert({ id: item.id, article: item, saved_at: new Date().toISOString() })
+        .upsert(
+          { id: item.id, article: item, saved_at: new Date().toISOString(), user_id: session?.user?.id },
+          { onConflict: 'id,user_id' }
+        )
         .then(({ error }) => {
           if (error) { console.error('Archive save:', error.message); return }
           setArchived(prev => new Set([...prev, item.id]))
           setArchiveItems(prev => [{ ...item, savedAt: new Date().toISOString() }, ...prev.filter(a => a.id !== item.id)])
         })
     }
-  }, [archived])
+  }, [archived, session?.user?.id])
 
   const saveConfig = useCallback((newFeeds, newCats) => {
     setSaveStatus('saving')
@@ -652,7 +850,7 @@ function App() {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, fetchNews)
       .subscribe()
     return () => { db.removeChannel(channel) }
-  }, [fetchNews])
+  }, [fetchNews, session?.user?.id])
 
   const filtered = useMemo(() => {
     let list = news
@@ -673,10 +871,10 @@ function App() {
     const unread = filtered.filter(i => !readArticles.has(i.id))
     if (!unread.length) return
     setReadArticles(prev => new Set([...prev, ...unread.map(i => i.id)]))
-    const rows = unread.map(i => ({ article_id: String(i.id), read_at: new Date().toISOString() }))
-    db.from('read_articles').upsert(rows)
+    const rows = unread.map(i => ({ article_id: String(i.id), read_at: new Date().toISOString(), user_id: session?.user?.id }))
+    db.from('read_articles').upsert(rows, { onConflict: 'article_id,user_id' })
       .then(({ error }) => { if (error) console.error('Mark all read:', error.message) })
-  }, [filtered, readArticles])
+  }, [filtered, readArticles, session?.user?.id])
 
   const featured = filtered.find(i => i.featured) || filtered[0]
   const rest      = filtered.filter(i => i !== featured)
@@ -685,7 +883,6 @@ function App() {
   const unreadCount = filtered.filter(i => !readArticles.has(i.id)).length
 
   if (!authReady) return null
-  if (!session)   return <LoginForm />
 
   return (
     <div className="shell" style={{
@@ -697,7 +894,8 @@ function App() {
       '--line':    THEME.line,
     }}>
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
-           active={active} onSetActive={setActive} onLogout={handleLogout} />
+           active={active} onSetActive={setActive} onLogout={handleLogout}
+           isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} />
 
       <section className="hello">
         <div className="hello__inner">
@@ -706,9 +904,17 @@ function App() {
             <div className="hello__wordmark">Notiserna</div>
           </div>
           <h1 className="hello__greet">
-            <span className="hello__greet-line">{getGreeting()}, Andreas.</span>
+            <span className="hello__greet-line">{getGreeting()}{isAnon ? '.' : ', Andreas.'}</span>
             <span className="hello__greet-line hello__greet-line--quiet">Här kommer dina senaste nyheter.</span>
           </h1>
+          {isAnon && (
+            <p className="anon-upgrade">
+              <button className="anon-upgrade__btn" onClick={() => setLoginOpen(true)}>
+                Spara dina inställningar
+              </button>
+              {' '}— skapa ett konto för att synka läst/oläst och arkiv på alla enheter.
+            </p>
+          )}
         </div>
       </section>
 
@@ -763,14 +969,14 @@ function App() {
             <div className="grid">
               {archiveItems.map(item => (
                 <NewsCard key={item.id} item={item} isArchived={true} onToggleArchive={toggleArchive}
-                          isRead={readArticles.has(item.id)} onRead={markAsRead} />
+                          isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
               ))}
             </div>
           )}
         </main>
       ) : (
         <main className="content">
-          <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />
+          {!isAnon && <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />}
 
           {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
           {!loading && filtered.length === 0 && (
@@ -784,13 +990,13 @@ function App() {
             <>
               {showHero && (
                 <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive}
-                          isRead={readArticles.has(featured.id)} onRead={markAsRead} />
+                          isRead={readArticles.has(featured.id)} onRead={markAsRead} onOpenReader={openReader} />
               )}
               <div className="grid">
                 {(showHero ? rest : filtered).map(item => (
                   <NewsCard key={item.id} item={item}
                             isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
-                            isRead={readArticles.has(item.id)} onRead={markAsRead} />
+                            isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
                 ))}
               </div>
             </>
@@ -801,7 +1007,7 @@ function App() {
               {filtered.map(item => (
                 <CompactCard key={item.id} item={item}
                              isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
-                             isRead={readArticles.has(item.id)} onRead={markAsRead} />
+                             isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
               ))}
             </div>
           )}
@@ -816,9 +1022,14 @@ function App() {
         </div>
       </footer>
 
-      <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
-                 categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
-                 onRenameCategory={handleRenameCategory} saveStatus={saveStatus} saveError={saveError} />
+      {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
+
+      {!isAnon && (
+        <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
+                   categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
+                   onRenameCategory={handleRenameCategory} saveStatus={saveStatus} saveError={saveError} />
+      )}
     </div>
   )
 }
