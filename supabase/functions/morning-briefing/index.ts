@@ -5,13 +5,47 @@ const cors = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent'
+const MAX_ATTEMPTS = 3
+const RETRY_DELAY_MS = 5000
+
+async function callGemini(prompt: string, apiKey: string): Promise<string> {
+  let lastError = ''
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    if (attempt > 1) await new Promise(r => setTimeout(r, RETRY_DELAY_MS))
+
+    const res = await fetch(`${GEMINI_URL}?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { maxOutputTokens: 1024, temperature: 0.4 },
+      }),
+    })
+
+    if (res.ok) {
+      const data = await res.json()
+      const content: string = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
+      if (content) return content
+      lastError = 'Empty response from Gemini'
+    } else {
+      const errText = await res.text()
+      lastError = `Gemini error ${res.status}: ${errText}`
+      console.warn(`Attempt ${attempt}/${MAX_ATTEMPTS} failed: ${res.status}`)
+      // Only retry on 503/429 (overload/rate-limit), not on 4xx auth errors
+      if (res.status !== 503 && res.status !== 429) break
+    }
+  }
+  throw new Error(lastError)
+}
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors })
 
   try {
-    const supabaseUrl  = Deno.env.get('SUPABASE_URL')!
-    const supabaseKey  = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const geminiKey    = Deno.env.get('GEMINI_API_KEY')!
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const geminiKey   = Deno.env.get('GEMINI_API_KEY')!
 
     const db = createClient(supabaseUrl, supabaseKey)
 
@@ -33,26 +67,7 @@ Deno.serve(async (req) => {
       'Använd • som listpunkt och skriv varje punkt på en ny rad.\n\n' +
       `Artiklar:\n${articleList}\n\nSammanfattning:`
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { maxOutputTokens: 1024, temperature: 0.4 },
-        }),
-      }
-    )
-
-    if (!geminiRes.ok) {
-      const errText = await geminiRes.text()
-      throw new Error(`Gemini error ${geminiRes.status}: ${errText}`)
-    }
-
-    const geminiData = await geminiRes.json()
-    const content: string = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
-    if (!content) throw new Error('Empty response from Gemini')
+    const content = await callGemini(prompt, geminiKey)
 
     const today = new Date().toISOString().slice(0, 10)
     const { error: saveErr } = await db
