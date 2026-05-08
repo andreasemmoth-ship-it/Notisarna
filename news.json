@@ -1,137 +1,125 @@
 {
   "articles": [
     {
-      "id": "naringsliv_9ec1a2c3",
+      "id": "naringsliv_c77859ee",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
+      "source": "Dagens industri",
       "date": "8 maj 2026",
-      "headline": "För fans av ”Babe – den modiga lilla grisen”",
-      "summary": "”Fårdetektiverna” är en sedelärande historia om en fårskock som försöker lösa mordet på sin älskade herde.",
+      "headline": "Personal utryms efter nytt efterskalv i Garpenbergsgruvan",
+      "summary": "Gruv- och smältverksbolaget Boliden har behövt utrymma personal efter ett nytt efterskalv i Garpenbergsgruvan. Det uppger kommunikationschef Klas Nilsson för Södra Dalarnes Tidning.",
       "hue": 150,
-      "link": "https://www.svd.se/a/zOMgMw/fardetektiverna-biofilm-recension-av-jan-soderqvist",
-      "image": "https://svd.vgc.no/v2/images/e716a331-aae1-3edf-83ed-b435b7e21534?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=04083b9cd62b8ad463d21d60bbafc097adb22b75",
+      "link": "https://www.di.se/live/personal-utryms-efter-nytt-efterskalv-i-garpenbergsgruvan/",
+      "image": "https://static.bonniernews.se/ba/80cc81c8-6298-4c52-8ed4-5acfec1d921f.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70",
       "featured": true
     },
     {
-      "id": "naringsliv_1cbc7811",
+      "id": "naringsliv_73ba9ebe",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "8 maj 2026",
-      "headline": "AI-veterinären backas av eliten – tecknar avtal med jätte",
-      "summary": "Med ett nytt avtal med Evidensia ska svenska Vetnios AI-lösning rullas ut på många kliniker – en satsning som sägs kunna spara veterinärer i snitt 15 minuter per patientmöte och effektivisera djursjukvården.",
+      "headline": "Nytt förslag: Miljardpaket ska säkra Sveriges flygbränsle",
+      "summary": "Sverige står inför en akut risk för brist på flygbränsle, samtidigt som EU:s klimatkrav på flyg- och sjöfartssektorn skärps. Nu föreslår regeringens utredare Mattias Viklund en rad åtgärder för att öka produktionen av hå…",
       "hue": 150,
-      "link": "https://www.di.se/digital/ai-veterinaren-backas-av-eliten-tecknar-avtal-med-jatte/",
-      "image": "https://static.bonniernews.se/ba/2024c5c9-e35d-4276-a567-a33bfd98489f.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+      "link": "https://www.di.se/nyheter/nytt-forslag-miljardpaket-ska-sakra-sveriges-flygbransle/",
+      "image": "https://static.bonniernews.se/ba/27d4373a-9598-47b5-ac09-eb9d5571e037.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
-      "id": "lokalt_d5d28315",
-      "category": "Lokalt",
-      "categoryKey": "lokalt",
-      "source": "SVT Stockholm",
+      "id": "naringsliv_130ab09b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
       "date": "8 maj 2026",
-      "headline": "Man döms till fängelse efter dödlig brand på Kungsholmen",
-      "summary": "En 25-årig man döms till åtta års fängelse efter en brand på Kungsholmen i februari där en person dog. Enligt domen hade han startat branden med flit genom att tända eld på en fåtölj i sin egen lägenhet.",
-      "hue": 60,
-      "link": "https://www.svt.se/nyheter/lokalt/stockholm/man-doms-till-fangelse-efter-dodlig-brand-pa-kungsholmen",
-      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/77c0b96927854af38787756683d484ada9fc05c0175d9bb4e77ce299cf32df75"
+      "headline": "Hemlig jakt: så hittades knarkmiljonerna",
+      "summary": "Knarkmiljonerna från darknet-sajten Flugsvamp såg länge ut att vara borta. Men utredarna fick upp ett spår. Nu berättar de för första gången om jakten genom bitcoinplånböcker och kryptobörser över hela världen.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/JOnmv6/polisen-sa-sparade-vi-bitcoinmiljonerna-fran-flugsvamp",
+      "image": "https://svd.vgc.no/v2/images/f727053b-8ad5-37b8-ba4c-dec610f7e009?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=b0651a5c8a6e65063eaa36e5925ec1bcac9177a9"
     },
     {
-      "id": "naringsliv_6be9983d",
+      "id": "naringsliv_d3a383bd",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "8 maj 2026",
-      "headline": "AI kräver ett nytt samhällskontrakt",
-      "summary": "Det som började som ett verktyg håller snabbt på att bli en självständig aktör, kapabel att fatta beslut, påverka utfall och verka i en skala vi tidigare inte sett. AI’s potential är betydande, men dagens system lever in…",
+      "headline": "Selin om maktskiftet i Balder: ”Det här blir bra för nästa 21-årsperiod”",
+      "summary": "Maktskiftet i Balder markerar slutet på en era för den svenska fastighetsmarknaden. Efter två decennier som vd lämnar Erik Selin över till sin mångårige parhäst Sharam Rahi för ”nästa 21-årsperiod”. ”Balder kommer alltid…",
       "hue": 150,
-      "link": "https://www.di.se/debatt/ai-kraver-ett-nytt-samhallskontrakt/",
-      "image": "https://static.bonniernews.se/ba/434a34fa-6c1b-4a30-9842-6021148a44d0.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+      "link": "https://www.di.se/nyheter/selin-om-maktskiftet-i-balder-det-har-blir-bra-for-nasta-21-arsperiod/",
+      "image": "https://static.bonniernews.se/ba/018900eb-6122-4300-b459-4135150f0512.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
-      "id": "naringsliv_56ab7a70",
+      "id": "skatt_3eab68c7",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "HFD nyheter",
+      "date": "8 maj 2026",
+      "headline": "Beslut i mål om resning",
+      "summary": "Resning har avslagits avseende domar om företrädaransvar.",
+      "hue": 24,
+      "link": "https://www.domstol.se/nyheter/2026/05/beslut-i-mal-om-resning/",
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+    },
+    {
+      "id": "naringsliv_c491897c",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "8 maj 2026",
-      "headline": "Minskat resultat för Envirologic trots högre orderingång",
-      "summary": "Envirologic, som utvecklar automatiska högtryckstvättar, hade intäkter på 16,7 miljoner kronor (19,2) och ett resultat före skatt om 1,7 miljoner kronor (4,2) under det första kvartalet.",
+      "headline": "Styrelsen skjuter ned EQT:s 112-miljardersbud",
+      "summary": "Trots ännu en budhöjning fortsätter styrelsen i brittiska Intertek att avvisa EQT:s bud som värderar bolaget till 112 miljarder kronor. Nu vill storägare att styrelsen inleder samtal med det svenska riskkapitalbolaget, s…",
       "hue": 150,
-      "link": "https://www.di.se/live/minskat-resultat-for-envirologic-trots-hogre-orderingang/",
+      "link": "https://www.di.se/live/styrelsen-skjuter-ned-eqts-112-miljardersbud/",
       "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
     },
     {
-      "id": "naringsliv_574e487f",
+      "id": "naringsliv_d40583a4",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Två döms i pedofilhärva i Västsverige",
+      "summary": "Två män döms till fängelse i den stora pedofilhärvan i Västra Götaland. Brotten uppdagades efter ett mord på en 17-årig flicka.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/L46lm9/tva-doms-i-pedofilharva-i-vastsverige",
+      "image": "https://svd.vgc.no/v2/images/bee15990-6004-3fc3-8d21-04cf0284317c?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=4025e299b2604eaef5cb78d4e99282419b62bebf"
+    },
+    {
+      "id": "naringsliv_1e29da47",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "Dagens industri",
       "date": "8 maj 2026",
-      "headline": "Hushållen trotsar kriget",
-      "summary": "Hushållen trotsar kriget i Mellanöstern. Konsumtionen steg i mars i den näst högsta takten sedan våren 2022. Samtidigt ökade produktionen i näringslivet i god fart. Plötsligt ser det första kvartalet inte så svagt ut för…",
+      "headline": "Minskat förvaltningsresultat för Sagax",
+      "summary": "David Mindus fastighetsbolag Sagax minskade förvaltningsresultatet under det första kvartalet.",
       "hue": 150,
-      "link": "https://www.di.se/nyheter/hushallen-trotsar-kriget/",
-      "image": "https://static.bonniernews.se/ba/bfa7fe6f-5cba-4b45-8fcb-bcc5e11c4bf8.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
+      "link": "https://www.di.se/live/minskat-forvaltningsresultat-for-sagax/",
+      "image": "https://static.bonniernews.se/ba/332bd25c-c7f2-441f-aa57-01c7a9318645.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
     },
     {
-      "id": "naringsliv_ae1b6edc",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Power vänder till vinst – ”chockar väldigt många”",
-      "summary": "När Power köpte Media Markts svenska verksamhet för snart tre år sedan hade bolaget visat blodröda siffror ända sedan etableringen 2006. Nu har verksamheten vänt till vinst. ”Det chockar väldigt många som har sagt att de…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/power-vander-till-vinst-chockar-valdigt-manga/",
-      "image": "https://static.bonniernews.se/ba/3420a798-7a08-4d2c-bb77-ef42a22ad828.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_b40e9d27",
+      "id": "naringsliv_4baa4881",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "8 maj 2026",
-      "headline": "Man bör få gå två meter med en öl",
-      "summary": "Den svenska alkohollagstiftningen behöver förändras om en gäst inte själv kan bära sin öl ett par meter från bardelen till uteserveringen.",
+      "headline": "Sverige pausar bygget av elkabel",
+      "summary": "",
       "hue": 150,
-      "link": "https://www.svd.se/a/3pqJA0/man-bor-fa-ga-tva-meter-med-en-ol",
-      "image": "https://svd.vgc.no/v2/images/852644ec-ba3c-31b7-aa4a-31f7ac9d6e99?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=4ad07832fbdabf25c8887078155ef34103f9f85e"
+      "link": "https://www.svd.se/a/aJvbzA/sverige-pausar-bygget-av-elkabel",
+      "image": "https://svd.vgc.no/v2/images/4e061438-7784-3d00-88fc-6ee2693c1dc4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=0879836331ef7c1665ec255b066bd018391ce69d"
     },
     {
-      "id": "naringsliv_95cb40fd",
+      "id": "naringsliv_f1ac72e3",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
       "source": "SVD Näringsliv",
       "date": "8 maj 2026",
-      "headline": "Nattsvart: ”Dags för Starmer att gå”",
-      "summary": "Högerpopulistiska Reform och Nigel Farage på frammarsch. Labour förlorar när ett nytt Storbritannien växer fram.",
+      "headline": "”Arbetslösa bör bredda sitt jobbsökande”",
+      "summary": "Det finns ett glapp mellan arbets­givarnas krav och de kompetenser som arbetssökande har. För att överbrygga detta behöver arbets­sökande söka andra jobb än man först tänkt sig, skriver Tove Elvelid, Arbetsförmedlingen, …",
       "hue": 150,
-      "link": "https://www.svd.se/a/Gx0Max/labour-forlorar-i-brittiska-lokalval",
-      "image": "https://svd.vgc.no/v2/images/40243278-b1aa-3f91-9e1c-c0724ef0f43f?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=f1e13bbab855b9f717f9749b79cbf7a410185ffc"
-    },
-    {
-      "id": "naringsliv_eae8c882",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Flygvärdinna inte smittad av hantavirus",
-      "summary": "En flygvärdinna i Nederländerna som befarades smittad med hantavirus har testat negativt för viruset, rapporterar RTL.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/8p5JOd/flygvardinna-inte-smittad-av-hantavirus",
-      "image": "https://svd.vgc.no/v2/images/5b44dcb0-641c-32ed-88a8-36ff60fdaa38?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=e6a7c4b21df8e035af147d49440b83d2b319d3c2"
-    },
-    {
-      "id": "naringsliv_bfaf51de",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Hon är ny ledamot i Svenska Akademien",
-      "summary": "Poeten och litteraturkritikern Anna Hallberg har valts till ny ledamot i Svenska Akademien.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/K86n6e/ny-ledamot-av-svenska-akademien",
-      "image": "https://svd.vgc.no/v2/images/2cee88eb-2dfd-39ed-a52e-5736974b8d38?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=587bb1f72a204391c0a428ff0f3e463676dcfaf8"
+      "link": "https://www.svd.se/a/6qo96z/arbetssokande-behover-bredda-sitt-jobbsokande-skriver-tove-elvelid-arbetsformedlingen",
+      "image": "https://svd.vgc.no/v2/images/dbe70db6-f7c0-3adf-9e90-4a5f1104eee5?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=267a8fd3544f2896d3e4b4f3257a8454bace76df"
     },
     {
       "id": "varlden_8126a0fc",
@@ -144,6 +132,30 @@
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/c86dp85g59xo?at_medium=RSS&at_campaign=rss",
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/ceca/live/514c94a0-4a6d-11f1-9270-375e80dbfe3c.jpg"
+    },
+    {
+      "id": "naringsliv_16b505e7",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Se upp för vårens trendfälla",
+      "summary": "När knoppar brister, brister även omdömet. Den som följer trend­analytikernas rapporter för våren 2026 kommer att gå vilse.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/xrJyXR/varens-trender-2026-en-enda-stor-kopfalla-skriver-alice-aveshagen",
+      "image": "https://svd.vgc.no/v2/images/4dfb30a3-9cfa-387a-8f1d-9bdb5dbf5047?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=3b793aaa4c6feab79de520dcfc93173a9c252a70"
+    },
+    {
+      "id": "lokalt_d5d28315",
+      "category": "Lokalt",
+      "categoryKey": "lokalt",
+      "source": "SVT Stockholm",
+      "date": "8 maj 2026",
+      "headline": "Man döms till fängelse efter dödlig brand på Kungsholmen",
+      "summary": "En 25-årig man döms till åtta års fängelse efter en brand på Kungsholmen i februari där en person dog. Enligt domen hade han startat branden med flit genom att tända eld på en fåtölj i sin egen lägenhet.",
+      "hue": 60,
+      "link": "https://www.svt.se/nyheter/lokalt/stockholm/man-doms-till-fangelse-efter-dodlig-brand-pa-kungsholmen",
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/77c0b96927854af38787756683d484ada9fc05c0175d9bb4e77ce299cf32df75"
     },
     {
       "id": "varlden_74004693",
@@ -422,18 +434,6 @@
       "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
-      "id": "skatt_fbf2162b",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "HFD nyheter",
-      "date": "29 apr 2026",
-      "headline": "Prövningstillstånd delvis meddelat i mål om stöd och service till vissa funktionshindrade",
-      "summary": "Högsta förvaltningsdomstolen meddelar prövningstillstånd såvitt avser frågan om insatsen ledsagarservice enligt 9 § 3 lagen (1993:387) om stöd och service till vissa funktionshindrade kan omfatta ledsagning vid universit…",
-      "hue": 24,
-      "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
-    },
-    {
       "id": "skatt_51094b2f",
       "category": "Skatt & juridik",
       "categoryKey": "skatt",
@@ -482,6 +482,30 @@
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
     },
     {
+      "id": "teknik_43d53c4f",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Sony&#8217;s PS5 sales plummet amid price rises and a memory crisis",
+      "summary": "Sony sold just 1.5 million PS5 consoles in its most recent fourth fiscal quarter, down 46 percent year over year. The slump in PS5 sales comes after Sony raised the price of its PS5 consoles twice over the past year, pus…",
+      "hue": 220,
+      "link": "https://www.theverge.com/news/926609/sonys-ps5-sales-plummet-memory-costs-price-hikes",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25717622/247361_PS5_Pro_VPavic_256.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.761835884455%2C100%2C78.47632823109&amp;w=1200"
+    },
+    {
+      "id": "teknik_052158f7",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "The Verge",
+      "date": "",
+      "headline": "Nintendo is raising Switch 2 prices",
+      "summary": "Nintendo is raising the price of its Switch 2 console globally, \"in light of changes in market conditions,\" and is now forecasting a drop in sales over the next year. Starting September 1st, the Switch 2 will cost $499.9…",
+      "hue": 220,
+      "link": "https://www.theverge.com/games/926606/nintendo-switch-2-price-hikes-earnings-results",
+      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/06/257769_Switch_2_AKrales_0395_588c1a.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
+    },
+    {
       "id": "teknik_46f9fb68",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -516,30 +540,6 @@
       "hue": 220,
       "link": "https://www.theverge.com/tech/926376/apple-airpods-cameras-ai-production",
       "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/09/257943_Airpods_Pro3_AKrales_0145.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.732984293194%2C100%2C78.534031413613&amp;w=1200"
-    },
-    {
-      "id": "teknik_fb430d7b",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "SpaceX has a $55 billion plan to build AI chips in Texas",
-      "summary": "Elon Musk's plans to get into the AI chip manufacturing business are going to be costly. As the New York Times and CNBC report, SpaceX is planning to invest at least $55 billion into its \"Terafab\" chip plant in Austin, T…",
-      "hue": 220,
-      "link": "https://www.theverge.com/ai-artificial-intelligence/926356/spacex-terafab-plant-cost-ai-chips",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2269580650.jpg?quality=90&amp;strip=all&amp;crop=0%2C10.756615395926%2C100%2C78.486769208148&amp;w=1200"
-    },
-    {
-      "id": "teknik_408418b9",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "The Verge",
-      "date": "",
-      "headline": "Peak Design is taking up to 50 percent off some of our favorite camera bags",
-      "summary": "Peak Design’s Everyday Backpack Zip features a unique wraparound zipper that provides quick access to your belongings. | Image: Peak Design To celebrate founder Peter Dering’s birthday, Peak Design is taking up to 50 per…",
-      "hue": 220,
-      "link": "https://www.theverge.com/gadgets/925427/peak-design-peter-dering-birthday-sale-2026-camera-backpack-sling-deal",
-      "image": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/peakdesigneverydaybagzipp.webp?quality=90&amp;strip=all&amp;crop=0%2C10.793302289671%2C100%2C78.413395420658&amp;w=1200"
     },
     {
       "id": "kultur_9ac8e2d0",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-08T08:08:33.532195+00:00",
+  "generated_at": "2026-05-08T09:53:14.556211+00:00",
   "count": 50
 }
