@@ -34,12 +34,12 @@ create policy "public all" on archived_articles for all using (true);
 -- Cron: Steg 1 — aktivera pg_cron och pg_net under Database → Extensions.
 -- Steg 2 — skapa hjälpfunktionen (undviker URL-radbrytning i cron-kommandot):
 
+-- Edge function är deployad med --no-verify-jwt, ingen Authorization-header behövs.
 create or replace function public.trigger_fetch_news()
 returns void language plpgsql as $$
 begin
   perform net.http_post(
-    url := 'https://juzqqvhupgvojdeuihok.supabase.co/functions/v1/fetch-news',
-    headers := '{"Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1enFxdmh1cGd2b2pkZXVpaG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDM1OTksImV4cCI6MjA5MzcxOTU5OX0.xwJik8yUoCbntl9X0_Ces0y4A_FDJyi9Ah3sOZy7FNQ","Content-Type":"application/json"}'::jsonb,
+    url  := 'https://juzqqvhupgvojdeuihok.supabase.co/functions/v1/fetch-news',
     body := '{}'::jsonb
   );
 end;
