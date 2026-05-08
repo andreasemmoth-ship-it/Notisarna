@@ -1,6 +1,67 @@
 {
   "articles": [
     {
+      "id": "naringsliv_187e1d62",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Fler flög med Finnair",
+      "summary": "Finska flygbolaget Finnair hade lite drygt 1 miljon passagerare i april 2026 och 6,3 procent fler än i april 2025. Passagerarantalet drevs av trafiken till Asien men även också i Europa medan den över Atlanten minskade. …",
+      "hue": 150,
+      "link": "https://www.di.se/live/fler-flog-med-finnair/",
+      "image": "https://static.bonniernews.se/ba/206b3d3f-6983-49f7-a665-ca63d04dd6f1.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70",
+      "featured": true
+    },
+    {
+      "id": "naringsliv_a07c4299",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Sänkt temperatur i den svenska industrin",
+      "summary": "Industrins orderingång i Sverige sjönk 1,4 procent i mars jämfört med månaden före, säsongsrensat. Det visar statistik från SCB.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/sankt-temperatur-i-den-svenska-industrin/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_1149dc02",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Webrock Ventures ökar resultatet något",
+      "summary": "Webrock Ventures, ett investeringsbolag inom digital affärsutveckling, hade ett substansvärde per aktie om 13:1 kronor per den 31 mars 2026, jämfört med 13:0 den 31 december 2025.",
+      "hue": 150,
+      "link": "https://www.di.se/live/webrock-ventures-okar-resultatet-nagot/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_02687819",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Fluicell vände till vinst första kvartalet",
+      "summary": "Fluicell redovisar ett rörelseresultat på 3,3 miljoner kronor (-2,6) i det första kvartalet 2026.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/fluicell-vande-till-vinst-forsta-kvartalet/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
+      "id": "naringsliv_598a8b6e",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "8 maj 2026",
+      "headline": "Tjänstepriserna stiger i Sverige",
+      "summary": "Tjänstepriserna steg 0,7 procent under första kvartalet jämfört med föregående kvartal. Jämfört med motsvarande kvartal föregående år steg priserna 1,6 procent.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/tjanstepriserna-stiger-i-sverige/",
+      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
+    },
+    {
       "id": "varlden_502a17ae",
       "category": "Världen",
       "categoryKey": "varlden",
@@ -10,8 +71,43 @@
       "summary": "Iran accuses the US of violating the truce, alleging it targeted an oil tanker and carried out attacks on coastal areas.",
       "hue": 280,
       "link": "https://www.bbc.com/news/articles/c626zyywxjno?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3ad9/live/27fe0690-4a7e-11f1-b55d-0f258dce1735.jpg",
-      "featured": true
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/3ad9/live/27fe0690-4a7e-11f1-b55d-0f258dce1735.jpg"
+    },
+    {
+      "id": "naringsliv_88c8de27",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "EU:s nya AI-regler – inför sexförbud",
+      "summary": "God morgon! Nya undantag från EU:s AI-lagar, Elon Musk i fransk brottsutredning, och Lovables drag för att höja lönerna.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/bOXn6q/eu-lattar-pa-ai-regler-men-infor-sexforbud",
+      "image": "https://svd.vgc.no/v2/images/7e250252-e475-3a7d-b36b-1b51271a9112?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=a9ad45d19b92c84c9002d87e8c5ca78a03a36084"
+    },
+    {
+      "id": "varlden_b9fc300e",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "8 maj 2026",
+      "headline": "From oil giants to banks - these companies are making billions from Iran war",
+      "summary": "Through surging profits or soaring share prices, the war has been a boon for some firms.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/ce8pyyz5e0ro?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/be46/live/8d97a640-4985-11f1-a49f-cb939a5301ad.jpg"
+    },
+    {
+      "id": "naringsliv_1960070f",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Ytterhöger mot seger i brittiska lokalvalen",
+      "summary": "Ytterhögerpartiet Reform ser ut att ha stora framgångar i torsdagens brittiska lokalval.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/16qO2W/ytterhogern-mot-storseger-i-brittiska-lokalval",
+      "image": "https://svd.vgc.no/v2/images/3282befe-39ce-3a56-b127-7316b73650d0?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=f20c2e43e85c9eec629e96c601349ad72c72bd51"
     },
     {
       "id": "naringsliv_75587bac",
@@ -26,30 +122,6 @@
       "image": "https://svd.vgc.no/v2/images/e1ca9403-1dc0-3fb0-a5b0-97e0dfa2743e?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=11212b8002b55efe42c934b4dcd47edb31e25b76"
     },
     {
-      "id": "naringsliv_c4cc02e8",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Villapriserna vädrar morgonluft – väcker hopp om nya flyttkedjor",
-      "summary": "Bostadsmarknaden visar tydliga vårtecken med stigande priser på både bostadsrätter och villor i april, första månaden med de nya bolånereglerna. Att även villapriserna nu tar fart ses som ett särskilt positivt tecken. ”D…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/villapriserna-vadrar-morgonluft-vacker-hopp-om-nya-flyttkedjor/",
-      "image": "https://static.bonniernews.se/ba/34559a42-656a-4359-9649-ae1d0e247029.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
-      "id": "naringsliv_512a62fd",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Miljardären kliver av – efter 1.900 procent",
-      "summary": "Erik Selin började med två tomma händer, och har på några decennier byggt upp börsens största fastighetsbolag. Succéreceptet bygger på en sällsynt investeringsnäsa, ”ränta-på-ränta” och väldigt hög belåning i början. Men…",
-      "hue": 150,
-      "link": "https://www.di.se/analys/miljardaren-kliver-av-efter-1900-procent/",
-      "image": "https://static.bonniernews.se/ba/574e4cad-748c-42c4-af41-44aa31a53001.jpeg?crop=1200:675&amp;auto=webp&amp;width=1200&amp;quality=70"
-    },
-    {
       "id": "naringsliv_ae1c1def",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -62,42 +134,6 @@
       "image": "https://svd.vgc.no/v2/images/3cdeb569-b2f4-3883-afe7-a64d6407879a?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=dd3bcbf7fb64a8f3f87fb07acac56c2f0b3d0915"
     },
     {
-      "id": "naringsliv_a4788c07",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Större boprislyft i storstädernas kärnor",
-      "summary": "Priserna på bostadsrätter i storstädernas centrala delar lyfter tydligt, visar ny statistik.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/pBdW2o/storre-boprislyft-i-storstadernas-karnor",
-      "image": "https://svd.vgc.no/v2/images/dd4352f0-b705-3fcc-95e8-c23e392c4a55?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=1bc9d1e8c189a613ef7d75c3d31a8c34c28e3f2c"
-    },
-    {
-      "id": "naringsliv_39325ef3",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "SD visar att de inte går att lita på",
-      "summary": "Sverigedemokraterna har med sitt agerande förstört tilliten till riksdagens kvittningssystem. Borgerligheten har ingen anledning att spela med eller skylla på andra.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Wv6Oe2/sverigedemokraterna-gar-inte-att-lita-pa",
-      "image": "https://svd.vgc.no/v2/images/670f0464-6278-3350-9b8b-a65e50f3a2a3?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=c2a2f806ec4be4d1885f0c7f7267a162c5f5bc97"
-    },
-    {
-      "id": "naringsliv_f1fa5234",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "Chock, behandling – sen KBT för oro och trauma",
-      "summary": "”Kommer jag att dö nu?” tänkte Såma Tillakoy när hon mitt i plugget drabbades av Hodgkins lymfom. Behandlingen tog hårt. Att göra cancern till en del av sin historia har hjälpt henne vidare.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/gkd8e5/cancer-i-tonaren-hur-blir-livet-sen",
-      "image": "https://svd.vgc.no/v2/images/96dae89b-8397-325f-98d3-39a7721675f2?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=cfb4c230f520a9fe1908e81d6bae1d9e76bf8974"
-    },
-    {
       "id": "lokalt_465a2201",
       "category": "Lokalt",
       "categoryKey": "lokalt",
@@ -108,54 +144,6 @@
       "hue": 60,
       "link": "https://www.svt.se/nyheter/lokalt/stockholm/efter-drapslaget-oviss-framtid-for-megaprojektet-centralstaden",
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.54/0.21/ee73d5e577b124c41539cc8b477ff35035c524188b7e1a03d819b10b6311667d"
-    },
-    {
-      "id": "naringsliv_ba9e4d96",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Förenade arabemiraten: Svarar på iranska robotar",
-      "summary": "Förenade arabemiraten uppger att landets luftförsvar svarar på robotar och drönare från Iran.",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/forenade-arabemiraten-svarar-pa-iranska-robotar/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
-    },
-    {
-      "id": "naringsliv_29142622",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Dystert på Asienbörserna",
-      "summary": "Nya uppgifter om attacker i Hormuzsundet och nedgångar på Wall Street sätter sina spår i fredagens inledande handel i Asien.",
-      "hue": 150,
-      "link": "https://www.di.se/live/dystert-pa-asienborserna-RoNje/",
-      "image": "https://static.bonniernews.se/gcs/di-dise/flamingo/di-logo-sharing.af8e42.png"
-    },
-    {
-      "id": "naringsliv_ab6b6d37",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "8 maj 2026",
-      "headline": "Trumps tullar döms ut på nytt",
-      "summary": "USA:s internationella handelsdomstol dömer ut president Donald Trumps globala tullar på 10 procent.",
-      "hue": 150,
-      "link": "https://www.di.se/live/trumps-tullar-doms-ut-pa-nytt/",
-      "image": ""
-    },
-    {
-      "id": "varlden_74362427",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Trump gives EU ultimatum deadline to approve trade deal with US",
-      "summary": "Trump's deadline to the European Union came as a trade court ruled his global tariff policy violated US law.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cp3pyk4nw3lo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/5bde/live/e5f4b280-4a64-11f1-ba67-71539f117a06.jpg"
     },
     {
       "id": "teknik_856e9806",
@@ -211,8 +199,8 @@
       "categoryKey": "lokalt",
       "source": "SVT Stockholm",
       "date": "7 maj 2026",
-      "headline": "Fullt utvecklad brand i Akalla",
-      "summary": "En man fördes med ambulans till sjukhus efter att en brand bröt ut i hans lägenhet på sjunde våningen i Akalla under torsdagskvällen. – Det är ett antal personer, jag uppfattar det som tre, som har andats in rök och kont…",
+      "headline": "En till sjukhus efter brand i Akalla",
+      "summary": "En man fördes med ambulans till sjukhus efter att en brand bröt ut i hans lägenhet på sjunde våningen i Akalla under torsdagskvällen.",
       "hue": 60,
       "link": "https://www.svt.se/nyheter/lokalt/stockholm/fullt-utvecklad-brand-i-akalla",
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.68/2b33b78c72803de56a37ac6e1b75cf71b9585a78e5eed07fd8d5f1c8d6023fc0"
@@ -311,7 +299,31 @@
       "summary": "Fråga om ett utländskt adoptionsbesluts giltighet i Sverige",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-utlandskt-adoptionsbesluts-giltighet-i-sverige/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+    },
+    {
+      "id": "skatt_abef10ce",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "7 maj 2026",
+      "headline": "Utökade befogenheter för Skatteverket inom folkbokföringsverksamheten",
+      "summary": "Regeringen föreslår att ett nytt brott ska införas: främjande av oriktig folkbokföring. Straffansvar ska inträda när någon genom en uppsåtlig handling i väsentlig mån främjar att en oriktig uppgift kan läggas till grund …",
+      "hue": 24,
+      "link": "https://www.regeringen.se/rattsliga-dokument/proposition/2026/05/prop.-202526261",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
+    },
+    {
+      "id": "skatt_8cfb9750",
+      "category": "Skatt & juridik",
+      "categoryKey": "skatt",
+      "source": "Regeringen (skatt)",
+      "date": "7 maj 2026",
+      "headline": "Nytt lagförslag ska minska risken för identitetsmissbruk",
+      "summary": "Regeringen vill förbättra folkbokföringen och minska risken för identitetsmissbruk. En ny proposition innehåller lagförslag som ger Skatteverket och Migrationsverket större möjligheter att använda biometriska uppgifter v…",
+      "hue": 24,
+      "link": "https://www.regeringen.se/pressmeddelanden/2026/05/nytt-lagforslag-ska-minska-risken-for-identitetsmissbruk/",
+      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
     },
     {
       "id": "skatt_3cd7c10e",
@@ -371,31 +383,7 @@
       "summary": "Dom i mål om föräldrapenning.",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
-    },
-    {
-      "id": "skatt_3af46f02",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "30 apr 2026",
-      "headline": "Regeringen tar nästa steg för att renodla Utbetalningsmyndighetens verksamhet",
-      "summary": "Regeringen har i dag beslutat om en lagrådsremiss med förslag som innebär att Utbetalningsmyndighetens verksamhet renodlas till kärnuppgiften att förebygga, förhindra och upptäcka felaktiga utbetalningar.",
-      "hue": 24,
-      "link": "https://www.regeringen.se/pressmeddelanden/2026/04/regeringen-tar-nasta-steg-for-att-renodla-utbetalningsmyndighetens-verksamhet/",
-      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
-    },
-    {
-      "id": "skatt_cb29735d",
-      "category": "Skatt & juridik",
-      "categoryKey": "skatt",
-      "source": "Regeringen (skatt)",
-      "date": "30 apr 2026",
-      "headline": "Avveckling av Utbetalningsmyndighetens system med transaktionskonto",
-      "summary": "I denna lagrådsremiss föreslås lagändringar för att avveckla Utbetalningsmyndighetens system med transaktionskonto.",
-      "hue": 24,
-      "link": "https://www.regeringen.se/rattsliga-dokument/lagradsremiss/2026/04/avveckling-av-utbetalningsmyndighetens-system-med-transaktionskonto/",
-      "image": "https://www.regeringen.se/dist/images/share-logo-sv.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_f6ccb84e",
@@ -431,7 +419,7 @@
       "summary": "Högsta förvaltningsdomstolen meddelar prövningstillstånd såvitt avser frågan om insatsen ledsagarservice enligt 9 § 3 lagen (1993:387) om stöd och service till vissa funktionshindrade kan omfatta ledsagning vid universit…",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
-      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_51094b2f",
@@ -480,6 +468,18 @@
       "hue": 24,
       "link": "https://blogg.pwc.se/taxmatters/omvandling-efterskankande-fordringar",
       "image": "https://blogg.pwc.se/hubfs/kollegor_diskuterar.jpg"
+    },
+    {
+      "id": "naringsliv_4d2d5a6a",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "22 feb 2022",
+      "headline": "Senaste nytt om kriget i Ukraina",
+      "summary": "SvD:s liverapport om Rysslands invasion av Ukraina – öppen för alla läsare.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/ja1n9q/konflikten-mellan-ukraina-och-ryssland-har-ar-senaste-nytt",
+      "image": "https://svd.vgc.no/v2/images/82b3f03c-9d88-3567-98ca-46aa5878054b?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=cdbe1ec339a0f8497dccff1614fb39cd2c5dc247"
     },
     {
       "id": "teknik_46f9fb68",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-08T04:34:48.781391+00:00",
+  "generated_at": "2026-05-08T06:22:25.998003+00:00",
   "count": 50
 }
