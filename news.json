@@ -1,6 +1,31 @@
 {
   "articles": [
     {
+      "id": "naringsliv_6b6c444b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "8 maj 2026",
+      "headline": "Hög brandrisk i stora delar av Sverige",
+      "summary": "SMHI uppmanar människor att ta det försiktigt i skog och mark på grund av stor risk för bränder i nästan hela Sverige.",
+      "hue": 150,
+      "link": "https://www.svd.se/a/aJv7yM/brandrisk-i-stora-delar-av-sverige",
+      "image": "https://svd.vgc.no/v2/images/fd052931-d2d2-370f-8408-9405962eb90c?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=12217c70a754bcb144a600548414147a2f9fb8ba",
+      "featured": true
+    },
+    {
+      "id": "varlden_e3c77f4c",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "7 maj 2026",
+      "headline": "Two Islamic-State linked Australian women charged with crimes against humanity",
+      "summary": "A third woman who also returned to Australia from Syria was charged with joining a terrorist organisation.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cdrpx8pl36vo?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/207d/live/b6ec8c50-4a79-11f1-b55d-0f258dce1735.jpg"
+    },
+    {
       "id": "naringsliv_4125b4aa",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -10,8 +35,7 @@
       "summary": "",
       "hue": 150,
       "link": "https://www.svd.se/a/rrzE5a/hantavirusutbrottets-ursprung-okant",
-      "image": "https://svd.vgc.no/v2/images/35b8d18c-2683-37d3-aea1-8b7d2a84c6a8?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=53ffd337361460c3c4aa88168cdba5ea7ef87908",
-      "featured": true
+      "image": "https://svd.vgc.no/v2/images/35b8d18c-2683-37d3-aea1-8b7d2a84c6a8?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=53ffd337361460c3c4aa88168cdba5ea7ef87908"
     },
     {
       "id": "naringsliv_d975d4cb",
@@ -60,18 +84,6 @@
       "hue": 150,
       "link": "https://www.svd.se/a/K86yEM/golfkrogar-i-stockholm-5-restauranger-att-besoka",
       "image": "https://svd.vgc.no/v2/images/7cfb3a3d-c302-3eeb-91d2-f9106b75c6d4?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=ab3e92ca72c60657a1d9ae36218cb32f2ba13af4"
-    },
-    {
-      "id": "naringsliv_3af182a6",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "8 maj 2026",
-      "headline": "”Köper det för att slippa gråta i köket”",
-      "summary": "Författaren Camilla Grebe minns pappas legendariska julkalkon, investerar i fryst lök och bjuder gärna på portugisisk husman.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/Ok63E1/camilla-grebe-koper-det-for-att-slippa-grata-i-koket",
-      "image": "https://svd.vgc.no/v2/images/fbe9057a-ea22-3930-996c-5011e71fa9ba?h=630&amp;q=80&amp;upscale=true&amp;w=1200&amp;s=882344027bdfec993dc3a31009f8b5ea3680edd6"
     },
     {
       "id": "teknik_856e9806",
@@ -230,18 +242,6 @@
       "image": "https://ichef.bbci.co.uk/news/1024/branded_news/abcc/live/8dc39600-4a3a-11f1-bd52-e755d604ece4.jpg"
     },
     {
-      "id": "varlden_477b8d4b",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 maj 2026",
-      "headline": "Fears of renewed Gaza war as Hamas disarmament talks stall",
-      "summary": "Israeli media reports suggest Israel is preparing to resume fighting because of the impasse in talks with Hamas.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cd6p5l3n2q3o?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/news/1024/branded_news/a2c4/live/8d288e50-4a15-11f1-a7ce-b934bcb15ff4.jpg"
-    },
-    {
       "id": "teknik_34708cef",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -299,7 +299,7 @@
       "summary": "Fråga om ett utländskt adoptionsbesluts giltighet i Sverige",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-utlandskt-adoptionsbesluts-giltighet-i-sverige/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "lokalt_9a00a963",
@@ -335,7 +335,7 @@
       "summary": "Den fråga i målet som har lett till att Högsta förvaltningsdomstolen meddelat prövningstillstånd gäller förutsättningarna för en kammarrätt att på yrkande av en kommun besluta om inhibition av förvaltningsrättens avgöran…",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_c1cc5034",
@@ -371,7 +371,7 @@
       "summary": "Dom i mål om föräldrapenning.",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/05/dom-i-mal-om-foraldrapenning/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_3af46f02",
@@ -419,7 +419,7 @@
       "summary": "En regions beslut att inom ramen för ett valfrihetssystem och i enlighet med ingånget avtal ta ut ett vite från en leverantör utgör inte myndighetsutövning mot enskild.",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/04/dom-i-mal-om-laglighetsprovning-enligt-kommunallagen/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_fbf2162b",
@@ -431,7 +431,7 @@
       "summary": "Högsta förvaltningsdomstolen meddelar prövningstillstånd såvitt avser frågan om insatsen ledsagarservice enligt 9 § 3 lagen (1993:387) om stöd och service till vissa funktionshindrade kan omfatta ledsagning vid universit…",
       "hue": 24,
       "link": "https://www.domstol.se/nyheter/2026/04/provningstillstand-meddelat-i-mal-om-stod-och-service-till-vissa-funktionshindrade/",
-      "image": "/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
+      "image": "https://www.domstol.se/publishedmedia/8917ub2snvkn35odjo8u/IMG_8734.jpg"
     },
     {
       "id": "skatt_51094b2f",
@@ -602,6 +602,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-05-07T23:37:15.631990+00:00",
+  "generated_at": "2026-05-08T01:25:39.647227+00:00",
   "count": 50
 }
