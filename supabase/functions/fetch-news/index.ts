@@ -82,7 +82,7 @@ async function makeId(catKey: string, str: string): Promise<string> {
 async function fetchOgImage(url: string): Promise<string> {
   try {
     const resp = await fetch(url, {
-      signal:  AbortSignal.timeout(3000),
+      signal:  AbortSignal.timeout(6000),
       headers: { 'User-Agent': 'Notiserna-bot/1.0' },
     })
     const html = await resp.text()
@@ -196,10 +196,12 @@ Deno.serve(async () => {
   articles.sort((a, b) => ((b.published_at as string) > (a.published_at as string) ? 1 : -1))
   if (articles[0]) articles[0].featured = true
 
-  // OG-bilder för de 20 nyaste
-  for (const a of articles.slice(0, 20)) {
-    if (a.link) a.image = await fetchOgImage(a.link as string)
-  }
+  // OG-bilder för de 20 nyaste — parallellt
+  await Promise.all(
+    articles.slice(0, 20).map(async a => {
+      if (a.link) a.image = await fetchOgImage(a.link as string)
+    })
+  )
 
   const { error } = await db.from('news_articles').upsert(articles, { onConflict: 'id' })
   if (error) {
