@@ -2,6 +2,16 @@
 const { useState, useMemo, useEffect, useCallback } = React;
 const db = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
+const DEFAULT_CAT_KEYS = new Set(['all', 'skatt', 'teknik', 'varlden', 'naringsliv', 'lokalt', 'kultur']);
+const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160];
+
+function slugify(str) {
+  return str.toLowerCase()
+    .replace(/[åä]/g, 'a').replace(/ö/g, 'o')
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_|_$/g, '');
+}
+
 const THEME = {
   accent:  '#0a0a0a',
   bg:      'oklch(0.97 0.008 80)',
@@ -146,11 +156,22 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive }) {
 }
 
 // ----- RSS settings drawer -----
-function RssDrawer({ open, onClose, feeds, setFeeds, saveStatus, saveError }) {
-  const [newName, setNewName] = useState('');
-  const [newUrl,  setNewUrl]  = useState('');
-  const [newCat,  setNewCat]  = useState('skatt');
-  const [editing, setEditing] = useState(null); // { cat, idx, name, url }
+function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, onRemoveCategory, saveStatus, saveError }) {
+  const [newName,    setNewName]    = useState('');
+  const [newUrl,     setNewUrl]     = useState('');
+  const [newCat,     setNewCat]     = useState('skatt');
+  const [newCatName, setNewCatName] = useState('');
+  const [editing,    setEditing]    = useState(null);
+
+  const handleAddCategory = () => {
+    if (!newCatName.trim()) return;
+    const key = slugify(newCatName);
+    if (!key || categories.some(c => c.key === key)) return;
+    const usedHues = new Set(categories.map(c => c.hue).filter(Boolean));
+    const hue = HUE_PALETTE.find(h => !usedHues.has(h)) ?? Math.floor(Math.random() * 360);
+    onAddCategory({ key, label: newCatName.trim(), hue });
+    setNewCatName('');
+  };
 
   const addFeed = () => {
     if (!newName.trim() || !newUrl.trim()) return;
@@ -209,14 +230,42 @@ function RssDrawer({ open, onClose, feeds, setFeeds, saveStatus, saveError }) {
 
         <div className="drawer__body">
           <section className="add-feed">
-            <h4>Lägg till nytt flöde</h4>
+            <h4>Lägg till kategori</h4>
+            <div className="add-feed__row">
+              <input placeholder="Kategorinamn (t.ex. Sverige)" value={newCatName}
+                     onChange={e => setNewCatName(e.target.value)}
+                     onKeyDown={e => e.key === 'Enter' && handleAddCategory()} />
+              <button className="btn btn--primary" onClick={handleAddCategory}>
+                <Icon name="plus" size={14} /> Skapa
+              </button>
+            </div>
+            <ul className="feed-list" style={{ marginTop: '0.5rem' }}>
+              {categories.filter(c => c.key !== 'all').map(cat => (
+                <li key={cat.key} className="feed-row">
+                  <div className="feed-row__text">
+                    <div className="feed-row__name">{cat.label}</div>
+                    {DEFAULT_CAT_KEYS.has(cat.key) && <div className="feed-row__url">Standard</div>}
+                  </div>
+                  {!DEFAULT_CAT_KEYS.has(cat.key) && (
+                    <button className="icon-btn icon-btn--quiet" title="Ta bort kategori"
+                            onClick={() => onRemoveCategory(cat.key)}>
+                      <Icon name="trash" size={14} />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="add-feed">
+            <h4>Lägg till flöde</h4>
             <div className="add-feed__row">
               <input placeholder="Namn (t.ex. SVT Nyheter)" value={newName}
                      onChange={e => setNewName(e.target.value)} />
               <input placeholder="https://exempel.se/rss" value={newUrl}
                      onChange={e => setNewUrl(e.target.value)} />
               <select value={newCat} onChange={e => setNewCat(e.target.value)}>
-                {CATEGORIES.filter(c => c.key !== 'all').map(c => (
+                {categories.filter(c => c.key !== 'all').map(c => (
                   <option key={c.key} value={c.key}>{c.label}</option>
                 ))}
               </select>
@@ -226,7 +275,7 @@ function RssDrawer({ open, onClose, feeds, setFeeds, saveStatus, saveError }) {
             </div>
           </section>
 
-          {CATEGORIES.filter(c => c.key !== 'all').map(cat => (
+          {categories.filter(c => c.key !== 'all').map(cat => (
             <section key={cat.key} className="feed-group">
               <div className="feed-group__head">
                 <h4>{cat.label}</h4>
@@ -302,23 +351,31 @@ function formatUpdated(iso) {
 }
 
 function App() {
-  const [active,    setActive]    = useState('all');
-  const [query,     setQuery]     = useState('');
-  const [drawer,    setDrawer]    = useState(false);
+  const [active,       setActive]       = useState('all');
+  const [query,        setQuery]        = useState('');
+  const [drawer,       setDrawer]       = useState(false);
   const [feeds,        setFeeds]        = useState(RSS_FEEDS);
+  const [categories,   setCategories]   = useState(CATEGORIES);
   const [news,         setNews]         = useState([]);
   const [loading,      setLoading]      = useState(true);
   const [updatedAt,    setUpdatedAt]    = useState(null);
-  const [saveStatus,   setSaveStatus]   = useState('idle'); // 'idle'|'saving'|'ok'|'error'
+  const [saveStatus,   setSaveStatus]   = useState('idle');
   const [saveError,    setSaveError]    = useState('');
-  const [archived,     setArchived]     = useState(new Set()); // Set of article ids
+  const [archived,     setArchived]     = useState(new Set());
   const [archiveItems, setArchiveItems] = useState([]);
 
   useEffect(() => {
-    db.from('feed_config').select('feeds').eq('id', 1).single()
+    db.from('feed_config').select('feeds, categories').eq('id', 1).single()
       .then(({ data, error }) => {
         if (error) { console.error('Supabase load:', error.code, error.message); return; }
         if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds);
+        if (data?.categories?.length) {
+          setCategories([
+            { key: 'all', label: 'Alla' },
+            ...CATEGORIES.filter(c => c.key !== 'all'),
+            ...data.categories,
+          ]);
+        }
       });
   }, []);
 
@@ -353,28 +410,49 @@ function App() {
     }
   }, [archived]);
 
+  const saveConfig = useCallback((newFeeds, newCats) => {
+    setSaveStatus('saving');
+    setSaveError('');
+    const customCats = newCats.filter(c => !DEFAULT_CAT_KEYS.has(c.key));
+    db.from('feed_config')
+      .upsert({ id: 1, feeds: newFeeds, categories: customCats, updated_at: new Date().toISOString() })
+      .then(({ error }) => {
+        if (error) {
+          console.error('Supabase:', error.message);
+          setSaveError(error.message);
+          setSaveStatus('error');
+        } else {
+          setSaveStatus('ok');
+          setTimeout(() => setSaveStatus('idle'), 2000);
+        }
+      });
+  }, []);
+
   const setAndSaveFeeds = useCallback((updater) => {
     setFeeds(prev => {
       const next = typeof updater === 'function' ? updater(prev) : updater;
-      setSaveStatus('saving');
-      setSaveError('');
-      db.from('feed_config')
-        .upsert({ id: 1, feeds: next, updated_at: new Date().toISOString() })
-        .then(({ error }) => {
-          if (error) {
-            console.error('Supabase:', error.message);
-            setSaveError(error.message);
-            setSaveStatus('error');
-          } else {
-            setSaveStatus('ok');
-            setTimeout(() => setSaveStatus('idle'), 2000);
-          }
-        });
+      saveConfig(next, categories);
       return next;
     });
-  }, []);
+  }, [categories, saveConfig]);
 
-  useEffect(() => {
+  const handleAddCategory = useCallback((cat) => {
+    const newCats = [...categories, cat];
+    setCategories(newCats);
+    saveConfig(feeds, newCats);
+  }, [categories, feeds, saveConfig]);
+
+  const handleRemoveCategory = useCallback((key) => {
+    const newCats = categories.filter(c => c.key !== key);
+    const newFeeds = { ...feeds };
+    delete newFeeds[key];
+    setCategories(newCats);
+    setFeeds(newFeeds);
+    saveConfig(newFeeds, newCats);
+    if (active === key) setActive('all');
+  }, [categories, feeds, active, saveConfig]);
+
+  const fetchNews = useCallback(() => {
     db.from('news_articles')
       .select('*')
       .order('published_at', { ascending: false })
@@ -391,6 +469,16 @@ function App() {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    fetchNews();
+
+    const channel = db.channel('news-updates')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, fetchNews)
+      .subscribe();
+
+    return () => { db.removeChannel(channel); };
+  }, [fetchNews]);
 
   const filtered = useMemo(() => {
     let list = news;
@@ -439,7 +527,7 @@ function App() {
       {active !== 'arkiv' && (
         <div className="filter-bar">
           <div className="filter-bar__inner">
-            {CATEGORIES.map(c => (
+            {categories.map(c => (
               <button key={c.key}
                       className={`pill ${active === c.key ? 'is-active' : ''}`}
                       onClick={() => setActive(c.key)}>
@@ -510,6 +598,7 @@ function App() {
       </footer>
 
       <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
+                 categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
                  saveStatus={saveStatus} saveError={saveError} />
     </div>
   );

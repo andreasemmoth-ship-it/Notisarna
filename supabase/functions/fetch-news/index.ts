@@ -151,18 +151,27 @@ async function parseFeed(
       image:        '',
       featured:     false,
       published_at: ok ? dt!.toISOString() : null,
+      fetched_at:   new Date().toISOString(),
     })
   }
   return articles
 }
 
 Deno.serve(async () => {
-  const { data: row } = await db.from('feed_config').select('feeds').eq('id', 1).single()
+  const { data: row } = await db.from('feed_config').select('feeds, categories').eq('id', 1).single()
   const feedConfig: Record<string, Array<{name: string; url: string; enabled: boolean}>> = row?.feeds ?? {}
+  const customCats: Array<{key: string; label: string; hue: number}> = row?.categories ?? []
+
+  const allFeeds: Record<string, Category> = { ...DEFAULT_FEEDS }
+  for (const cat of customCats) {
+    if (!allFeeds[cat.key]) {
+      allFeeds[cat.key] = { label: cat.label, hue: cat.hue, sources: [] }
+    }
+  }
 
   const articles: Record<string, unknown>[] = []
 
-  for (const [catKey, cat] of Object.entries(DEFAULT_FEEDS)) {
+  for (const [catKey, cat] of Object.entries(allFeeds)) {
     const sources: Source[] = feedConfig[catKey]
       ? feedConfig[catKey].map(f => [f.name, f.url, f.enabled] as Source)
       : cat.sources

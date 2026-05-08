@@ -20,20 +20,20 @@ create table if not exists news_articles (
 create index if not exists news_articles_category_key on news_articles(category_key);
 create index if not exists news_articles_published_at  on news_articles(published_at desc);
 
--- Aktivera pg_cron och pg_net (görs under Database → Extensions i dashboarden)
--- Kör sedan detta för att schemalägga Edge Function var 15:e minut:
---
--- select cron.schedule(
---   'fetch-news',
---   '*/15 * * * *',
---   $$
---   select net.http_post(
---     url     := 'https://DIN_PROJECT_REF.supabase.co/functions/v1/fetch-news',
---     headers := jsonb_build_object(
---       'Authorization', 'Bearer DIN_ANON_KEY',
---       'Content-Type',  'application/json'
---     ),
---     body    := '{}'::jsonb
---   )
---   $$
--- );
+-- Steg 1: Aktivera pg_cron och pg_net under Database → Extensions i Supabase-dashboarden.
+-- Steg 2: Kör nedanstående SQL i SQL Editor för att schemalägga Edge Function var 15:e minut.
+
+select cron.schedule(
+  'fetch-news',
+  '*/15 * * * *',
+  $$
+  select net.http_post(
+    url     := 'https://juzqqvhupgvojdeuihok.supabase.co/functions/v1/fetch-news',
+    headers := jsonb_build_object(
+      'Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1enFxdmh1cGd2b2pkZXVpaG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDM1OTksImV4cCI6MjA5MzcxOTU5OX0.xwJik8yUoCbntl9X0_Ces0y4A_FDJyi9Ah3sOZy7FNQ',
+      'Content-Type',  'application/json'
+    ),
+    body    := '{}'::jsonb
+  )
+  $$
+);
