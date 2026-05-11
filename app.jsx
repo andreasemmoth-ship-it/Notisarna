@@ -46,6 +46,10 @@ const Icon = ({ name, size = 16 }) => {
     pencil:   <><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></>,
     trash:    <><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></>,
     bookmark: <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>,
+    spark:   <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>,
+    chevron: <path d="m6 9 6 6 6-6"/>,
+    book:    <><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></>,
+    spin:    <path d="M21 12a9 9 0 1 1-6.219-8.56" strokeLinecap="round"/>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -56,7 +60,7 @@ const Icon = ({ name, size = 16 }) => {
 };
 
 // ----- Cards -----
-function HeroCard({ item, isArchived, onToggleArchive }) {
+function HeroCard({ item, isArchived, onToggleArchive, onOpenReader }) {
   return (
     <article className="hero-card">
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -81,18 +85,25 @@ function HeroCard({ item, isArchived, onToggleArchive }) {
              rel="noopener noreferrer" className="read-more">
             Läs hela artikeln <Icon name="arrow" size={15} />
           </a>
-          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
-                  onClick={() => onToggleArchive(item)}
-                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
-            <Icon name="bookmark" size={16} />
-          </button>
+          <div className="card__actions">
+            {item.link && (
+              <button className="icon-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+                <Icon name="book" size={16} />
+              </button>
+            )}
+            <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                    onClick={() => onToggleArchive(item)}
+                    title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+              <Icon name="bookmark" size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </article>
   );
 }
 
-function NewsCard({ item, isArchived, onToggleArchive }) {
+function NewsCard({ item, isArchived, onToggleArchive, onOpenReader }) {
   return (
     <article className="news-card">
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
@@ -116,14 +127,106 @@ function NewsCard({ item, isArchived, onToggleArchive }) {
              rel="noopener noreferrer" className="read-more read-more--small">
             Läs mer <Icon name="arrow" size={13} />
           </a>
-          <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
-                  onClick={() => onToggleArchive(item)}
-                  title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
-            <Icon name="bookmark" size={14} />
-          </button>
+          <div className="card__actions">
+            {item.link && (
+              <button className="icon-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+                <Icon name="book" size={14} />
+              </button>
+            )}
+            <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                    onClick={() => onToggleArchive(item)}
+                    title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+              <Icon name="bookmark" size={14} />
+            </button>
+          </div>
         </div>
       </div>
     </article>
+  );
+}
+
+// ----- Morning briefing -----
+function MorningBriefing({ text }) {
+  if (!text) return null;
+  return (
+    <div className="briefing">
+      <div className="briefing__icon"><Icon name="spark" size={18} /></div>
+      <div className="briefing__body">
+        <div className="briefing__label">AI-morgonbriefing</div>
+        <p className="briefing__text">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+// ----- Reader modal -----
+function ReaderModal({ state, onClose }) {
+  useEffect(() => {
+    if (!state.open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [state.open, onClose]);
+
+  useEffect(() => {
+    document.body.style.overflow = state.open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [state.open]);
+
+  if (!state.open) return null;
+
+  return (
+    <div className="reader-overlay" onClick={onClose}>
+      <article className="reader-modal" onClick={e => e.stopPropagation()}>
+        <button className="reader-close icon-btn" onClick={onClose} title="Stäng">
+          <Icon name="close" size={18} />
+        </button>
+
+        {state.loading && (
+          <div className="reader-loading">
+            <svg className="reader-spinner" width="32" height="32" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" strokeWidth="1.7"
+                 strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+            <p>Hämtar artikel…</p>
+          </div>
+        )}
+
+        {!state.loading && state.error && (
+          <div className="reader-error">
+            <h3>Kunde inte läsa artikeln</h3>
+            <p>{state.error}</p>
+            <a href={state.sourceUrl} target="_blank" rel="noopener noreferrer"
+               className="btn btn--primary" style={{ marginTop: 20, alignSelf: 'flex-start' }}>
+              Öppna originalsidan <Icon name="arrow" size={14} />
+            </a>
+          </div>
+        )}
+
+        {!state.loading && state.article && (
+          <>
+            <header className="reader-head">
+              {state.article.siteName && (
+                <div className="reader-source">{state.article.siteName}</div>
+              )}
+              <h1 className="reader-title">{state.article.title}</h1>
+              {state.article.byline && (
+                <p className="reader-byline">{state.article.byline}</p>
+              )}
+            </header>
+            <div className="reader-body"
+                 dangerouslySetInnerHTML={{ __html: state.article.content }} />
+            <footer className="reader-foot">
+              <a href={state.sourceUrl} target="_blank" rel="noopener noreferrer"
+                 className="read-more">
+                Läs på originalsidan <Icon name="arrow" size={14} />
+              </a>
+            </footer>
+          </>
+        )}
+      </article>
+    </div>
   );
 }
 
@@ -406,6 +509,8 @@ function App() {
   const [saveError,    setSaveError]    = useState('');
   const [archived,     setArchived]     = useState(new Set());
   const [archiveItems, setArchiveItems] = useState([]);
+  const [filterOpen,   setFilterOpen]   = useState(() => window.innerWidth > 880);
+  const [reader,       setReader]       = useState({ open: false, loading: false, article: null, error: null, sourceUrl: '' });
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -469,6 +574,29 @@ function App() {
           setTimeout(() => setSaveStatus('idle'), 2000);
         }
       });
+  }, []);
+
+  const closeReader = useCallback(() => setReader(prev => ({ ...prev, open: false })), []);
+
+  const openReader = useCallback(async (item) => {
+    setReader({ open: true, loading: true, article: null, error: null, sourceUrl: item.link });
+    try {
+      const fnUrl = `${window.SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`;
+      const res = await fetch(fnUrl, {
+        headers: {
+          'apikey': window.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}`,
+        },
+      });
+      const data = await res.json();
+      if (data.error) {
+        setReader(prev => ({ ...prev, loading: false, error: data.error }));
+      } else {
+        setReader(prev => ({ ...prev, loading: false, article: data }));
+      }
+    } catch (err) {
+      setReader(prev => ({ ...prev, loading: false, error: err.message }));
+    }
   }, []);
 
   const setAndSaveFeeds = useCallback((updater) => {
@@ -548,6 +676,24 @@ function App() {
   const rest      = filtered.filter(i => i !== featured);
   const showHero  = featured && active === 'all' && !query;
 
+  const briefing = useMemo(() => {
+    if (!news.length) return '';
+    const seen = new Set();
+    const snippets = [];
+    for (const a of news) {
+      if (!seen.has(a.categoryKey) && snippets.length < 3) {
+        seen.add(a.categoryKey);
+        snippets.push(`${a.headline.replace(/\.+$/, '')} (${a.source})`);
+      }
+    }
+    const d = new Date();
+    const today = `${d.getDate()} ${['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'][d.getMonth()]} ${d.getFullYear()}`;
+    const catCount = new Set(news.map(a => a.categoryKey)).size;
+    let text = `${today}: ${news.length} artiklar från ${catCount} kategorier.`;
+    if (snippets.length) text += ` Höjdpunkter: ${snippets.join(' · ')}.`;
+    return text;
+  }, [news]);
+
   return (
     <div className="shell" style={{
       '--accent':  THEME.accent,
@@ -576,18 +722,27 @@ function App() {
       {active !== 'arkiv' && (
         <div className="filter-bar">
           <div className="filter-bar__inner">
-            {categories.map(c => (
-              <button key={c.key}
-                      className={`pill ${active === c.key ? 'is-active' : ''}`}
-                      onClick={() => setActive(c.key)}>
-                {c.label}
-                <span className="pill__count">
-                  {c.key === 'all'
-                    ? news.length
-                    : news.filter(n => n.categoryKey === c.key).length}
-                </span>
-              </button>
-            ))}
+            <button className={`filter-toggle ${filterOpen ? 'is-open' : ''} ${active !== 'all' ? 'has-filter' : ''}`}
+                    onClick={() => setFilterOpen(o => !o)}>
+              {active !== 'all'
+                ? categories.find(c => c.key === active)?.label
+                : 'Alla kategorier'}
+              <Icon name="chevron" size={14} />
+            </button>
+            <div className={`filter-pills ${filterOpen ? 'is-open' : ''}`}>
+              {categories.map(c => (
+                <button key={c.key}
+                        className={`pill ${active === c.key ? 'is-active' : ''}`}
+                        onClick={() => { setActive(c.key); setFilterOpen(false); }}>
+                  {c.label}
+                  <span className="pill__count">
+                    {c.key === 'all'
+                      ? news.length
+                      : news.filter(n => n.categoryKey === c.key).length}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -606,7 +761,8 @@ function App() {
           ) : (
             <div className="grid">
               {archiveItems.map(item => (
-                <NewsCard key={item.id} item={item} isArchived={true} onToggleArchive={toggleArchive} />
+                <NewsCard key={item.id} item={item} isArchived={true}
+                          onToggleArchive={toggleArchive} onOpenReader={openReader} />
               ))}
             </div>
           )}
@@ -623,15 +779,21 @@ function App() {
             </div>
           )}
 
+          {!loading && active === 'all' && !query && (
+            <MorningBriefing text={briefing} />
+          )}
+
           {!loading && showHero && (
-            <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive} />
+            <HeroCard item={featured} isArchived={archived.has(featured.id)}
+                      onToggleArchive={toggleArchive} onOpenReader={openReader} />
           )}
 
           {!loading && (
             <div className="grid">
               {(showHero ? rest : filtered).map(item => (
                 <NewsCard key={item.id} item={item}
-                          isArchived={archived.has(item.id)} onToggleArchive={toggleArchive} />
+                          isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
+                          onOpenReader={openReader} />
               ))}
             </div>
           )}
@@ -649,6 +811,8 @@ function App() {
       <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
                  categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
                  onRenameCategory={handleRenameCategory} saveStatus={saveStatus} saveError={saveError} />
+
+      <ReaderModal state={reader} onClose={closeReader} />
     </div>
   );
 }
