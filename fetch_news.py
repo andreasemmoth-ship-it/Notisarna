@@ -3,6 +3,7 @@
 
 import email.utils
 import hashlib
+import html as html_lib
 import json
 import os
 import re
@@ -160,7 +161,7 @@ def fetch_og_image(url: str) -> str:
             html = resp.read(65_536).decode('utf-8', errors='ignore')
         m = _OG_RE.search(html)
         if m:
-            return (m.group(1) or m.group(2) or '').strip()
+            return html_lib.unescape((m.group(1) or m.group(2) or '').strip())
     except Exception:
         pass
     return ''
