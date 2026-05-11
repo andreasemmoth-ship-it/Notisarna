@@ -50,6 +50,8 @@ const Icon = ({ name, size = 16 }) => {
     chevron: <path d="m6 9 6 6 6-6"/>,
     book:    <><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></>,
     spin:    <path d="M21 12a9 9 0 1 1-6.219-8.56" strokeLinecap="round"/>,
+    grid:    <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
+    listview:<><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="3" cy="6" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="18" r="1"/></>,
   };
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -145,6 +147,44 @@ function NewsCard({ item, isArchived, onToggleArchive, onOpenReader }) {
   );
 }
 
+function ListCard({ item, isArchived, onToggleArchive, onOpenReader }) {
+  return (
+    <article className="list-card">
+      <div className="list-card__media" style={{ background: placeholderBg(item.hue) }}>
+        {item.image && (
+          <img src={item.image} alt="" className="media-img"
+               onError={e => { e.target.style.display = 'none'; }} />
+        )}
+      </div>
+      <div className="list-card__body">
+        <div className="list-card__meta">
+          <span className="cat-tag cat-tag--small">{item.category}</span>
+          <span className="dot-sep">·</span>
+          <span>{item.source}</span>
+          <span className="dot-sep">·</span>
+          <span>{item.date}</span>
+        </div>
+        <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
+           rel="noopener noreferrer">
+          <h3 className="list-card__title">{item.headline}</h3>
+        </a>
+      </div>
+      <div className="list-card__actions">
+        {item.link && (
+          <button className="icon-btn" onClick={() => onOpenReader(item)} title="Läsläge">
+            <Icon name="book" size={14} />
+          </button>
+        )}
+        <button className={`bookmark-btn ${isArchived ? 'is-saved' : ''}`}
+                onClick={() => onToggleArchive(item)}
+                title={isArchived ? 'Ta bort från arkiv' : 'Spara till arkiv'}>
+          <Icon name="bookmark" size={14} />
+        </button>
+      </div>
+    </article>
+  );
+}
+
 // ----- Morning briefing -----
 function MorningBriefing({ text }) {
   if (!text) return null;
@@ -206,6 +246,10 @@ function ReaderModal({ state, onClose }) {
 
         {!state.loading && state.article && (
           <>
+            {state.image && (
+              <img src={state.image} alt="" className="reader-hero-img"
+                   onError={e => { e.target.style.display = 'none'; }} />
+            )}
             <header className="reader-head">
               {state.article.siteName && (
                 <div className="reader-source">{state.article.siteName}</div>
@@ -231,13 +275,13 @@ function ReaderModal({ state, onClose }) {
 }
 
 // ----- Header / nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onGoHome }) {
   return (
     <header className="nav">
-      <div className="nav__brand">
+      <button className="nav__brand" onClick={onGoHome}>
         <div className="nav__logo">N</div>
         <div className="nav__name">Notiserna</div>
-      </div>
+      </button>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all'); }}
            className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
@@ -510,7 +554,8 @@ function App() {
   const [archived,     setArchived]     = useState(new Set());
   const [archiveItems, setArchiveItems] = useState([]);
   const [filterOpen,   setFilterOpen]   = useState(() => window.innerWidth > 880);
-  const [reader,       setReader]       = useState({ open: false, loading: false, article: null, error: null, sourceUrl: '' });
+  const [reader,       setReader]       = useState({ open: false, loading: false, article: null, error: null, sourceUrl: '', image: '' });
+  const [viewMode,     setViewMode]     = useState('grid');
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -576,10 +621,12 @@ function App() {
       });
   }, []);
 
+  const goHome = useCallback(() => { setActive('all'); setQuery(''); }, []);
+
   const closeReader = useCallback(() => setReader(prev => ({ ...prev, open: false })), []);
 
   const openReader = useCallback(async (item) => {
-    setReader({ open: true, loading: true, article: null, error: null, sourceUrl: item.link });
+    setReader({ open: true, loading: true, article: null, error: null, sourceUrl: item.link, image: item.image || '' });
     try {
       const fnUrl = `${window.SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`;
       const res = await fetch(fnUrl, {
@@ -704,14 +751,14 @@ function App() {
       '--line':    THEME.line,
     }}>
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
-           active={active} onSetActive={setActive} />
+           active={active} onSetActive={setActive} onGoHome={goHome} />
 
       <section className="hello">
         <div className="hello__inner">
-          <div className="hello__brand">
+          <button className="hello__brand" onClick={goHome}>
             <div className="hello__logo">N</div>
             <div className="hello__wordmark">Notiserna</div>
-          </div>
+          </button>
           <h1 className="hello__greet">
             <span className="hello__greet-line">{getGreeting()}, Andreas.</span>
             <span className="hello__greet-line hello__greet-line--quiet">Här kommer dina senaste nyheter.</span>
@@ -742,6 +789,18 @@ function App() {
                   </span>
                 </button>
               ))}
+            </div>
+            <div className="filter-bar__tools">
+              <div className="view-toggle">
+                <button className={`view-btn ${viewMode === 'grid' ? 'is-active' : ''}`}
+                        onClick={() => setViewMode('grid')} title="Rutnät">
+                  <Icon name="grid" size={15} />
+                </button>
+                <button className={`view-btn ${viewMode === 'list' ? 'is-active' : ''}`}
+                        onClick={() => setViewMode('list')} title="Lista">
+                  <Icon name="listview" size={15} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -789,13 +848,23 @@ function App() {
           )}
 
           {!loading && (
-            <div className="grid">
-              {(showHero ? rest : filtered).map(item => (
-                <NewsCard key={item.id} item={item}
-                          isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
-                          onOpenReader={openReader} />
-              ))}
-            </div>
+            viewMode === 'list' ? (
+              <div className="list">
+                {(showHero ? rest : filtered).map(item => (
+                  <ListCard key={item.id} item={item}
+                            isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
+                            onOpenReader={openReader} />
+                ))}
+              </div>
+            ) : (
+              <div className="grid">
+                {(showHero ? rest : filtered).map(item => (
+                  <NewsCard key={item.id} item={item}
+                            isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
+                            onOpenReader={openReader} />
+                ))}
+              </div>
+            )
           )}
         </main>
       )}
