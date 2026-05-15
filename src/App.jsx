@@ -33,9 +33,16 @@ function getGreeting() {
   return 'God natt'
 }
 
+function isMorning() {
+  const d = new Date()
+  const h = d.getHours(), m = d.getMinutes()
+  return h < 9 || (h === 9 && m < 30)
+}
+
 function placeholderBg(hue) {
-  const h2 = (hue + 40) % 360
-  return `linear-gradient(135deg, oklch(0.78 0.10 ${hue}) 0%, oklch(0.62 0.13 ${h2}) 100%)`
+  const h = hue ?? 200
+  const h2 = (h + 40) % 360
+  return `linear-gradient(135deg, oklch(0.78 0.10 ${h}) 0%, oklch(0.62 0.13 ${h2}) 100%)`
 }
 
 const Icon = ({ name, size = 16 }) => {
@@ -221,15 +228,22 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
 function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <div className={`compact-row ${isRead ? 'is-read' : ''}`}>
-      <span className="compact-row__cat">{item.category}</span>
-      <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-         rel="noopener noreferrer" className="compact-row__title"
-         onClick={() => onRead(item.id)}>
-        {item.headline}
-      </a>
-      <span className="compact-row__meta">
-        {item.source}<span className="dot-sep"> · </span>{item.date}
-      </span>
+      <div className="compact-row__img" style={{ background: placeholderBg(item.hue) }}>
+        {item.image && (
+          <img src={item.image} alt="" className="media-img"
+               onError={e => { e.target.style.display = 'none' }} />
+        )}
+      </div>
+      <div className="compact-row__text">
+        <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
+           rel="noopener noreferrer" className="compact-row__title"
+           onClick={() => onRead(item.id)}>
+          {item.headline}
+        </a>
+        <span className="compact-row__meta">
+          {item.source}<span className="dot-sep"> · </span>{item.date}
+        </span>
+      </div>
       <div className="compact-row__actions">
         {isRead && <span className="compact-row__check"><Icon name="check" size={12} /></span>}
         {item.link && (
@@ -396,13 +410,13 @@ function LoginModal({ onClose, isAnon }) {
 }
 
 // ----- Nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, onOpenLogin }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, onOpenLogin, onGoHome }) {
   return (
     <header className="nav">
-      <div className="nav__brand">
+      <button className="nav__brand" onClick={onGoHome}>
         <div className="nav__logo">N</div>
         <div className="nav__name">Notiserna</div>
-      </div>
+      </button>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
            className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
@@ -695,6 +709,12 @@ function App() {
   const closeReader = useCallback(() => setReaderItem(null), [])
   const isAnon = session?.user?.is_anonymous ?? false
 
+  const goHome = useCallback(() => {
+    setActive('all')
+    setQuery('')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
       .then(({ data, error }) => {
@@ -895,14 +915,14 @@ function App() {
     }}>
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
            active={active} onSetActive={setActive} onLogout={handleLogout}
-           isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} />
+           isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
 
       <section className="hello">
         <div className="hello__inner">
-          <div className="hello__brand">
+          <button className="hello__brand" onClick={goHome}>
             <div className="hello__logo">N</div>
             <div className="hello__wordmark">Notiserna</div>
-          </div>
+          </button>
           <h1 className="hello__greet">
             <span className="hello__greet-line">{getGreeting()}{isAnon ? '.' : ', Andreas.'}</span>
             <span className="hello__greet-line hello__greet-line--quiet">Här kommer dina senaste nyheter.</span>
@@ -976,7 +996,7 @@ function App() {
         </main>
       ) : (
         <main className="content">
-          {!isAnon && <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />}
+          {!isAnon && isMorning() && <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />}
 
           {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
           {!loading && filtered.length === 0 && (
