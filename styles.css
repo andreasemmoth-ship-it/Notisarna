@@ -452,6 +452,8 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   margin-bottom: 6px;
 }
 .briefing__text { font-size: 14.5px; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
+.briefing__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.briefing__item { font-size: 14.5px; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
 
 /* ===== Filter toggle (mobil) ===== */
 .filter-toggle {

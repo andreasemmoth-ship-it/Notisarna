@@ -30,9 +30,16 @@ function getGreeting() {
   return 'God natt';
 }
 
+function isMorning() {
+  const d = new Date();
+  const h = d.getHours(), m = d.getMinutes();
+  return h < 9 || (h === 9 && m < 30);
+}
+
 function placeholderBg(hue) {
-  const h2 = (hue + 40) % 360;
-  return `linear-gradient(135deg, oklch(0.78 0.10 ${hue}) 0%, oklch(0.62 0.13 ${h2}) 100%)`;
+  const h = hue ?? 200;
+  const h2 = (h + 40) % 360;
+  return `linear-gradient(135deg, oklch(0.78 0.10 ${h}) 0%, oklch(0.62 0.13 ${h2}) 100%)`;
 }
 
 const Icon = ({ name, size = 16 }) => {
@@ -188,12 +195,20 @@ function ListCard({ item, isArchived, onToggleArchive, onOpenReader }) {
 // ----- Morning briefing -----
 function MorningBriefing({ text }) {
   if (!text) return null;
+  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+  const hasBullets = lines.some(l => l.startsWith('•'));
   return (
     <div className="briefing">
       <div className="briefing__icon"><Icon name="spark" size={18} /></div>
       <div className="briefing__body">
         <div className="briefing__label">AI-morgonbriefing</div>
-        <p className="briefing__text">{text}</p>
+        {hasBullets ? (
+          <ul className="briefing__list">
+            {lines.map((l, i) => <li key={i} className="briefing__item">{l}</li>)}
+          </ul>
+        ) : (
+          <p className="briefing__text">{text}</p>
+        )}
       </div>
     </div>
   );
@@ -556,6 +571,13 @@ function App() {
   const [filterOpen,   setFilterOpen]   = useState(() => window.innerWidth > 880);
   const [reader,       setReader]       = useState({ open: false, loading: false, article: null, error: null, sourceUrl: '', image: '' });
   const [viewMode,     setViewMode]     = useState('grid');
+  const [aiSummary,    setAiSummary]    = useState('');
+
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    db.from('briefings').select('content').eq('date', today).limit(1)
+      .then(({ data }) => { if (data?.[0]?.content) setAiSummary(data[0].content); });
+  }, []);
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -621,7 +643,11 @@ function App() {
       });
   }, []);
 
-  const goHome = useCallback(() => { setActive('all'); setQuery(''); }, []);
+  const goHome = useCallback(() => {
+    setActive('all');
+    setQuery('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
 
   const closeReader = useCallback(() => setReader(prev => ({ ...prev, open: false })), []);
 
@@ -728,9 +754,10 @@ function App() {
     const seen = new Set();
     const snippets = [];
     for (const a of news) {
+      if (!a.headline || !a.categoryKey) continue;
       if (!seen.has(a.categoryKey) && snippets.length < 3) {
         seen.add(a.categoryKey);
-        snippets.push(`${a.headline.replace(/\.+$/, '')} (${a.source})`);
+        snippets.push(`${a.headline.replace(/\.+$/, '')} (${a.source || ''})`);
       }
     }
     const d = new Date();
@@ -838,8 +865,8 @@ function App() {
             </div>
           )}
 
-          {!loading && active === 'all' && !query && (
-            <MorningBriefing text={briefing} />
+          {!loading && active === 'all' && !query && isMorning() && (
+            <MorningBriefing text={aiSummary || briefing} />
           )}
 
           {!loading && showHero && (

@@ -25,8 +25,16 @@ async function callGemini(prompt: string, apiKey: string): Promise<string> {
 
     if (res.ok) {
       const data = await res.json()
-      const content: string = data?.candidates?.[0]?.content?.parts?.[0]?.text ?? ''
-      if (content) return content
+      const candidate = data?.candidates?.[0]
+      const rawText: string = (candidate?.content?.parts?.[0]?.text ?? '').trim()
+      const finishReason: string = candidate?.finishReason ?? ''
+      if (rawText) {
+        if (finishReason === 'MAX_TOKENS') {
+          const lastBullet = rawText.lastIndexOf('\n•')
+          return lastBullet > 0 ? rawText.slice(0, lastBullet).trim() : rawText
+        }
+        return rawText
+      }
       lastError = 'Empty response from Gemini'
     } else {
       const errText = await res.text()
@@ -63,7 +71,7 @@ Deno.serve(async (req) => {
 
     const prompt =
       'Du är en personlig nyhetsassistent. Sammanfatta dessa nyheter på svenska i 4–5 korta punkter. ' +
-      'Fokusera på det viktigaste och mest relevanta. Skriv koncist och informativt. ' +
+      'Fokusera på det viktigaste och mest relevanta. Skriv koncist och informativt. Avsluta alltid varje punkt med en fullständig mening. ' +
       'Använd • som listpunkt och skriv varje punkt på en ny rad.\n\n' +
       `Artiklar:\n${articleList}\n\nSammanfattning:`
 
