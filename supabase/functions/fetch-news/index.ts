@@ -16,36 +16,38 @@ const DEFAULT_FEEDS: Record<string, Category> = {
   skatt: {
     label: 'Skatt & juridik', hue: 24,
     sources: [
-      ['SKV Rättslig vägledning 1', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.71e0e530146a50ea9ac139', true],
-      ['SKV Rättslig vägledning 2', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.669f7efe1468ee8b548162e', true],
-      ['SKV Rättslig vägledning 3', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.703cf5a5146ada421629626', true],
-      ['SKV Rättslig vägledning 4', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.703cf5a5146ada421629657', true],
-      ['SKV Rättslig vägledning 5', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.669f7efe1468ee8b548161f', true],
-      ['Skatterättsnämnden', 'https://skatterattsnamnden.se/4.14dfc9b0163796ee3e77aa3a/12.14dfc9b0163796ee3e77aa45.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8', true],
-      ['PwC Tax Matters', 'https://blogg.pwc.se/taxmatters/rss.xml', true],
-      ['HFD nyheter', 'https://www.domstol.se/feed/56/?searchPageId=1092&scope=news', true],
+      ['Skatteverket',   'https://www.skatteverket.se/rss/nyheter.rss',  true],
+      ['HFD nyheter',    'https://www.domstol.se/hfd/feed',              true],
+      ['PwC Tax Matters','https://taxmatters.pwc.se/feed',               true],
+    ],
+  },
+  sverige: {
+    label: 'Sverige', hue: 0,
+    sources: [
+      ['SVT Nyheter', 'https://www.svt.se/nyheter/rss.xml', true],
     ],
   },
   teknik: {
     label: 'Teknik', hue: 220,
     sources: [
-      ['Ars Technica', 'https://feeds.arstechnica.com/arstechnica/index', true],
-      ['The Verge',    'https://www.theverge.com/rss/index.xml',           true],
-      ['Hacker News',  'https://hnrss.org/frontpage',                      false],
+      ['The Verge',   'https://www.theverge.com/rss/index.xml',            true],
+      ['Feber',       'https://feber.se/rss/',                             true],
+      ['Ars Technica','https://feeds.arstechnica.com/arstechnica/index',   false],
+      ['Hacker News', 'https://hnrss.org/frontpage',                       false],
     ],
   },
   varlden: {
     label: 'Världen', hue: 280,
     sources: [
-      ['Reuters',  'https://feeds.reuters.com/reuters/worldNews',      true],
-      ['BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml',      true],
+      ['Reuters',  'https://feeds.reuters.com/reuters/worldNews',     true],
+      ['BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml',     true],
     ],
   },
   naringsliv: {
     label: 'Näringsliv', hue: 150,
     sources: [
-      ['Dagens industri', 'https://www.di.se/rss',                                         true],
-      ['SVD Näringsliv',  'https://www.svd.se/?service=rss&type=section&id=24561',         true],
+      ['Dagens industri', 'https://www.di.se/rss',                                       true],
+      ['SVD Näringsliv',  'https://www.svd.se/?service=rss&type=section&id=24561',       true],
     ],
   },
   lokalt: {
@@ -195,9 +197,20 @@ Deno.serve(async () => {
     const customCats: Array<{key: string; label: string; hue: number}> = row?.categories ?? []
 
     const allFeeds: Record<string, Category> = { ...DEFAULT_FEEDS }
+
+    // Lägg till kategorier från feed_config.categories (admin-skapade)
     for (const cat of customCats) {
       if (!allFeeds[cat.key]) {
         allFeeds[cat.key] = { label: cat.label, hue: cat.hue, sources: [] }
+      }
+    }
+
+    // Lägg till eventuella kategorier i feed_config.feeds som ännu inte finns
+    // (t.ex. Sverige-kategorin som är en default-kategori men saknas i customCats)
+    for (const catKey of Object.keys(feedConfig)) {
+      if (!allFeeds[catKey]) {
+        const label = catKey.charAt(0).toUpperCase() + catKey.slice(1)
+        allFeeds[catKey] = { label, hue: 200, sources: [] }
       }
     }
 

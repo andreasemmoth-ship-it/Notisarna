@@ -2,34 +2,19 @@ name: Fetch RSS News
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Every 15 minutes
-  workflow_dispatch:       # Allow manual trigger from GitHub UI
-
-permissions:
-  contents: write
+    - cron: '*/15 * * * *'   # Var 15:e minut
+  workflow_dispatch:          # Manuell körning via GitHub UI
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Fetch news
+      - name: Anropa Supabase fetch-news Edge Function
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_URL:      ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: python fetch_news.py
-
-      - name: Commit and push if changed
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add news.json
-          git diff --cached --quiet && echo "Inga ändringar" || (
-            git commit -m "chore: update news.json [skip ci]" &&
-            git push
-          )
+          curl -sf --max-time 120 \
+            -X POST "$SUPABASE_URL/functions/v1/fetch-news" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json"
