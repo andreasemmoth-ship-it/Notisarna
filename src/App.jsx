@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { RSS_FEEDS, CATEGORIES } from './data.js'
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js'
+import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
@@ -54,6 +54,72 @@ const Icon = ({ name, size = 16 }) => {
          stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       {paths[name]}
     </svg>
+  )
+}
+
+// ----- Privacy modal -----
+function PrivacyModal({ onClose }) {
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  return (
+    <div className="reader-overlay" onClick={onClose}>
+      <div className="privacy-modal" onClick={e => e.stopPropagation()}>
+        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
+          <Icon name="close" size={18} />
+        </button>
+        <h2>Integritetspolicy</h2>
+        <p className="privacy-updated">Senast uppdaterad: juni 2026</p>
+
+        <h3>Vad vi samlar in</h3>
+        <p>Notiserna använder anonym inloggning (via Supabase) för att ge dig en personlig upplevelse utan att du behöver skapa ett konto. Vi sparar:</p>
+        <ul>
+          <li>Ett anonymt sessions-ID i din webbläsare (via cookie/localStorage)</li>
+          <li>Vilka artiklar du har markerat som lästa</li>
+          <li>Artiklar du sparar till arkivet</li>
+        </ul>
+        <p>Om du väljer att skapa ett konto sparas dessutom din e-postadress hos Supabase.</p>
+
+        <h3>Varför</h3>
+        <p>Data används uteslutande för att visa rätt läst/oläst-status och bevara ditt arkiv mellan besök. Vi säljer eller delar aldrig din data med tredje part.</p>
+
+        <h3>Tredjepartstjänster</h3>
+        <ul>
+          <li><strong>Supabase</strong> — databas och autentisering (servrar inom EU)</li>
+          <li><strong>Vercel</strong> — hosting och anonymiserad besöksstatistik (ingen spårning av individer)</li>
+        </ul>
+
+        <h3>Dina rättigheter</h3>
+        <p>Du kan när som helst begära att din data raderas genom att kontakta <a href="mailto:andreas.emmoth@gmail.com">andreas.emmoth@gmail.com</a>. Anonym data raderas automatiskt om du inte loggat in på 90 dagar.</p>
+
+        <div className="privacy-modal__footer">
+          <button className="btn btn--primary" onClick={onClose}>Stäng</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ----- GDPR banner -----
+function GdprBanner({ onAccept, onOpenPrivacy }) {
+  return (
+    <div className="gdpr-banner">
+      <p className="gdpr-banner__text">
+        Vi använder cookies och anonym inloggning för att spara bokmärken och lästa artiklar.{' '}
+        <button className="gdpr-link" onClick={onOpenPrivacy}>Läs mer</button>
+      </p>
+      <button className="btn btn--primary btn--sm" onClick={onAccept}>
+        Jag förstår
+      </button>
+    </div>
   )
 }
 
@@ -370,7 +436,7 @@ function LoginModal({ onClose, isAnon }) {
 }
 
 // ----- Nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, onOpenLogin, onGoHome }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, isAdmin, onOpenLogin, onGoHome }) {
   return (
     <header className="nav">
       <button className="nav__brand" onClick={onGoHome}>
@@ -394,9 +460,11 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
           </button>
         ) : (
           <>
-            <button className="btn btn--ghost" onClick={onOpenRss}>
-              <Icon name="rss" size={14} /> Källor
-            </button>
+            {isAdmin && (
+              <button className="btn btn--ghost" onClick={onOpenRss}>
+                <Icon name="rss" size={14} /> Källor
+              </button>
+            )}
             <button className="btn btn--ghost" onClick={onLogout} title="Logga ut">
               <Icon name="logout" size={14} />
             </button>
@@ -695,7 +763,16 @@ function App() {
 
   const openReader  = useCallback((item) => setReaderItem(item), [])
   const closeReader = useCallback(() => setReaderItem(null), [])
-  const isAnon = session?.user?.is_anonymous ?? false
+  const isAnon  = session?.user?.is_anonymous ?? false
+  const isAdmin = session?.user?.email === ADMIN_EMAIL
+
+  const [gdprOk,      setGdprOk]      = useState(() => !!localStorage.getItem('gdpr_ok'))
+  const [privacyOpen, setPrivacyOpen] = useState(false)
+
+  const acceptGdpr = useCallback(() => {
+    localStorage.setItem('gdpr_ok', '1')
+    setGdprOk(true)
+  }, [])
 
   const goHome = useCallback(() => {
     setActive('all')
@@ -900,15 +977,14 @@ function App() {
     }}>
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
            active={active} onSetActive={setActive} onLogout={handleLogout}
-           isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
+           isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
 
       <header className="brand-header">
         <button className="brand-header__link" onClick={goHome}>
           <div className="brand-header__logo">N</div>
-          <div className="brand-header__text">
-            <span className="brand-header__name">Notiserna</span>
-            <span className="brand-header__tagline">Dina nyheter, samlat på ett ställe</span>
-          </div>
+          <span className="brand-header__name">Notiserna</span>
+          <span className="brand-header__sep">&mdash;</span>
+          <span className="brand-header__tagline">Dina nyheter, samlat på ett ställe</span>
         </button>
       </header>
 
@@ -1033,15 +1109,23 @@ function App() {
       <footer className="foot">
         <div className="foot__rule" />
         <div className="foot__row">
-          <span>© Notiserna 2026</span>
+          <span>
+            © Notiserna 2026
+            {' · '}
+            <button className="foot__privacy-link" onClick={() => setPrivacyOpen(true)}>
+              Integritetspolicy
+            </button>
+          </span>
           <span>{updatedAt ? `Uppdaterad ${formatUpdated(updatedAt)}` : 'Uppdateras var 15:e minut'}</span>
         </div>
       </footer>
 
       {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
+      {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
+      {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
-      {!isAnon && (
+      {isAdmin && (
         <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}
                    categories={categories} onAddCategory={handleAddCategory} onRemoveCategory={handleRemoveCategory}
                    onRenameCategory={handleRenameCategory} saveStatus={saveStatus} saveError={saveError} />
