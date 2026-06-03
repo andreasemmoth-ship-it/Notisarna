@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react'
+import React, { Component, useState, useMemo, useEffect, useCallback } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { RSS_FEEDS, CATEGORIES } from './data.js'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
@@ -8,6 +8,59 @@ const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 const DEFAULT_CAT_KEYS = new Set(['all', 'teknik', 'varlden', 'naringsliv', 'kultur'])
 const HIDDEN_ANON_CATS = new Set(['skatt', 'lokalt'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
+const PAGE_SIZE = 48
+const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
+
+// ----- Error Boundary -----
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  componentDidCatch(error, info) {
+    console.error('App error:', error, info.componentStack)
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh', display: 'flex', alignItems: 'center',
+          justifyContent: 'center', background: 'oklch(0.97 0.008 80)',
+          fontFamily: 'Inter Tight, system-ui, sans-serif',
+        }}>
+          <div style={{ textAlign: 'center', padding: '40px', maxWidth: '420px' }}>
+            <div style={{
+              width: 64, height: 64, borderRadius: 16, background: '#0a0a0a',
+              color: '#fff', display: 'grid', placeItems: 'center',
+              fontFamily: 'Instrument Serif, serif', fontSize: 40,
+              fontStyle: 'italic', margin: '0 auto 24px',
+            }}>N</div>
+            <h1 style={{ fontSize: 24, fontWeight: 500, marginBottom: 12 }}>
+              Något gick fel
+            </h1>
+            <p style={{ color: 'oklch(0.45 0.01 60)', marginBottom: 24, lineHeight: 1.6 }}>
+              Notiserna stötte på ett oväntat fel. Prova att ladda om sidan — om problemet kvarstår är Supabase tillfälligt nere.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              style={{
+                padding: '10px 24px', borderRadius: 10, background: '#0a0a0a',
+                color: '#fff', border: 'none', cursor: 'pointer',
+                fontFamily: 'inherit', fontSize: 14, fontWeight: 500,
+              }}
+            >
+              Ladda om sidan
+            </button>
+          </div>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
 
 function slugify(str) {
   return str.toLowerCase()
@@ -760,6 +813,8 @@ function App() {
   const [viewMode,      setViewMode]      = useState(() => localStorage.getItem('viewMode') || 'grid')
   const [readerItem,    setReaderItem]    = useState(null)
   const [loginOpen,     setLoginOpen]     = useState(false)
+  const [hasMore,       setHasMore]       = useState(true)
+  const [loadingMore,   setLoadingMore]   = useState(false)
 
   const openReader  = useCallback((item) => setReaderItem(item), [])
   const closeReader = useCallback(() => setReaderItem(null), [])
@@ -911,19 +966,33 @@ function App() {
     db.from('news_articles')
       .select('*')
       .order('published_at', { ascending: false })
-      .limit(200)
+      .range(0, PAGE_SIZE - 1)
       .then(({ data, error }) => {
         if (error) { console.error('Supabase news:', error.message); return }
-        const articles = (data || []).map(row => ({
-          ...row,
-          categoryKey: row.category_key,
-          date: row.date_sv,
-        }))
+        const articles = (data || []).map(mapArticle)
         setNews(articles)
+        setHasMore(articles.length === PAGE_SIZE)
         if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at)
       })
       .finally(() => setLoading(false))
-  }, [])
+  }, []) // stabil – inga beroenden som ändras
+
+  const loadMore = useCallback(() => {
+    if (loadingMore || !hasMore) return
+    setLoadingMore(true)
+    const from = news.length
+    db.from('news_articles')
+      .select('*')
+      .order('published_at', { ascending: false })
+      .range(from, from + PAGE_SIZE - 1)
+      .then(({ data, error }) => {
+        if (error) { console.error('Load more:', error.message); return }
+        const articles = (data || []).map(mapArticle)
+        setNews(prev => [...prev, ...articles])
+        setHasMore(articles.length === PAGE_SIZE)
+      })
+      .finally(() => setLoadingMore(false))
+  }, [news.length, loadingMore, hasMore])
 
   useEffect(() => {
     fetchNews()
@@ -1103,6 +1172,14 @@ function App() {
               ))}
             </div>
           )}
+
+          {!loading && hasMore && !query && (
+            <div className="load-more">
+              <button className="btn btn--ghost" onClick={loadMore} disabled={loadingMore}>
+                {loadingMore ? 'Hämtar…' : 'Ladda fler nyheter'}
+              </button>
+            </div>
+          )}
         </main>
       )}
 
@@ -1134,4 +1211,5 @@ function App() {
   )
 }
 
+export { ErrorBoundary }
 export default App
