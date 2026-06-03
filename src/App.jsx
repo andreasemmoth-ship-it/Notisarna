@@ -24,21 +24,6 @@ const THEME = {
   line:    'oklch(0.90 0.008 60)',
 }
 
-function getGreeting() {
-  const h = new Date().getHours()
-  if (h < 5)  return 'God natt'
-  if (h < 11) return 'God morgon'
-  if (h < 17) return 'God eftermiddag'
-  if (h < 22) return 'God kväll'
-  return 'God natt'
-}
-
-function isMorning() {
-  const d = new Date()
-  const h = d.getHours(), m = d.getMinutes()
-  return h < 9 || (h === 9 && m < 30)
-}
-
 function placeholderBg(hue) {
   const h = hue ?? 200
   const h2 = (h + 40) % 360
@@ -106,35 +91,6 @@ function LoginForm() {
   )
 }
 
-// ----- Briefing card -----
-function BriefingCard({ briefing, open, onToggle }) {
-  if (!briefing) return null
-  const today = new Date().toLocaleDateString('sv-SE', { weekday: 'long', day: 'numeric', month: 'long' })
-  const lines = briefing.split('\n').map(l => l.trim()).filter(Boolean)
-
-  return (
-    <div className="briefing-card">
-      <button className="briefing-card__head" onClick={onToggle}>
-        <span className="briefing-card__sun">☀</span>
-        <div className="briefing-card__head-text">
-          <span className="briefing-card__label">AI-morgonbriefing</span>
-          <span className="briefing-card__date">{today}</span>
-        </div>
-        <span className="briefing-card__chevron">
-          <Icon name={open ? 'chevron-up' : 'chevron-down'} size={16} />
-        </span>
-      </button>
-      {open && (
-        <div className="briefing-card__body">
-          {lines.map((line, i) => (
-            <p key={i} className="briefing-card__line">{line}</p>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
 // ----- Cards -----
 function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
@@ -142,6 +98,7 @@ function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
         {item.image
           ? <img src={item.image} alt="" className="media-img"
+                 loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
           : <><span className="media-stripe" /><span className="media-label">[ {item.category} bild ]</span></>
         }
@@ -187,6 +144,7 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
         {item.image
           ? <img src={item.image} alt="" className="media-img"
+                 loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
           : <><span className="media-stripe" /><span className="media-label">[ {item.category.toLowerCase()} ]</span></>
         }
@@ -231,6 +189,7 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpen
       <div className="compact-row__img" style={{ background: placeholderBg(item.hue) }}>
         {item.image && (
           <img src={item.image} alt="" className="media-img"
+               loading="lazy" decoding="async"
                onError={e => { e.target.style.display = 'none' }} />
         )}
       </div>
@@ -700,8 +659,6 @@ function App() {
   const [archiveItems,  setArchiveItems]  = useState([])
   const [readArticles,  setReadArticles]  = useState(new Set())
   const [viewMode,      setViewMode]      = useState(() => localStorage.getItem('viewMode') || 'grid')
-  const [briefing,      setBriefing]      = useState(null)
-  const [briefingOpen,  setBriefingOpen]  = useState(true)
   const [readerItem,    setReaderItem]    = useState(null)
   const [loginOpen,     setLoginOpen]     = useState(false)
 
@@ -753,11 +710,7 @@ function App() {
       })
   }, [session?.user?.id])
 
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10)
-    db.from('briefings').select('content').eq('date', today).single()
-      .then(({ data }) => { if (data?.content) setBriefing(data.content) })
-  }, [])
+
 
   const markAsRead = useCallback((id) => {
     if (readArticles.has(id)) return
@@ -917,26 +870,7 @@ function App() {
            active={active} onSetActive={setActive} onLogout={handleLogout}
            isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
 
-      <section className="hello">
-        <div className="hello__inner">
-          <button className="hello__brand" onClick={goHome}>
-            <div className="hello__logo">N</div>
-            <div className="hello__wordmark">Notiserna</div>
-          </button>
-          <h1 className="hello__greet">
-            <span className="hello__greet-line">{getGreeting()}{isAnon ? '.' : ', Andreas.'}</span>
-            <span className="hello__greet-line hello__greet-line--quiet">Här kommer dina senaste nyheter.</span>
-          </h1>
-          {isAnon && (
-            <p className="anon-upgrade">
-              <button className="anon-upgrade__btn" onClick={() => setLoginOpen(true)}>
-                Spara dina inställningar
-              </button>
-              {' '}— skapa ett konto för att synka läst/oläst och arkiv på alla enheter.
-            </p>
-          )}
-        </div>
-      </section>
+
 
       {active !== 'arkiv' && (
         <div className="filter-bar">
@@ -976,6 +910,16 @@ function App() {
 
       {active === 'arkiv' ? (
         <main className="content">
+          {isAnon && (
+            <div className="anon-banner">
+              <span className="anon-banner__text">
+                <strong>Anonym profil</strong> — Skapa ett konto för att synka inställningar och sparade artiklar på alla enheter.
+              </span>
+              <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
+                Spara inställningar
+              </button>
+            </div>
+          )}
           <div className="archive-header">
             <h2>Arkiv</h2>
             <p>{archiveItems.length} sparade artiklar</p>
@@ -996,7 +940,16 @@ function App() {
         </main>
       ) : (
         <main className="content">
-          {!isAnon && isMorning() && <BriefingCard briefing={briefing} open={briefingOpen} onToggle={() => setBriefingOpen(v => !v)} />}
+          {isAnon && (
+            <div className="anon-banner">
+              <span className="anon-banner__text">
+                <strong>Anonym profil</strong> — Skapa ett konto för att synka inställningar och sparade artiklar på alla enheter.
+              </span>
+              <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
+                Spara inställningar
+              </button>
+            </div>
+          )}
 
           {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
           {!loading && filtered.length === 0 && (

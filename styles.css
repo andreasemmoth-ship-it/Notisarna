@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--bg); color: var(--ink); font-family: 'Inter Tight', system-ui, sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
@@ -55,31 +54,34 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .icon-btn--quiet:hover { opacity: 1; color: oklch(0.55 0.15 25); }
 
 /* ===== Hello / greeting ===== */
-.hello { padding: 72px 40px 48px; }
-.hello__inner { max-width: 1240px; margin: 0 auto; }
-.hello__brand { display: flex; align-items: center; gap: 18px; margin-bottom: 36px; }
-.hello__logo {
-  width: 64px; height: 64px; border-radius: 16px;
-  background: var(--ink); color: var(--surface);
-  display: grid; place-items: center;
-  font-family: 'Instrument Serif', serif; font-size: 40px; font-style: italic; font-weight: 500;
-  letter-spacing: -0.02em;
-  box-shadow: 0 8px 24px -10px color-mix(in oklch, var(--ink) 50%, transparent);
+.anon-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 13.5px;
 }
-.hello__logo span, .hello__logo { line-height: 1; }
-.hello__wordmark {
-  font-family: 'Instrument Serif', serif;
-  font-size: 44px; font-weight: 500; letter-spacing: -0.025em; line-height: 1;
+.anon-banner__text {
+  color: var(--muted);
+  line-height: 1.5;
 }
-.hello__greet {
-  font-family: 'Instrument Serif', serif;
-  font-weight: 500;
-  font-size: clamp(38px, 5.6vw, 68px);
-  line-height: 1.05; letter-spacing: -0.025em;
-  text-wrap: pretty;
-  display: flex; flex-direction: column; gap: 4px;
+.anon-banner__text strong {
+  color: var(--ink);
+  font-weight: 600;
 }
-.hello__greet-line--quiet { color: var(--muted); font-style: italic; }
+@media (max-width: 720px) {
+  .anon-banner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 12px;
+  }
+}
 
 /* ===== Filter bar ===== */
 .filter-bar {
@@ -434,26 +436,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   }
 }
 
-/* ===== Morning briefing ===== */
-.briefing {
-  display: flex; gap: 16px; align-items: flex-start;
-  padding: 20px 24px; margin-bottom: 32px;
-  background: color-mix(in oklch, var(--ink) 4%, var(--surface));
-  border: 1px solid var(--line); border-radius: 14px;
-}
-.briefing__icon {
-  flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
-  background: var(--ink); color: var(--surface);
-  display: grid; place-items: center;
-}
-.briefing__label {
-  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
-  text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted);
-  margin-bottom: 6px;
-}
-.briefing__text { font-size: 14.5px; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
-.briefing__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-.briefing__item { font-size: 14.5px; color: var(--ink); line-height: 1.55; text-wrap: pretty; }
+
 
 /* ===== Filter toggle (mobil) ===== */
 .filter-toggle {
@@ -616,43 +599,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .compact-row__actions { display: flex; align-items: center; gap: 4px; }
 .compact-row__check { color: #16a34a; display: flex; align-items: center; }
 
-/* ===== AI Briefing card ===== */
-.briefing-card {
-  margin-bottom: 36px;
-  background: oklch(0.97 0.025 85);
-  border: 1px solid oklch(0.88 0.04 85);
-  border-radius: 14px;
-  overflow: hidden;
-}
-.briefing-card__head {
-  width: 100%; display: flex; align-items: center; gap: 14px;
-  padding: 16px 20px; cursor: pointer;
-  transition: background 0.15s;
-}
-.briefing-card__head:hover { background: oklch(0.94 0.03 85); }
-.briefing-card__sun { font-size: 22px; line-height: 1; flex-shrink: 0; }
-.briefing-card__head-text { flex: 1; text-align: left; }
-.briefing-card__label {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em;
-  color: oklch(0.45 0.06 75);
-}
-.briefing-card__date {
-  display: block;
-  font-size: 13px; font-weight: 500; color: oklch(0.25 0.04 70);
-  margin-top: 1px;
-}
-.briefing-card__chevron { color: oklch(0.5 0.04 75); flex-shrink: 0; }
-.briefing-card__body {
-  padding: 4px 20px 20px 56px;
-  display: flex; flex-direction: column; gap: 6px;
-  border-top: 1px solid oklch(0.88 0.04 85);
-}
-.briefing-card__line {
-  font-size: 14px; line-height: 1.55; color: oklch(0.25 0.04 70);
-  text-wrap: pretty;
-}
+
 
 /* ===== Responsive additions ===== */
 @media (max-width: 880px) {

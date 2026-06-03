@@ -156,12 +156,19 @@ def fetch_og_image(url: str) -> str:
     if not url:
         return ''
     try:
-        req = Request(url, headers={'User-Agent': 'Notiserna-bot/1.0'})
-        with urlopen(req, timeout=3) as resp:
+        req = Request(
+            url,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            }
+        )
+        with urlopen(req, timeout=4) as resp:
             html = resp.read(65_536).decode('utf-8', errors='ignore')
         m = _OG_RE.search(html)
         if m:
-            return html_lib.unescape((m.group(1) or m.group(2) or '').strip())
+            img_url = html_lib.unescape((m.group(1) or m.group(2) or '').strip())
+            return img_url.replace('&amp;', '&')
     except Exception:
         pass
     return ''
@@ -177,6 +184,29 @@ def fetch_url(url: str) -> bytes | None:
         return None
 
 
+def find_feed_image_element(element) -> str:
+    try:
+        xml_str = ET.tostring(element, encoding='utf-8').decode('utf-8')
+        m = re.search(r'<[^:>]*:?content[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r'<[^:>]*:?thumbnail[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r'<enclosure[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r'<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+        m = re.search(r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']enclosure["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+    except Exception:
+        pass
+    return ''
+
+
 def parse_feed(
     data: bytes,
     source: str,
@@ -190,7 +220,7 @@ def parse_feed(
         print(f'  XML error: {exc}')
         return []
 
-    raw: list[tuple[str, str, str, str]] = []
+    raw: list[tuple[str, str, str, str, str]] = []
 
     if 'feed' in root.tag.lower():  # Atom
         for entry in root.findall(f'{{{ATOM_NS}}}entry')[:MAX_ITEMS]:
@@ -209,7 +239,8 @@ def parse_feed(
                 or entry.find(f'{{{ATOM_NS}}}link')
             )
             link = link_el.get('href', '') if link_el is not None else ''
-            raw.append((title, summary, pub, link))
+            image = find_feed_image_element(entry)
+            raw.append((title, summary, pub, link, image))
     else:  # RSS 2.0
         channel = root.find('channel') or root
         for item in channel.findall('item')[:MAX_ITEMS]:
@@ -220,10 +251,11 @@ def parse_feed(
             summary = clean(desc or '')
             pub = item.findtext('pubDate', '')
             link = item.findtext('link', '')
-            raw.append((title, summary, pub, link))
+            image = find_feed_image_element(item)
+            raw.append((title, summary, pub, link, image))
 
     articles: list[dict] = []
-    for title, summary, pub, link in raw:
+    for title, summary, pub, link, image in raw:
         if not title:
             continue
         dt = parse_date(pub)
@@ -240,6 +272,7 @@ def parse_feed(
             'summary': summary,
             'hue': hue,
             'link': link,
+            'image': image,
             '_ts': dt.timestamp() if dt else 0.0,
         })
     return articles
@@ -266,17 +299,20 @@ def main() -> None:
         for name, url, enabled in cat['sources']:
             if not enabled:
                 continue
-            print(f'Fetching {name} …')
+            print(f'Fetching {name} ...')
             data = fetch_url(url)
             if data is None:
                 continue
             items = parse_feed(data, name, cat_key, cat['label'], cat['hue'])
-            for article in items:
-                article['image'] = fetch_og_image(article.get('link', ''))
-            print(f'  → {len(items)} artiklar ({sum(1 for a in items if a["image"])} med bild)')
+            print(f'  -> {len(items)} artiklar ({sum(1 for a in items if a["image"])} med bild)')
             articles.extend(items)
 
     articles.sort(key=lambda a: a['_ts'], reverse=True)
+
+    # Fetch og:image only for the top 20 articles that don't have an image yet
+    needs_og_image = [a for a in articles if not a.get('image') and a.get('link')][:20]
+    for a in needs_og_image:
+        a['image'] = fetch_og_image(a['link'])
 
     for i, article in enumerate(articles):
         article.pop('_ts')
@@ -293,7 +329,7 @@ def main() -> None:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f'\nKlar — {len(articles)} artiklar skrivna till news.json')
+    print(f'\nKlar - {len(articles)} artiklar skrivna till news.json')
 
 
 if __name__ == '__main__':

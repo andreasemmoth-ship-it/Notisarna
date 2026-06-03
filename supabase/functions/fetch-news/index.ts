@@ -83,16 +83,46 @@ async function fetchOgImage(url: string): Promise<string> {
   try {
     const resp = await fetch(url, {
       signal:  AbortSignal.timeout(6000),
-      headers: { 'User-Agent': 'Notiserna-bot/1.0' },
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'sv,en;q=0.9',
+      },
     })
     const html = await resp.text()
     const m = html.match(
       /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']|<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i
     )
-    return m ? (m[1] || m[2] || '') : ''
+    if (m) {
+      const rawUrl = m[1] || m[2] || ''
+      return rawUrl.replace(/&amp;/g, '&').trim()
+    }
+    return ''
   } catch {
     return ''
   }
+}
+
+function findFeedImage(block: string): string {
+  // Try media:content url="..."
+  let m = block.match(/<media:content[^>]+url=["']([^"']+)["']/i)
+  if (m) return m[1]
+  
+  // Try media:thumbnail url="..."
+  m = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
+  if (m) return m[1]
+  
+  // Try enclosure url="..."
+  m = block.match(/<enclosure[^>]+url=["']([^"']+)["']/i)
+  if (m) return m[1]
+  
+  // Try atom enclosure link rel="enclosure" href="..." or vice versa
+  m = block.match(/<link[^>]+rel=["']enclosure["'][^>]+href=["']([^"']+)["']/i)
+  if (m) return m[1]
+  m = block.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']enclosure["']/i)
+  if (m) return m[1]
+  
+  return ''
 }
 
 function xmlTag(block: string, tag: string): string {
@@ -137,6 +167,7 @@ async function parseFeed(
     const ok  = dt && !isNaN(dt.getTime())
     const id  = await makeId(catKey, link || title)
     const sum = summary.length > MAX_SUMMARY ? summary.slice(0, MAX_SUMMARY) + '…' : summary
+    const feedImage = findFeedImage(block)
 
     articles.push({
       id,
@@ -148,7 +179,7 @@ async function parseFeed(
       summary:      sum,
       hue,
       link,
-      image:        '',
+      image:        feedImage,
       featured:     false,
       published_at: ok ? dt!.toISOString() : null,
       fetched_at:   new Date().toISOString(),
@@ -158,71 +189,77 @@ async function parseFeed(
 }
 
 Deno.serve(async () => {
-  const { data: row } = await db.from('feed_config').select('feeds, categories').eq('id', 1).single()
-  const feedConfig: Record<string, Array<{name: string; url: string; enabled: boolean}>> = row?.feeds ?? {}
-  const customCats: Array<{key: string; label: string; hue: number}> = row?.categories ?? []
+  try {
+    const { data: row } = await db.from('feed_config').select('feeds, categories').eq('id', 1).single()
+    const feedConfig: Record<string, Array<{name: string; url: string; enabled: boolean}>> = row?.feeds ?? {}
+    const customCats: Array<{key: string; label: string; hue: number}> = row?.categories ?? []
 
-  const allFeeds: Record<string, Category> = { ...DEFAULT_FEEDS }
-  for (const cat of customCats) {
-    if (!allFeeds[cat.key]) {
-      allFeeds[cat.key] = { label: cat.label, hue: cat.hue, sources: [] }
-    }
-  }
-
-  const articles: Record<string, unknown>[] = []
-
-  for (const [catKey, cat] of Object.entries(allFeeds)) {
-    const sources: Source[] = feedConfig[catKey]
-      ? feedConfig[catKey].map(f => [f.name, f.url, f.enabled] as Source)
-      : cat.sources
-
-    for (const [name, url, enabled] of sources) {
-      if (!enabled) continue
-      console.log(`Fetching ${name}…`)
-      try {
-        const resp = await fetch(url, {
-          signal:  AbortSignal.timeout(15000),
-          headers: { 'User-Agent': 'Notiserna-bot/1.0' },
-        })
-        const items = await parseFeed(await resp.text(), name, catKey, cat.label, cat.hue)
-        articles.push(...items)
-        console.log(`  → ${items.length} artiklar`)
-      } catch (err) {
-        console.error(`  SKIP ${url}: ${err}`)
+    const allFeeds: Record<string, Category> = { ...DEFAULT_FEEDS }
+    for (const cat of customCats) {
+      if (!allFeeds[cat.key]) {
+        allFeeds[cat.key] = { label: cat.label, hue: cat.hue, sources: [] }
       }
     }
-  }
 
-  articles.sort((a, b) => ((b.published_at as string) > (a.published_at as string) ? 1 : -1))
-  if (articles[0]) articles[0].featured = true
+    const articles: Record<string, unknown>[] = []
 
-  // OG-bilder för de 20 nyaste — parallellt
-  await Promise.all(
-    articles.slice(0, 20).map(async a => {
-      if (a.link) a.image = await fetchOgImage(a.link as string)
+    for (const [catKey, cat] of Object.entries(allFeeds)) {
+      const sources: Source[] = feedConfig[catKey]
+        ? feedConfig[catKey].map(f => [f.name, f.url, f.enabled] as Source)
+        : cat.sources
+
+      for (const [name, url, enabled] of sources) {
+        if (!enabled) continue
+        console.log(`Fetching ${name}…`)
+        try {
+          const resp = await fetch(url, {
+            signal:  AbortSignal.timeout(15000),
+            headers: { 'User-Agent': 'Notiserna-bot/1.0' },
+          })
+          const items = await parseFeed(await resp.text(), name, catKey, cat.label, cat.hue)
+          articles.push(...items)
+          console.log(`  → ${items.length} artiklar`)
+        } catch (err) {
+          console.error(`  SKIP ${url}: ${err}`)
+        }
+      }
+    }
+
+    articles.sort((a, b) => ((b.published_at as string) > (a.published_at as string) ? 1 : -1))
+    if (articles[0]) articles[0].featured = true
+
+    // Hämta og:image för de 20 nyaste artiklarna som saknar bild från flödet
+    const needsOgImage = articles.filter(a => !a.image && a.link).slice(0, 20)
+    await Promise.all(
+      needsOgImage.map(async a => {
+        a.image = await fetchOgImage(a.link as string)
+      })
+    )
+
+    const { error } = await db.from('news_articles').upsert(articles, { onConflict: 'id' })
+    if (error) {
+      throw new Error(`Database upsert failed: ${error.message}`)
+    }
+
+    const { count: dbCount } = await db.from('news_articles').select('*', { count: 'exact', head: true })
+
+    const oldestDate = articles.reduce((min, a) => {
+      if (!a.published_at) return min
+      return !min || (a.published_at as string) < min ? (a.published_at as string) : min
+    }, '' as string)
+
+    // Rensa artiklar äldre än 30 dagar
+    await db.from('news_articles')
+      .delete()
+      .lt('published_at', new Date(Date.now() - 30 * 86400_000).toISOString())
+
+    return new Response(JSON.stringify({ parsed: articles.length, dbCount, oldestDate, ok: true }), {
+      headers: { 'Content-Type': 'application/json' },
     })
-  )
-
-  const { error } = await db.from('news_articles').upsert(articles, { onConflict: 'id' })
-  if (error) {
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500, headers: { 'Content-Type': 'application/json' },
+  } catch (err) {
+    console.error("Critical error during news fetch:", err)
+    return new Response(JSON.stringify({ ok: false, error: String(err) }), {
+      headers: { 'Content-Type': 'application/json' },
     })
   }
-
-  const { count: dbCount } = await db.from('news_articles').select('*', { count: 'exact', head: true })
-
-  const oldestDate = articles.reduce((min, a) => {
-    if (!a.published_at) return min
-    return !min || (a.published_at as string) < min ? (a.published_at as string) : min
-  }, '' as string)
-
-  // Rensa artiklar äldre än 30 dagar
-  await db.from('news_articles')
-    .delete()
-    .lt('published_at', new Date(Date.now() - 30 * 86400_000).toISOString())
-
-  return new Response(JSON.stringify({ parsed: articles.length, dbCount, oldestDate, ok: true }), {
-    headers: { 'Content-Type': 'application/json' },
-  })
 })
