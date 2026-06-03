@@ -25,6 +25,15 @@
   <link rel="canonical" href="https://notiserna.se/" />
   <meta name="robots" content="index, follow" />
 
+  <!-- Förhindra blixt av fel tema vid sidladdning -->
+  <script>
+    (function(){
+      var s = localStorage.getItem('colorScheme');
+      var t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
