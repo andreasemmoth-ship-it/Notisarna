@@ -94,6 +94,7 @@ const Icon = ({ name, size = 16 }) => {
     'book-open':   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
     moon:          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>,
     sun:           <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></>,
+    lock:          <><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -501,33 +502,46 @@ function LoginModal({ onClose, isAnon }) {
         {done ? (
           <div className="login-modal__done">
             <div className="login-modal__logo">N</div>
-            <h2>Konto skapat!</h2>
-            <p>Bekräfta din e-post — sedan är allt ditt läst/oläst och arkiv sparat permanent.</p>
+            <h2>Välkommen!</h2>
+            <p>Vi har skickat en bekräftelse till din e-post. Klicka på länken i mailet — sedan är allt ditt arkiv och din läst-historik synkad permanent.</p>
           </div>
         ) : (
           <>
             <div className="login-modal__logo">N</div>
             {isAnon && (
               <div className="login-modal__tabs">
+                <button className={tab === 'up' ? 'is-active' : ''} onClick={() => { setTab('up'); setError('') }}>
+                  Skapa konto
+                </button>
                 <button className={tab === 'in' ? 'is-active' : ''} onClick={() => { setTab('in'); setError('') }}>
                   Logga in
                 </button>
-                <button className={tab === 'up' ? 'is-active' : ''} onClick={() => { setTab('up'); setError('') }}>
-                  Spara konto
-                </button>
               </div>
             )}
-            {tab === 'up' && (
-              <p className="login-modal__hint">Ditt läst/oläst och arkiv sparas till kontot automatiskt.</p>
+
+            {tab === 'up' ? (
+              <div className="signup-benefits">
+                <p className="signup-benefits__lead">
+                  Allt du läst och sparat idag följer automatiskt med — inget försvinner.
+                </p>
+                <ul className="signup-benefits__list">
+                  <li><Icon name="check" size={13} /> Synkroniseras på alla dina enheter</li>
+                  <li><Icon name="check" size={13} /> Arkiv och läst-historik sparas permanent</li>
+                  <li><Icon name="check" size={13} /> Gratis, alltid</li>
+                </ul>
+              </div>
+            ) : (
+              !isAnon && <p className="login-modal__hint">Välkommen tillbaka.</p>
             )}
-            <form onSubmit={submit} className="login-form" style={{ marginTop: '1.25rem', width: '100%' }}>
-              <input type="email" placeholder="E-post" value={email}
+
+            <form onSubmit={submit} className="login-form" style={{ marginTop: '1rem', width: '100%' }}>
+              <input type="email" placeholder="E-postadress" value={email}
                      onChange={e => setEmail(e.target.value)} required autoFocus />
-              <input type="password" placeholder="Lösenord" value={password}
+              <input type="password" placeholder={tab === 'up' ? 'Välj ett lösenord' : 'Lösenord'} value={password}
                      onChange={e => setPassword(e.target.value)} required />
               {error && <p className="login-error">{error}</p>}
               <button type="submit" className="btn btn--primary" style={{ width: '100%' }} disabled={loading}>
-                {loading ? 'Väntar…' : tab === 'in' ? 'Logga in' : 'Spara mina inställningar'}
+                {loading ? 'Väntar…' : tab === 'in' ? 'Logga in' : 'Skapa konto — det är gratis'}
               </button>
             </form>
           </>
@@ -664,9 +678,11 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
       <aside className={`drawer ${open ? 'is-open' : ''}`}>
         <header className="drawer__head">
           <div>
-            <div className="drawer__eyebrow">Inställningar</div>
-            <h2>Koppla RSS-flöden</h2>
-            <p>Välj vilka källor som ska läsas in per kategori.</p>
+            <div className="drawer__eyebrow drawer__eyebrow--admin">
+              <Icon name="lock" size={10} /> Admin
+            </div>
+            <h2>Flödeskonfiguration</h2>
+            <p>Styr vilka RSS-källor och kategorier som visas för <strong>alla besökare</strong> av Notiserna.</p>
             {saveStatus === 'saving' && <p className="save-status save-status--saving">Sparar…</p>}
             {saveStatus === 'ok'     && <p className="save-status save-status--ok">Sparat!</p>}
             {saveStatus === 'error'  && <p className="save-status save-status--error">Fel: {saveError}</p>}
@@ -1183,10 +1199,10 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Anonym profil</strong> — Skapa ett konto för att synka inställningar och sparade artiklar på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att bevara dina bokmärken och lästa artiklar på alla enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
-                Spara inställningar
+                Skapa konto gratis
               </button>
             </div>
           )}
@@ -1213,10 +1229,10 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Anonym profil</strong> — Skapa ett konto för att synka inställningar och sparade artiklar på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att bevara dina bokmärken och lästa artiklar på alla enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
-                Spara inställningar
+                Skapa konto gratis
               </button>
             </div>
           )}

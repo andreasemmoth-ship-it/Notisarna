@@ -900,6 +900,39 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 }
 .login-modal__done p { color: var(--muted); line-height: 1.55; }
 
+/* ===== Signup benefits (login modal) ===== */
+.signup-benefits {
+  width: 100%;
+  margin-top: 12px;
+}
+.signup-benefits__lead {
+  font-size: 13.5px; color: var(--muted);
+  line-height: 1.55; margin-bottom: 10px;
+  text-align: center;
+}
+.signup-benefits__list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 12px 14px;
+  background: color-mix(in oklch, var(--bg) 60%, var(--surface));
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.signup-benefits__list li {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; color: var(--ink);
+}
+.signup-benefits__list svg { color: #16a34a; flex-shrink: 0; }
+[data-theme="dark"] .signup-benefits__list svg { color: #4ade80; }
+
+/* ===== Admin drawer eyebrow ===== */
+.drawer__eyebrow--admin {
+  display: inline-flex; align-items: center; gap: 5px;
+  color: oklch(0.55 0.18 30);         /* amber/rust — signalerar admin */
+  font-weight: 700;
+}
+[data-theme="dark"] .drawer__eyebrow--admin { color: oklch(0.72 0.16 60); }
+
 /* ===== Anon upgrade note ===== */
 .anon-upgrade {
   font-size: 13.5px; color: var(--muted);
