@@ -5,7 +5,7 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const DEFAULT_CAT_KEYS = new Set(['all', 'teknik', 'varlden', 'naringsliv', 'kultur'])
+const DEFAULT_CAT_KEYS = new Set(['all', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
 const HIDDEN_ANON_CATS = new Set(['skatt', 'lokalt'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 const PAGE_SIZE = 48

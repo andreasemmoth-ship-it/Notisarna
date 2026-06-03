@@ -4,10 +4,14 @@ export const RSS_FEEDS = {
     { name: 'HFD',                url: 'https://www.domstol.se/hfd/feed',                                    enabled: true  },
     { name: 'PWC Tax Matters',    url: 'https://taxmatters.pwc.se/feed',                                     enabled: true  },
   ],
+  sverige: [
+    { name: 'SVT Nyheter',        url: 'https://www.svt.se/nyheter/rss.xml',                                 enabled: true  },
+  ],
   teknik: [
-    { name: 'Ars Technica',       url: 'https://feeds.arstechnica.com/arstechnica/index',                    enabled: true  },
     { name: 'The Verge',          url: 'https://www.theverge.com/rss/index.xml',                             enabled: true  },
-    { name: 'Hacker News',        url: 'https://hnrss.org/frontpage',                                       enabled: false },
+    { name: 'Feber',              url: 'https://feber.se/rss/',                                              enabled: true  },
+    { name: 'Ars Technica',       url: 'https://feeds.arstechnica.com/arstechnica/index',                    enabled: false },
+    { name: 'Hacker News',        url: 'https://hnrss.org/frontpage',                                        enabled: false },
   ],
   varlden: [
     { name: 'Reuters',            url: 'https://feeds.reuters.com/reuters/worldNews',                        enabled: true  },
@@ -29,6 +33,7 @@ export const RSS_FEEDS = {
 
 export const CATEGORIES = [
   { key: 'all',        label: 'Alla'          },
+  { key: 'sverige',    label: 'Sverige'       },
   { key: 'teknik',     label: 'Teknik'        },
   { key: 'varlden',    label: 'Världen'       },
   { key: 'naringsliv', label: 'Näringsliv'    },
