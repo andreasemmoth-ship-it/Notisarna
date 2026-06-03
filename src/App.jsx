@@ -69,15 +69,6 @@ function slugify(str) {
     .replace(/^_|_$/g, '')
 }
 
-const THEME = {
-  accent:  '#0a0a0a',
-  bg:      'oklch(0.97 0.008 80)',
-  surface: '#fff',
-  ink:     'oklch(0.16 0.01 60)',
-  muted:   'oklch(0.45 0.01 60)',
-  line:    'oklch(0.90 0.008 60)',
-}
-
 function placeholderBg(hue) {
   const h = hue ?? 200
   const h2 = (h + 40) % 360
@@ -155,6 +146,62 @@ function PrivacyModal({ onClose }) {
 
         <div className="privacy-modal__footer">
           <button className="btn btn--primary" onClick={onClose}>Stäng</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ----- Om Notiserna -----
+function AboutModal({ onClose, onOpenPrivacy }) {
+  useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = '' }
+  }, [])
+
+  const sourcesByCategory = Object.entries(RSS_FEEDS).map(([key, feeds]) => {
+    const cat = CATEGORIES.find(c => c.key === key)
+    return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
+  }).filter(g => g.feeds.length > 0)
+
+  return (
+    <div className="reader-overlay" onClick={onClose}>
+      <div className="about-modal" onClick={e => e.stopPropagation()}>
+        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
+          <Icon name="close" size={18} />
+        </button>
+
+        <div className="about-modal__logo">N</div>
+        <h2>Om Notiserna</h2>
+        <p className="about-modal__lead">
+          Notiserna samlar nyheter från svenska och internationella källor i ett personligt flöde — utan algoritmer, utan reklam, uppdaterat var 15:e minut.
+        </p>
+
+        <h3>Aktiva källor</h3>
+        <div className="about-sources">
+          {sourcesByCategory.map(({ label, feeds }) => (
+            <div key={label} className="about-sources__group">
+              <span className="about-sources__cat">{label}</span>
+              <span className="about-sources__names">{feeds.map(f => f.name).join(' · ')}</span>
+            </div>
+          ))}
+        </div>
+
+        <h3>Vem driver sajten?</h3>
+        <p>
+          Notiserna är ett personligt projekt byggt med React och Supabase.
+          Sajten drivs av <a href="mailto:andreas.emmoth@gmail.com">Andreas Emmoth</a>.
+        </p>
+
+        <div className="about-modal__footer">
+          <button className="btn btn--ghost btn--sm" onClick={() => { onClose(); onOpenPrivacy() }}>
+            Integritetspolicy <Icon name="arrow" size={13} />
+          </button>
         </div>
       </div>
     </div>
@@ -489,7 +536,7 @@ function LoginModal({ onClose, isAnon }) {
 }
 
 // ----- Nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, isAdmin, onOpenLogin, onGoHome }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, isAdmin, onOpenLogin, onGoHome, onOpenAbout }) {
   return (
     <header className="nav">
       <button className="nav__brand" onClick={onGoHome}>
@@ -501,6 +548,7 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
            className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('arkiv') }}
            className={active === 'arkiv' ? 'is-active' : ''}>Arkiv</a>
+        <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
       </nav>
       <div className="nav__right">
         <div className="nav__search">
@@ -797,8 +845,13 @@ function App() {
 
   const handleLogout = useCallback(() => db.auth.signOut(), [])
 
-  const [active,        setActive]        = useState('all')
-  const [query,         setQuery]         = useState('')
+  const [active,        setActive]        = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    return p.get('view') === 'arkiv' ? 'arkiv' : (p.get('cat') ?? 'all')
+  })
+  const [query,         setQuery]         = useState(() =>
+    new URLSearchParams(window.location.search).get('q') ?? ''
+  )
   const [drawer,        setDrawer]        = useState(false)
   const [feeds,         setFeeds]         = useState(RSS_FEEDS)
   const [categories,    setCategories]    = useState(CATEGORIES)
@@ -823,6 +876,16 @@ function App() {
 
   const [gdprOk,      setGdprOk]      = useState(() => !!localStorage.getItem('gdpr_ok'))
   const [privacyOpen, setPrivacyOpen] = useState(false)
+  const [aboutOpen,   setAboutOpen]   = useState(false)
+
+  // Synka active/query → URL (delningsbara länkar)
+  useEffect(() => {
+    const p = new URLSearchParams()
+    if (active === 'arkiv')    p.set('view', 'arkiv')
+    else if (active !== 'all') p.set('cat', active)
+    if (query.trim())          p.set('q', query.trim())
+    history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
+  }, [active, query])
 
   const acceptGdpr = useCallback(() => {
     localStorage.setItem('gdpr_ok', '1')
@@ -1036,17 +1099,11 @@ function App() {
   if (!authReady) return null
 
   return (
-    <div className="shell" style={{
-      '--accent':  THEME.accent,
-      '--bg':      THEME.bg,
-      '--surface': THEME.surface,
-      '--ink':     THEME.ink,
-      '--muted':   THEME.muted,
-      '--line':    THEME.line,
-    }}>
+    <div className="shell">
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
            active={active} onSetActive={setActive} onLogout={handleLogout}
-           isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
+           isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)}
+           onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)} />
 
       <header className="brand-header">
         <button className="brand-header__link" onClick={goHome}>
@@ -1189,6 +1246,10 @@ function App() {
           <span>
             © Notiserna 2026
             {' · '}
+            <button className="foot__privacy-link" onClick={() => setAboutOpen(true)}>
+              Om sajten
+            </button>
+            {' · '}
             <button className="foot__privacy-link" onClick={() => setPrivacyOpen(true)}>
               Integritetspolicy
             </button>
@@ -1200,6 +1261,7 @@ function App() {
       {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
+      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
       {isAdmin && (
