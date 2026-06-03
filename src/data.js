@@ -29,10 +29,8 @@ export const RSS_FEEDS = {
 
 export const CATEGORIES = [
   { key: 'all',        label: 'Alla'          },
-  { key: 'skatt',      label: 'Skatt & juridik' },
   { key: 'teknik',     label: 'Teknik'        },
   { key: 'varlden',    label: 'Världen'       },
   { key: 'naringsliv', label: 'Näringsliv'    },
-  { key: 'lokalt',     label: 'Lokalt'        },
   { key: 'kultur',     label: 'Kultur'        },
 ]

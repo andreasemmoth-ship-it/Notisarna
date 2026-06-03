@@ -5,7 +5,8 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js'
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const DEFAULT_CAT_KEYS = new Set(['all', 'skatt', 'teknik', 'varlden', 'naringsliv', 'lokalt', 'kultur'])
+const DEFAULT_CAT_KEYS = new Set(['all', 'teknik', 'varlden', 'naringsliv', 'kultur'])
+const HIDDEN_ANON_CATS = new Set(['skatt', 'lokalt'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 
 function slugify(str) {
@@ -406,15 +407,32 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
   )
 }
 
+// ----- Quick-add category presets -----
+const QUICK_ADD_PRESETS = [
+  { key: 'skatt',  label: 'Skatt & juridik', hue: 30 },
+  { key: 'lokalt', label: 'Lokalt',          hue: 200 },
+]
+
 // ----- RSS drawer -----
 function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, onRemoveCategory, onRenameCategory, saveStatus, saveError }) {
   const [newName,     setNewName]     = useState('')
   const [newUrl,      setNewUrl]      = useState('')
-  const [newCat,      setNewCat]      = useState('skatt')
+  const [newCat,      setNewCat]      = useState('teknik')
   const [newCatName,  setNewCatName]  = useState('')
   const [editing,     setEditing]     = useState(null)
   const [showCatEdit, setShowCatEdit] = useState(false)
   const [editingCat,  setEditingCat]  = useState(null)
+
+  const missingPresets = QUICK_ADD_PRESETS.filter(p => !categories.some(c => c.key === p.key))
+
+  const quickAdd = (preset) => {
+    onAddCategory(preset)
+    // Also restore default feeds for the category
+    const defaultFeeds = RSS_FEEDS[preset.key]
+    if (defaultFeeds) {
+      setFeeds(prev => ({ ...prev, [preset.key]: defaultFeeds }))
+    }
+  }
 
   const handleAddCategory = () => {
     if (!newCatName.trim()) return
@@ -482,6 +500,19 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
         </header>
 
         <div className="drawer__body">
+          {missingPresets.length > 0 && (
+            <section className="quick-add-cats">
+              <h4>Lägg till fler kategorier</h4>
+              <p className="quick-add-cats__hint">Dessa kategorier är dolda för oinloggade besökare men kan aktiveras för ditt konto.</p>
+              <div className="quick-add-cats__btns">
+                {missingPresets.map(p => (
+                  <button key={p.key} className="btn btn--outline" onClick={() => quickAdd(p)}>
+                    <Icon name="plus" size={14} /> {p.label}
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
           <section className="add-feed">
             <h4>Kategorier</h4>
             <div className="add-feed__row">
@@ -827,6 +858,7 @@ function App() {
 
   const filtered = useMemo(() => {
     let list = news
+    if (isAnon) list = list.filter(i => !HIDDEN_ANON_CATS.has(i.categoryKey))
     if (active !== 'all') list = list.filter(i => i.categoryKey === active)
     if (query.trim()) {
       const q = query.toLowerCase()
@@ -838,7 +870,7 @@ function App() {
       )
     }
     return list
-  }, [news, active, query])
+  }, [news, active, query, isAnon])
 
   const markAllAsRead = useCallback(() => {
     const unread = filtered.filter(i => !readArticles.has(i.id))
@@ -870,19 +902,30 @@ function App() {
            active={active} onSetActive={setActive} onLogout={handleLogout}
            isAnon={isAnon} onOpenLogin={() => setLoginOpen(true)} onGoHome={goHome} />
 
+      <header className="brand-header">
+        <button className="brand-header__link" onClick={goHome}>
+          <div className="brand-header__logo">N</div>
+          <div className="brand-header__text">
+            <span className="brand-header__name">Notiserna</span>
+            <span className="brand-header__tagline">Dina nyheter, samlat på ett ställe</span>
+          </div>
+        </button>
+      </header>
 
 
       {active !== 'arkiv' && (
         <div className="filter-bar">
           <div className="filter-bar__inner">
-            {categories.map(c => (
+            {categories
+              .filter(c => !isAnon || !HIDDEN_ANON_CATS.has(c.key))
+              .map(c => (
               <button key={c.key}
                       className={`pill ${active === c.key ? 'is-active' : ''}`}
                       onClick={() => setActive(c.key)}>
                 {c.label}
                 <span className="pill__count">
                   {c.key === 'all'
-                    ? news.length
+                    ? (isAnon ? news.filter(n => !HIDDEN_ANON_CATS.has(n.categoryKey)).length : news.length)
                     : news.filter(n => n.categoryKey === c.key).length}
                 </span>
               </button>
