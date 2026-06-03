@@ -10,33 +10,27 @@
   --line:      oklch(0.90 0.008 60);
 }
 
-/* ===== Mörkt läge ===== */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --accent:    oklch(0.95 0.006 80);
-    --on-accent: #0a0a0a;
-    --bg:        oklch(0.10 0.006 80);
-    --surface:   oklch(0.15 0.007 80);
-    --ink:       oklch(0.94 0.006 80);
-    --muted:     oklch(0.52 0.008 80);
-    --line:      oklch(0.22 0.008 80);
-  }
-  /* Gröna statusfärger i mörkt läge */
-  .read-badge {
-    color: #4ade80;
-    background: rgba(74, 222, 128, 0.08);
-    border-color: rgba(74, 222, 128, 0.2);
-  }
-  .compact-row__check { color: #4ade80; }
-  .save-status--ok    { color: #4ade80; }
-  /* Formulärfält */
-  .login-form input {
-    background: var(--surface);
-    border-color: var(--line);
-  }
-  .login-form input:focus { border-color: var(--ink); }
-  .login-card { background: var(--surface); border-color: var(--line); }
+/* ===== Mörkt läge (manuell toggle via data-theme="dark" på <html>) ===== */
+[data-theme="dark"] {
+  --accent:    oklch(0.95 0.006 80);
+  --on-accent: #0a0a0a;
+  --bg:        oklch(0.10 0.006 80);
+  --surface:   oklch(0.15 0.007 80);
+  --ink:       oklch(0.94 0.006 80);
+  --muted:     oklch(0.52 0.008 80);
+  --line:      oklch(0.22 0.008 80);
 }
+/* Gröna statusfärger i mörkt läge */
+[data-theme="dark"] .read-badge {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.2);
+}
+[data-theme="dark"] .compact-row__check { color: #4ade80; }
+[data-theme="dark"] .save-status--ok    { color: #4ade80; }
+[data-theme="dark"] .login-form input   { background: var(--surface); border-color: var(--line); }
+[data-theme="dark"] .login-form input:focus { border-color: var(--ink); }
+[data-theme="dark"] .login-card         { background: var(--surface); border-color: var(--line); }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: var(--surface); color: var(--ink); font-family: 'Inter Tight', system-ui, sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
@@ -126,8 +120,11 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 /* ===== Brand header ===== */
 .brand-header {
   padding: 44px 40px 22px;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
+  /* Ingen justify-content: center — vänsterjusteras med .content */
 }
 .brand-header__link {
   display: flex;
@@ -164,7 +161,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   line-height: 1.2;
 }
 @media (max-width: 720px) {
-  .brand-header { padding: 28px 20px 14px; }
+  .brand-header { padding: 28px 20px 14px; justify-content: center; } /* centrera på mobil */
   .brand-header__link { flex-wrap: wrap; justify-content: center; gap: 12px; }
   .brand-header__logo { width: 50px; height: 50px; font-size: 32px; border-radius: 13px; }
   .brand-header__name { font-size: 32px; }

@@ -92,6 +92,8 @@ const Icon = ({ name, size = 16 }) => {
     rows:          <><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></>,
     grid:          <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
     'book-open':   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
+    moon:          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>,
+    sun:           <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -536,7 +538,7 @@ function LoginModal({ onClose, isAnon }) {
 }
 
 // ----- Nav -----
-function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, isAdmin, onOpenLogin, onGoHome, onOpenAbout }) {
+function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon, isAdmin, onOpenLogin, onGoHome, onOpenAbout, colorScheme, onToggleTheme }) {
   return (
     <header className="nav">
       <button className="nav__brand" onClick={onGoHome}>
@@ -555,6 +557,10 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
           <Icon name="search" size={14} />
           <input placeholder="Sök…" value={query} onChange={e => setQuery(e.target.value)} />
         </div>
+        <button className="icon-btn theme-toggle" onClick={onToggleTheme}
+                title={colorScheme === 'dark' ? 'Byt till ljust läge' : 'Byt till mörkt läge'}>
+          <Icon name={colorScheme === 'dark' ? 'sun' : 'moon'} size={16} />
+        </button>
         {isAnon ? (
           <button className="btn btn--ghost" onClick={onOpenLogin}>
             Logga in
@@ -878,6 +884,24 @@ function App() {
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [aboutOpen,   setAboutOpen]   = useState(false)
 
+  // Mörkt/ljust läge
+  const [colorScheme, setColorScheme] = useState(() => {
+    const stored = localStorage.getItem('colorScheme')
+    if (stored === 'dark' || stored === 'light') return stored
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
+  const toggleTheme = useCallback(() => {
+    setColorScheme(prev => {
+      const next = prev === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('colorScheme', next)
+      document.documentElement.setAttribute('data-theme', next)
+      return next
+    })
+  }, [])
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', colorScheme)
+  }, [colorScheme])
+
   // Synka active/query → URL (delningsbara länkar)
   useEffect(() => {
     const p = new URLSearchParams()
@@ -1103,7 +1127,8 @@ function App() {
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
            active={active} onSetActive={setActive} onLogout={handleLogout}
            isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)}
-           onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)} />
+           onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)}
+           colorScheme={colorScheme} onToggleTheme={toggleTheme} />
 
       <header className="brand-header">
         <button className="brand-header__link" onClick={goHome}>
