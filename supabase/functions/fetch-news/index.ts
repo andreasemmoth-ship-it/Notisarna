@@ -24,7 +24,9 @@ const DEFAULT_FEEDS: Record<string, Category> = {
   sverige: {
     label: 'Sverige', hue: 0,
     sources: [
-      ['SVT Nyheter', 'https://www.svt.se/nyheter/rss.xml', true],
+      ['SVT Nyheter', 'https://www.svt.se/rss.xml', true],
+      ['Dagens Nyheter', 'https://www.dn.se/rss/', true],
+      ['Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', true],
     ],
   },
   teknik: {
@@ -32,15 +34,15 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['The Verge',   'https://www.theverge.com/rss/index.xml',            true],
       ['Feber',       'https://feber.se/rss/',                             true],
-      ['Ars Technica','https://feeds.arstechnica.com/arstechnica/index',   false],
-      ['Hacker News', 'https://hnrss.org/frontpage',                       false],
+      ['Tech Radar',  'https://www.techradar.com/feeds.xml',               true],
+      ['Forbes Innovation', 'https://www.forbes.com/innovation/feed',      true],
     ],
   },
   varlden: {
     label: 'Världen', hue: 280,
     sources: [
-      ['Reuters',  'https://feeds.reuters.com/reuters/worldNews',     true],
       ['BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml',     true],
+      ['New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', true],
     ],
   },
   naringsliv: {
@@ -48,6 +50,7 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['Dagens industri', 'https://www.di.se/rss',                                       true],
       ['SVD Näringsliv',  'https://www.svd.se/?service=rss&type=section&id=24561',       true],
+      ['EFN', 'https://efn.se/rss/infront', true],
     ],
   },
   lokalt: {

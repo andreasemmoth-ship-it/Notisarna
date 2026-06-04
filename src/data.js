@@ -5,21 +5,24 @@ export const RSS_FEEDS = {
     { name: 'PWC Tax Matters',    url: 'https://taxmatters.pwc.se/feed',                                     enabled: true  },
   ],
   sverige: [
-    { name: 'SVT Nyheter',        url: 'https://www.svt.se/nyheter/rss.xml',                                 enabled: true  },
+    { name: 'SVT Nyheter',        url: 'https://www.svt.se/rss.xml',                                         enabled: true  },
+    { name: 'Dagens Nyheter',     url: 'https://www.dn.se/rss/',                                             enabled: true  },
+    { name: 'Ekot',               url: 'https://api.sr.se/rss/channel?id=83&formatId=1',                      enabled: true  },
   ],
   teknik: [
     { name: 'The Verge',          url: 'https://www.theverge.com/rss/index.xml',                             enabled: true  },
     { name: 'Feber',              url: 'https://feber.se/rss/',                                              enabled: true  },
-    { name: 'Ars Technica',       url: 'https://feeds.arstechnica.com/arstechnica/index',                    enabled: false },
-    { name: 'Hacker News',        url: 'https://hnrss.org/frontpage',                                        enabled: false },
+    { name: 'Tech Radar',         url: 'https://www.techradar.com/feeds.xml',                                enabled: true  },
+    { name: 'Forbes Innovation',  url: 'https://www.forbes.com/innovation/feed',                             enabled: true  },
   ],
   varlden: [
-    { name: 'Reuters',            url: 'https://feeds.reuters.com/reuters/worldNews',                        enabled: true  },
-    { name: 'BBC News',           url: 'https://feeds.bbci.co.uk/news/world/rss.xml',                       enabled: true  },
+    { name: 'BBC News',           url: 'https://feeds.bbci.co.uk/news/world/rss.xml',                        enabled: true  },
+    { name: 'New York Times',     url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',             enabled: true  },
   ],
   naringsliv: [
     { name: 'Dagens industri',    url: 'https://www.di.se/rss',                                              enabled: true  },
-    { name: 'SVD Näringsliv',     url: 'https://www.svd.se/?service=rss&type=section&id=24561',             enabled: true  },
+    { name: 'SVD Näringsliv',     url: 'https://www.svd.se/?service=rss&type=section&id=24561',              enabled: true  },
+    { name: 'EFN',                url: 'https://efn.se/rss/infront',                                         enabled: true  },
   ],
   lokalt: [
     { name: 'SVT Stockholm',      url: 'https://www.svt.se/nyheter/lokalt/stockholm/rss.xml',               enabled: true  },

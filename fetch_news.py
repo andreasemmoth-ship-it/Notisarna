@@ -16,30 +16,33 @@ FEEDS: dict = {
     'skatt': {
         'label': 'Skatt & juridik', 'hue': 24,
         'sources': [
-            ('SKV Rättslig vägledning 1', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.71e0e530146a50ea9ac139', True),
-            ('SKV Rättslig vägledning 2', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.669f7efe1468ee8b548162e', True),
-            ('SKV Rättslig vägledning 3', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.703cf5a5146ada421629626', True),
-            ('SKV Rättslig vägledning 4', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.703cf5a5146ada421629657', True),
-            ('SKV Rättslig vägledning 5', 'https://www4.skatteverket.se/4.5606ef3015064c8c07415c5/12.5606ef3015064c8c07415cd.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8&feed=4.669f7efe1468ee8b548161f', True),
-            ('Skatterättsnämnden', 'https://skatterattsnamnden.se/4.14dfc9b0163796ee3e77aa3a/12.14dfc9b0163796ee3e77aa45.portlet?state=rss&sv.contenttype=text/xml;charset=UTF-8', True),
-            ('PwC Tax Matters', 'https://blogg.pwc.se/taxmatters/rss.xml', True),
-            ('Regeringen (skatt)', 'https://www.regeringen.se/Filter/RssFeed?filterType=Taxonomy&filterByType=FilterablePageBase&preFilteredCategories=1284%2C1285%2C1286%2C1287%2C1288%2C1290%2C1291%2C1292%2C1293%2C1294%2C1295%2C1296%2C1297%2C2425&rootPageReference=0&filteredContentCategories=2097%2C2540%2C1339%2C2098%2C1334%2C1341%2C2099%2C1324%2C1325%2C1326%2C1327%2C2085%2C1329%2C1330%2C1331%2C1332&filteredPoliticalLevelCategories=&filteredPoliticalAreaCategories=1267&filteredPublisherCategories=', True),
-            ('HFD nyheter', 'https://www.domstol.se/feed/56/?searchPageId=1092&scope=news&facets=%5B{%22id%22:%22organization%22,%22name%22:%22%22,%22type%22:%22list%22,%22facets%22:%5B{%22value%22:%221076%22}%5D},{%22id%22:%22NewsArticleType%22,%22name%22:%22%22,%22type%22:%22list%22,%22facets%22:%5B{%22value%22:%22news%22}%5D}%5D', True),
+            ('Skatteverket', 'https://www.skatteverket.se/rss/nyheter.rss', True),
+            ('HFD nyheter', 'https://www.domstol.se/hfd/feed', True),
+            ('PwC Tax Matters', 'https://taxmatters.pwc.se/feed', True),
+        ],
+    },
+    'sverige': {
+        'label': 'Sverige', 'hue': 0,
+        'sources': [
+            ('SVT Nyheter', 'https://www.svt.se/rss.xml', True),
+            ('Dagens Nyheter', 'https://www.dn.se/rss/', True),
+            ('Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', True),
         ],
     },
     'teknik': {
         'label': 'Teknik', 'hue': 220,
         'sources': [
-            ('Ars Technica', 'https://feeds.arstechnica.com/arstechnica/index', True),
             ('The Verge', 'https://www.theverge.com/rss/index.xml', True),
-            ('Hacker News', 'https://hnrss.org/frontpage', False),
+            ('Feber', 'https://feber.se/rss/', True),
+            ('Tech Radar', 'https://www.techradar.com/feeds.xml', True),
+            ('Forbes Innovation', 'https://www.forbes.com/innovation/feed', True),
         ],
     },
     'varlden': {
         'label': 'Världen', 'hue': 280,
         'sources': [
-            ('Reuters', 'https://feeds.reuters.com/reuters/worldNews', True),
             ('BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml', True),
+            ('New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', True),
         ],
     },
     'naringsliv': {
@@ -47,6 +50,7 @@ FEEDS: dict = {
         'sources': [
             ('Dagens industri', 'https://www.di.se/rss', True),
             ('SVD Näringsliv', 'https://www.svd.se/?service=rss&type=section&id=24561', True),
+            ('EFN', 'https://efn.se/rss/infront', True),
         ],
     },
     'lokalt': {
