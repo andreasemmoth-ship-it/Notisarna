@@ -200,7 +200,8 @@ Deno.serve(async (req) => {
     const token = authHeader.replace('Bearer ', '').trim()
     const anonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    if (token !== anonKey && token !== serviceKey) {
+    const fallbackAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1enFxdmh1cGd2b2pkZXVpaG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDM1OTksImV4cCI6MjA5MzcxOTU5OX0.xwJik8yUoCbntl9X0_Ces0y4A_FDJyi9Ah3sOZy7FNQ'
+    if (token !== anonKey && token !== serviceKey && token !== fallbackAnonKey) {
       return new Response(JSON.stringify({ ok: false, error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' }
