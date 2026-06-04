@@ -193,8 +193,20 @@ async function parseFeed(
   return articles
 }
 
-Deno.serve(async () => {
+Deno.serve(async (req) => {
   try {
+    // ----- Authorization check -----
+    const authHeader = req.headers.get('Authorization') ?? ''
+    const token = authHeader.replace('Bearer ', '').trim()
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY')
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
+    if (token !== anonKey && token !== serviceKey) {
+      return new Response(JSON.stringify({ ok: false, error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
     const { data: row } = await db.from('feed_config').select('feeds, categories').eq('id', 1).single()
     const feedConfig: Record<string, Array<{name: string; url: string; enabled: boolean}>> = row?.feeds ?? {}
     const customCats: Array<{key: string; label: string; hue: number}> = row?.categories ?? []
