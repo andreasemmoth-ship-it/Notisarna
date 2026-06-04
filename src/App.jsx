@@ -1111,10 +1111,16 @@ function App() {
 
   useEffect(() => {
     fetchNews()
+    const interval = setInterval(fetchNews, 60000) // Fallback: hämta var 60:e sekund
+
     const channel = db.channel('news-updates')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, fetchNews)
       .subscribe()
-    return () => { db.removeChannel(channel) }
+
+    return () => {
+      clearInterval(interval)
+      db.removeChannel(channel)
+    }
   }, [fetchNews, session?.user?.id])
 
   const filtered = useMemo(() => {
