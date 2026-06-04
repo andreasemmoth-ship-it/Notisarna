@@ -1213,12 +1213,12 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 }
 /* Sizes based on container class context */
 .hero-card .placeholder-logo {
-  width: 48px; height: 48px; border-radius: 12px; font-size: 30px;
+  width: 64px; height: 64px; border-radius: 16px; font-size: 40px;
 }
 .news-card .placeholder-logo {
-  width: 36px; height: 36px; border-radius: 9px; font-size: 22px;
+  width: 64px; height: 64px; border-radius: 16px; font-size: 40px;
 }
 .compact-row .placeholder-logo {
-  width: 24px; height: 24px; border-radius: 6px; font-size: 15px;
+  width: 32px; height: 32px; border-radius: 8px; font-size: 20px;
 }
 
