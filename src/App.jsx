@@ -8,7 +8,7 @@ const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 const DEFAULT_CAT_KEYS = new Set(['all', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
 const HIDDEN_ANON_CATS = new Set(['skatt', 'lokalt', 'kultur'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
-const PAGE_SIZE = 48
+const PAGE_SIZE = 30
 const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
 
 // ----- Error Boundary -----
@@ -266,12 +266,14 @@ function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
   return (
     <article className={`hero-card ${isRead ? 'is-read' : ''}`}>
       <div className="hero-card__media" style={{ background: placeholderBg(item.hue) }}>
-        {item.image
-          ? <img src={item.image} alt="" className="media-img"
+        <div className="placeholder-logo-wrap">
+          <div className="placeholder-logo">N</div>
+        </div>
+        {item.image && (
+          <img src={item.image} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
-          : <><span className="media-stripe" /><span className="media-label">[ {item.category} bild ]</span></>
-        }
+        )}
       </div>
       <div className="hero-card__body">
         <div className="hero-card__meta">
@@ -312,12 +314,14 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
   return (
     <article className={`news-card ${isRead ? 'is-read' : ''}`}>
       <div className="news-card__media" style={{ background: placeholderBg(item.hue) }}>
-        {item.image
-          ? <img src={item.image} alt="" className="media-img"
+        <div className="placeholder-logo-wrap">
+          <div className="placeholder-logo">N</div>
+        </div>
+        {item.image && (
+          <img src={item.image} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
-          : <><span className="media-stripe" /><span className="media-label">[ {item.category.toLowerCase()} ]</span></>
-        }
+        )}
         <span className="cat-tag cat-tag--overlay" data-hue={item.hue}>{item.category}</span>
       </div>
       <div className="news-card__body">
@@ -357,6 +361,9 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpen
   return (
     <div className={`compact-row ${isRead ? 'is-read' : ''}`}>
       <div className="compact-row__img" style={{ background: placeholderBg(item.hue) }}>
+        <div className="placeholder-logo-wrap">
+          <div className="placeholder-logo">N</div>
+        </div>
         {item.image && (
           <img src={item.image} alt="" className="media-img"
                loading="lazy" decoding="async"

@@ -1190,3 +1190,35 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   transition: color 0.15s, text-decoration-color 0.15s;
 }
 .foot__privacy-link:hover { color: var(--ink); text-decoration-color: var(--muted); }
+
+/* ===== Placeholder Logo ===== */
+.placeholder-logo-wrap {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.placeholder-logo {
+  background: var(--ink);
+  color: var(--surface);
+  display: grid;
+  place-items: center;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+  box-shadow: 0 6px 16px -8px color-mix(in oklch, var(--ink) 50%, transparent);
+  user-select: none;
+}
+/* Sizes based on container class context */
+.hero-card .placeholder-logo {
+  width: 48px; height: 48px; border-radius: 12px; font-size: 30px;
+}
+.news-card .placeholder-logo {
+  width: 36px; height: 36px; border-radius: 9px; font-size: 22px;
+}
+.compact-row .placeholder-logo {
+  width: 24px; height: 24px; border-radius: 6px; font-size: 15px;
+}
+
