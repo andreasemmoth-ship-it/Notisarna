@@ -534,6 +534,7 @@ function LoginModal({ onClose, isAnon }) {
                 <ul className="signup-benefits__list">
                   <li><Icon name="check" size={13} /> Synkroniseras på alla dina enheter</li>
                   <li><Icon name="check" size={13} /> Arkiv och läst-historik sparas permanent</li>
+                  <li><Icon name="check" size={13} /> Lås upp fler kategorier (Skatt, Lokalt, Kultur)</li>
                   <li><Icon name="check" size={13} /> Gratis, alltid</li>
                 </ul>
               </div>
@@ -872,7 +873,11 @@ function App() {
     return () => subscription.unsubscribe()
   }, [])
 
-  const handleLogout = useCallback(() => db.auth.signOut(), [])
+  const handleLogout = useCallback(() => {
+    db.auth.signOut().then(() => {
+      window.location.href = window.location.origin + window.location.pathname
+    })
+  }, [])
 
   const [active,        setActive]        = useState(() => {
     const p = new URLSearchParams(window.location.search)
@@ -1206,7 +1211,7 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att bevara dina bokmärken och lästa artiklar på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis
@@ -1236,7 +1241,7 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att bevara dina bokmärken och lästa artiklar på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis

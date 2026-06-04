@@ -14,11 +14,11 @@
 [data-theme="dark"] {
   --accent:    oklch(0.95 0.006 80);
   --on-accent: #0a0a0a;
-  --bg:        oklch(0.10 0.006 80);
-  --surface:   oklch(0.15 0.007 80);
+  --bg:        oklch(0.18 0.006 80);
+  --surface:   oklch(0.24 0.008 80);
   --ink:       oklch(0.94 0.006 80);
-  --muted:     oklch(0.52 0.008 80);
-  --line:      oklch(0.22 0.008 80);
+  --muted:     oklch(0.62 0.008 80);
+  --line:      oklch(0.30 0.008 80);
 }
 /* Gröna statusfärger i mörkt läge */
 [data-theme="dark"] .read-badge {
