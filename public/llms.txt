@@ -1,0 +1,13 @@
+# Notisarna
+> Notisarna är en ren och personlig nyhetsdashboard som samlar nyheter från svenska och internationella källor på ett ställe.
+
+## Huvudfunktioner
+- **Personligt nyhetsflöde**: Samlar artiklar inom teknik, näringsliv, skatt, kultur, lokala nyheter och globala händelser.
+- **AI-morgonbriefing**: En daglig AI-genererad sammanfattning av de viktigaste nyhetshändelserna.
+- **Läsläge**: Ett distraktionsfritt läsläge för att läsa artiklar direkt i applikationen.
+- **Arkiv & Bevakning**: Spara artiklar för att läsa senare samt möjlighet att bevaka specifika ämnen.
+- **Källhantering**: Hantera och koppla anpassade RSS-flöden per kategori.
+
+## Struktur & Sidor
+Eftersom Notisarna är byggd som en Single Page Application (SPA), nås alla funktioner och vyer direkt från startsidan via gränssnittet:
+- [Startsida / Flöde](https://notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
