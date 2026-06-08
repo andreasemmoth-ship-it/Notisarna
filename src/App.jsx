@@ -156,7 +156,7 @@ function PrivacyModal({ onClose }) {
 }
 
 // ----- Om Notiserna -----
-function AboutModal({ isAnon, onClose, onOpenPrivacy }) {
+function AboutModal({ onClose, onOpenPrivacy }) {
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -167,8 +167,10 @@ function AboutModal({ isAnon, onClose, onOpenPrivacy }) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
+  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv'])
+
   const sourcesByCategory = Object.entries(RSS_FEEDS)
-    .filter(([key]) => !isAnon || !HIDDEN_ANON_CATS.has(key))
+    .filter(([key]) => PUBLIC_ABOUT_CATS.has(key))
     .map(([key, feeds]) => {
       const cat = CATEGORIES.find(c => c.key === key)
       return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
@@ -1330,7 +1332,7 @@ function App() {
       {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-      {aboutOpen && <AboutModal isAnon={isAnon} onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
+      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
       {isAdmin && (
