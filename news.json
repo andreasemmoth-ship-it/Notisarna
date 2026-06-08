@@ -1,6 +1,19 @@
 {
   "articles": [
     {
+      "id": "sverige_a6615f3b",
+      "category": "Sverige",
+      "categoryKey": "sverige",
+      "source": "Dagens Nyheter",
+      "date": "8 jun 2026",
+      "headline": "Larsson: ”Vi måste ha en öppen dialog”",
+      "summary": "Processen att forma startelvan till VM-premiären mot Tunisien är ständigt pågående. – Graham har en idé, utan att den är spikad på något sätt, säger assisterande förbundskaptenen Sebastian Larsson.",
+      "hue": 0,
+      "link": "https://www.dn.se/sport/larsson-vi-maste-ha-en-oppen-dialog/",
+      "image": "https://static.bonniernews.se/ba/b40c8fd3-808c-4380-ae72-6c29135b3026.jpeg?io=1&amp;width=1000",
+      "featured": true
+    },
+    {
       "id": "teknik_a41fc828",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -10,8 +23,7 @@
       "summary": "Google is warning about hackers walking into offices, pretending to be IT support.",
       "hue": 220,
       "link": "https://www.techradar.com/pro/security/silent-ransom-group-breaks-into-businesses-to-launch-ransomware-and-extortion-campaign",
-      "image": "https://cdn.mos.cms.futurecdn.net/4adJ3T5YpKFvEjfzbkU6nL-1280-80.jpg",
-      "featured": true
+      "image": "https://cdn.mos.cms.futurecdn.net/4adJ3T5YpKFvEjfzbkU6nL-1280-80.jpg"
     },
     {
       "id": "varlden_deec2f00",
@@ -72,18 +84,6 @@
       "hue": 0,
       "link": "https://www.dn.se/sverige/polisens-insats-mot-elsparkcyklar-vissa-gar-i-110/",
       "image": "https://static.bonniernews.se/ba/7a8ea38b-0a06-460f-8d45-4d95c10b6272.jpeg?io=1&amp;width=1000"
-    },
-    {
-      "id": "sverige_ea5f7812",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Ekot",
-      "date": "8 jun 2026",
-      "headline": "Närmare 400 har räddats – kidnappades av Boko Haram",
-      "summary": "Närmare 400 kidnappade kvinnor och barn har räddats i Nigeria av landets armé, rapporterar AFP.De kidnappades tidigare under våren av den jihadistiska terrorgruppen Boko Haram i nordöstra Nigeria.Boko Haram slåss sedan 1…",
-      "hue": 0,
-      "link": "https://www.sverigesradio.se/artikel/9233301",
-      "image": ""
     },
     {
       "id": "naringsliv_52d02fa6",
@@ -311,7 +311,7 @@
       "summary": "Än en gång försöker stormakter tvinga fram förändringar i Mellanöstern. Men kanske ligger lösningen på regionens problem i att göra helt tvärtom.",
       "hue": 150,
       "link": "https://www.svd.se/a/vr64LV/krigen-i-mellanostern-finns-det-en-losning-pa-regionens-problem",
-      "image": "https://akamai.vgc.no/v2/images/d372be8e-898e-319e-bbd9-51054d0c2168?format=auto&w=1080&s=9eb1d955fd62a92c79098404709f1ba9785fadd1"
+      "image": "https://svd.vgc.no/v2/images/d372be8e-898e-319e-bbd9-51054d0c2168?h=630&q=80&upscale=true&w=1200&s=ad4542e2176651df0c0bb1a0e93d4c6beab7ffc4"
     },
     {
       "id": "naringsliv_986e17fe",
@@ -446,30 +446,6 @@
       "image": "https://static.bonniernews.se/ba/b1881d82-8122-492c-b8cf-3633e5fdf36d.jpeg?width=600"
     },
     {
-      "id": "sverige_6b88085d",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Dagens Nyheter",
-      "date": "8 jun 2026",
-      "headline": "Hoppet om landslaget tillbaka inför Sydafrikas återkomst till VM",
-      "summary": "KAPSTADEN. Efter 16 långa år är Sydafrika tillbaka i fotbolls-VM och landslaget ”Bafana Bafana” spelar premiärmatchen den 11 juni – mot samma motstånd som 2010 när de själva stod värdar för turneringen. Men nu är det Mex…",
-      "hue": 0,
-      "link": "https://www.dn.se/sport/hoppet-om-landslaget-tillbaka-infor-sydafrikas-aterkomst-till-vm/",
-      "image": "https://static.bonniernews.se/ba/bc822dec-dbb0-4899-a5a6-931608472bb5.jpeg?io=1&amp;width=1000"
-    },
-    {
-      "id": "sverige_f007fddc",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Ekot",
-      "date": "8 jun 2026",
-      "headline": "Frankrike och Tyskland oense om gemensamt stridsflyg",
-      "summary": "Tyskland och Frankrike har avslutat arbetet med att utveckla ett gemensamt stridsflygplan, det prestigefyllda mångmiljonprojektet FCAS, rapporterar flera tyska medier.Samarbetet var tänkt att skapa framtidens flygvapen o…",
-      "hue": 0,
-      "link": "https://www.sverigesradio.se/artikel/9233263",
-      "image": ""
-    },
-    {
       "id": "varlden_8614142a",
       "category": "Världen",
       "categoryKey": "varlden",
@@ -492,6 +468,18 @@
       "hue": 0,
       "link": "https://www.svt.se/nyheter/lokalt/vasterbotten/experten-nils-funcke-om-slagsmalsfilmen-utgor-inte-grund-for-brott",
       "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.79/0.48/1f1908654c6e0f9ca6d5bcf69f1ca9f82e1266c4ec548510e1f4b2909e85d1b6"
+    },
+    {
+      "id": "varlden_cc3aa7ce",
+      "category": "Världen",
+      "categoryKey": "varlden",
+      "source": "BBC News",
+      "date": "8 jun 2026",
+      "headline": "Jailed crypto founder Sam Bankman-Fried seeks Trump pardon",
+      "summary": "The former leader of crypto platform FTX, currently serving a 25-year sentence, on Monday officially applied to be pardoned.",
+      "hue": 280,
+      "link": "https://www.bbc.com/news/articles/cjwgd6jqd5do?at_medium=RSS&at_campaign=rss",
+      "image": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/a742/live/c593be00-6355-11f1-8b15-6100cfbc3083.jpg"
     },
     {
       "id": "teknik_1b78a19b",
@@ -530,18 +518,6 @@
       "image": "https://delivery2.objectic.io/ncDCPjqO3MTHdg7wODCN8l/AM0AL7jZa0n7/5yt9h4ltRZsrwrnNMRUvwgGJ7Hho08Mw7VlA1yAL.png"
     },
     {
-      "id": "sverige_c95582ec",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Ekot",
-      "date": "8 jun 2026",
-      "headline": "Åklagaren överklagar – ”bonusprinsen” kvar i häktet",
-      "summary": "Den norska så kallade bonusprinsen Marius Borg Høiby har fått tillstånd att lämna häktet på grund av hans mammas, kronprinsessan Mette-Marits, förvärrade hälsotillstånd. Men åklagaren har redan överklagat beslutet och än…",
-      "hue": 0,
-      "link": "https://www.sverigesradio.se/artikel/9233249",
-      "image": ""
-    },
-    {
       "id": "naringsliv_2f458389",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -564,30 +540,6 @@
       "hue": 150,
       "link": "https://efn.se/prospekteringsboom-for-epiroc-unikt-erbjudande",
       "image": "https://delivery2.objectic.io/ncDCPjqO3MTHdg7wODCN8l/AM0AL7jZa0n7/5F72ow0gBDnPk5RNTelQNkX43Nlx5y1Xw9Httlxc.jpg"
-    },
-    {
-      "id": "sverige_fc597b70",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Ekot",
-      "date": "8 jun 2026",
-      "headline": "Volontärer rustar gården – Ulf Kristersson kritiseras",
-      "summary": "Ulf Kristersson anklagas, enligt Aftonbladet, för att blanda sin roll som statsminister med privata intressen kring parets herrgård i Sörmland.Juridikprofessorn Joakim Nergelius säger att upplägget kan behöva granskas av…",
-      "hue": 0,
-      "link": "https://www.sverigesradio.se/artikel/9233224",
-      "image": ""
-    },
-    {
-      "id": "sverige_4824b528",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Ekot",
-      "date": "8 jun 2026",
-      "headline": "Trumps roll i Irans besked: ”Indirekt men viktig”",
-      "summary": "Israel och Iran har meddelat att de för tillfället kommer att avbryta sina attacker mot varandra.”Ses som en öppning för fortsatt möjlighet till en diplomatisk lösning”, säger Peder Gustafson, Ekots utsände i Washington.…",
-      "hue": 0,
-      "link": "https://www.sverigesradio.se/artikel/9233179",
-      "image": ""
     },
     {
       "id": "naringsliv_a0240a2d",
@@ -647,7 +599,7 @@
       "summary": "Den man som stått åtalad för att ha dränkt sin fru i Sigtunafjärden för elva år sedan frias nu i Attunda tingsrätt.",
       "hue": 60,
       "link": "https://www.svt.se/nyheter/lokalt/stockholm/man-frias-for-11-ar-gammalt-mord-i-sigtuna",
-      "image": ""
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.36/0.39/fe9a2eaff3ba29dcdc6e95d3dcfc5809ce0974a78403f7c18ceb988d1cd4543a"
     },
     {
       "id": "varlden_af3ea9f8",
@@ -683,19 +635,7 @@
       "summary": "Trots avrådan från att äta fisk från Drevviken och Magelungen på grund av höga PFAS-halter, är den övergripande situationen i Stockholms vatten betydligt bättre i dag än när Miljöförvaltningen började övervaka PFAS i vat…",
       "hue": 60,
       "link": "https://www.svt.se/nyheter/lokalt/stockholm/ny-avradan-for-fisk-fran-drevviken-men-pfas-minskar-i-flera-sjoar",
-      "image": ""
-    },
-    {
-      "id": "varlden_74162e3d",
-      "category": "Världen",
-      "categoryKey": "varlden",
-      "source": "BBC News",
-      "date": "7 jun 2026",
-      "headline": "'A World Cup for them not us': Fans' anger at US travel bans and visa restrictions",
-      "summary": "Fans across the world say US travel bans and visa regulations make them feel excluded from the World Cup.",
-      "hue": 280,
-      "link": "https://www.bbc.com/news/articles/cx212p8r28eo?at_medium=RSS&at_campaign=rss",
-      "image": "https://ichef.bbci.co.uk/ace/standard/240/cpsprodpb/5caf/live/02106910-60d0-11f1-89a3-d1f559421220.jpg"
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.46/0.57/49942a5a9bf54e8347bdea2d9abc041314422d39a6d41b9a2d5e0622de0b35a8"
     },
     {
       "id": "lokalt_dfbfef43",
@@ -842,6 +782,6 @@
       "image": ""
     }
   ],
-  "generated_at": "2026-06-08T19:06:03.922786+00:00",
-  "count": 70
+  "generated_at": "2026-06-08T19:21:24.555915+00:00",
+  "count": 65
 }

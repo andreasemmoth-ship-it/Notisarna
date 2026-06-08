@@ -7,7 +7,6 @@ export const RSS_FEEDS = {
   sverige: [
     { name: 'SVT Nyheter',        url: 'https://www.svt.se/rss.xml',                                         enabled: true  },
     { name: 'Dagens Nyheter',     url: 'https://www.dn.se/rss/',                                             enabled: true  },
-    { name: 'Ekot',               url: 'https://api.sr.se/rss/channel?id=83&formatId=1',                      enabled: true  },
   ],
   teknik: [
     { name: 'The Verge',          url: 'https://www.theverge.com/rss/index.xml',                             enabled: true  },

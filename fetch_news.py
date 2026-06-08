@@ -26,7 +26,6 @@ FEEDS: dict = {
         'sources': [
             ('SVT Nyheter', 'https://www.svt.se/rss.xml', True),
             ('Dagens Nyheter', 'https://www.dn.se/rss/', True),
-            ('Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', True),
         ],
     },
     'teknik': {

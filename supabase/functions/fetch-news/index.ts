@@ -26,7 +26,6 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['SVT Nyheter', 'https://www.svt.se/rss.xml', true],
       ['Dagens Nyheter', 'https://www.dn.se/rss/', true],
-      ['Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', true],
     ],
   },
   teknik: {
