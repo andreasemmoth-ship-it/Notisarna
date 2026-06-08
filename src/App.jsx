@@ -156,7 +156,7 @@ function PrivacyModal({ onClose }) {
 }
 
 // ----- Om Notiserna -----
-function AboutModal({ onClose, onOpenPrivacy }) {
+function AboutModal({ isAnon, onClose, onOpenPrivacy }) {
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -167,10 +167,12 @@ function AboutModal({ onClose, onOpenPrivacy }) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const sourcesByCategory = Object.entries(RSS_FEEDS).map(([key, feeds]) => {
-    const cat = CATEGORIES.find(c => c.key === key)
-    return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
-  }).filter(g => g.feeds.length > 0)
+  const sourcesByCategory = Object.entries(RSS_FEEDS)
+    .filter(([key]) => !isAnon || !HIDDEN_ANON_CATS.has(key))
+    .map(([key, feeds]) => {
+      const cat = CATEGORIES.find(c => c.key === key)
+      return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
+    }).filter(g => g.feeds.length > 0)
 
   return (
     <div className="reader-overlay" onClick={onClose}>
@@ -1328,7 +1330,7 @@ function App() {
       {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
+      {aboutOpen && <AboutModal isAnon={isAnon} onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
       {isAdmin && (
