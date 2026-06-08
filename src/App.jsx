@@ -404,16 +404,24 @@ function ReaderModal({ item, onClose }) {
   const [errMsg,  setErrMsg]  = useState('')
 
   useEffect(() => {
-    fetch(
-      `${SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`,
-      { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-    )
-      .then(r => r.json())
-      .then(json => {
-        if (json.error) { setErrMsg(json.error); setState('error') }
-        else { setData(json); setState('ok') }
-      })
-      .catch(err => { setErrMsg(String(err)); setState('error') })
+    db.auth.getSession().then(({ data: { session } }) => {
+      const token = session?.access_token || SUPABASE_ANON_KEY
+      fetch(
+        `${SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      )
+        .then(r => r.json())
+        .then(json => {
+          if (json.error) { setErrMsg(json.error); setState('error') }
+          else { setData(json); setState('ok') }
+        })
+        .catch(err => { setErrMsg(String(err)); setState('error') })
+    })
   }, [item.link])
 
   useEffect(() => {

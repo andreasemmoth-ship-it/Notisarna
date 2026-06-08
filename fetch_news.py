@@ -75,26 +75,7 @@ SV_MONTHS = {
 }
 
 
-def generate_briefing(articles: list[dict]) -> str:
-    """Build a short morning briefing from today's top articles per category."""
-    if not articles:
-        return ''
-    seen: set = set()
-    snippets: list = []
-    for a in articles:
-        cat = a['categoryKey']
-        if cat not in seen:
-            seen.add(cat)
-            snippets.append(f"{a['headline'].rstrip('.')} ({a['source']})")
-        if len(snippets) >= 3:
-            break
-    today = sv_date(datetime.now(timezone.utc))
-    total = len(articles)
-    cat_count = len({a['categoryKey'] for a in articles})
-    text = f"{today}: {total} artiklar från {cat_count} kategorier."
-    if snippets:
-        text += " Höjdpunkter: " + " · ".join(snippets) + "."
-    return text
+
 MAX_ITEMS = 5
 MAX_SUMMARY = 220
 ATOM_NS = 'http://www.w3.org/2005/Atom'
@@ -327,7 +308,6 @@ def main() -> None:
         'articles': articles,
         'generated_at': datetime.now(timezone.utc).isoformat(),
         'count': len(articles),
-        'briefing': generate_briefing(articles),
     }
 
     with open('news.json', 'w', encoding='utf-8') as f:
