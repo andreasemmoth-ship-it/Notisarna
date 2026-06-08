@@ -1229,7 +1229,7 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis
@@ -1259,7 +1259,7 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis
