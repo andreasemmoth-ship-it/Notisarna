@@ -171,15 +171,40 @@ def fetch_url(url: str) -> bytes | None:
 def find_feed_image_element(element) -> str:
     try:
         xml_str = ET.tostring(element, encoding='utf-8').decode('utf-8')
-        m = re.search(r'<[^:>]*:?content[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
-        if m:
-            return m.group(1)
+        
+        # Extract all media:content/content tags and find the first one that is NOT a video
+        content_tags = re.findall(r'<[^:>]*:?content\s+([^>]+)>', xml_str, re.IGNORECASE)
+        for tag_content in content_tags:
+            url_match = re.search(r'url=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+            if url_match:
+                url = url_match.group(1)
+                medium_match = re.search(r'medium=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+                type_match = re.search(r'type=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+                
+                is_video = (
+                    (medium_match and medium_match.group(1).lower() == 'video') or
+                    (type_match and type_match.group(1).lower().startswith('video/')) or
+                    '.mp4' in url.lower() or
+                    '.m3u8' in url.lower() or
+                    '.webm' in url.lower()
+                )
+                if not is_video:
+                    return url
+                    
+        # Try media:thumbnail
         m = re.search(r'<[^:>]*:?thumbnail[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
             return m.group(1)
+            
+        # Try enclosure (excluding videos)
         m = re.search(r'<enclosure[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
-            return m.group(1)
+            url = m.group(1)
+            is_video = '.mp4' in url.lower() or '.m3u8' in url.lower() or '.webm' in url.lower()
+            if not is_video:
+                return url
+                
+        # Try link enclosure
         m = re.search(r'<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
             return m.group(1)

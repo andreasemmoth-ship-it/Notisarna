@@ -108,17 +108,42 @@ async function fetchOgImage(url: string): Promise<string> {
 }
 
 function findFeedImage(block: string): string {
-  // Try media:content url="..."
-  let m = block.match(/<media:content[^>]+url=["']([^"']+)["']/i)
-  if (m) return m[1]
-  
+  // Try all media:content tags and find the first one that is NOT a video
+  const contentRegex = /<media:content([\s\S]*?)\/?>/gi
+  let match
+  while ((match = contentRegex.exec(block)) !== null) {
+    const tagContent = match[1]
+    const urlMatch = tagContent.match(/url=["']([^"']+)["']/i)
+    if (urlMatch) {
+      const url = urlMatch[1]
+      const mediumMatch = tagContent.match(/medium=["']([^"']+)["']/i)
+      const typeMatch = tagContent.match(/type=["']([^"']+)["']/i)
+      
+      const isVideo = (mediumMatch && mediumMatch[1].toLowerCase() === 'video') ||
+                      (typeMatch && typeMatch[1].toLowerCase().startsWith('video/')) ||
+                      url.toLowerCase().includes('.mp4') ||
+                      url.toLowerCase().includes('.m3u8') ||
+                      url.toLowerCase().includes('.webm')
+                      
+      if (!isVideo) {
+        return url
+      }
+    }
+  }
+
   // Try media:thumbnail url="..."
-  m = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
+  let m = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
   if (m) return m[1]
   
-  // Try enclosure url="..."
+  // Try enclosure url="..." (excluding videos)
   m = block.match(/<enclosure[^>]+url=["']([^"']+)["']/i)
-  if (m) return m[1]
+  if (m) {
+    const url = m[1]
+    const isVideo = url.toLowerCase().includes('.mp4') || 
+                    url.toLowerCase().includes('.m3u8') || 
+                    url.toLowerCase().includes('.webm')
+    if (!isVideo) return url
+  }
   
   // Try atom enclosure link rel="enclosure" href="..." or vice versa
   m = block.match(/<link[^>]+rel=["']enclosure["'][^>]+href=["']([^"']+)["']/i)

@@ -74,7 +74,13 @@ graph TD
 *   Sidan utnyttjar dynamisk färgsättning i form av HSL/OKLCH-paletter där varje nyhetskategori får ett eget harmoniskt färg-id.
 *   Användaren kan sömlöst växla mellan ett modernt **rutnät (Grid)** och en **kompakt lista** eller **lista** för maximal överblick.
 
+### 5. Egna Artiklar och Blogg (Markdown)
+*   Möjlighet att publicera egna lokala artiklar/ledare direkt i applikationen genom att lägga till Markdown-filer (`.md`) under `src/content/posts/`.
+*   Systemet läser dynamiskt in och parsar frontmatter (titel, datum, beskrivning, bild, etc.) samt renderar artiklarna i ett skräddarsytt, premium läsläge.
+*   Artiklarna sammanställs automatiskt för LLM-klienter i `/llms.txt` via skriptet `generate-llms-txt.js`.
+
 ---
+
 
 ## 🛠️ Teknisk Stack
 
@@ -105,10 +111,12 @@ graph TD
 │   ├── add_read_and_briefings.sql # Sätter upp lässtatus och databasschema
 │   └── setup_two_tier.sql   # Sätter upp RLS-skydd för anonyma vs inloggade profiler
 ├── src/                     # React källkod
-│   ├── App.jsx              # Appens huvudkomponent, auth-hantering och vyer
+│   ├── App.jsx              # Appens huvudkomponent, auth-hantering, vyer och blogg/artikel-renderare
 │   ├── main.jsx             # React entrypoint
 │   ├── data.js              # Standardkällor och kategorier
-│   └── config.js            # Anslutningsuppgifter till Supabase (URL & Anon Key)
+│   ├── config.js            # Anslutningsuppgifter till Supabase (URL & Anon Key)
+│   └── content/             # Statiskt innehåll och artiklar
+│       └── posts/           # Egna artiklar och blogginlägg i Markdown-format (.md)
 ├── supabase/                # Supabase Edge Functions
 │   └── functions/
 │       ├── fetch-news/      # Deno-funktion som hämtar och parsar RSS-flöden
