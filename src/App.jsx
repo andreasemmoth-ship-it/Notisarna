@@ -1092,6 +1092,8 @@ function App() {
   const fetchNews = useCallback(() => {
     db.from('news_articles')
       .select('*')
+      .not('image', 'is', null)
+      .neq('image', '')
       .order('published_at', { ascending: false })
       .range(0, PAGE_SIZE - 1)
       .then(({ data, error }) => {
@@ -1110,6 +1112,8 @@ function App() {
     const from = news.length
     db.from('news_articles')
       .select('*')
+      .not('image', 'is', null)
+      .neq('image', '')
       .order('published_at', { ascending: false })
       .range(from, from + PAGE_SIZE - 1)
       .then(({ data, error }) => {
