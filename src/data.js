@@ -17,6 +17,7 @@ export const RSS_FEEDS = {
   varlden: [
     { name: 'BBC News',           url: 'https://feeds.bbci.co.uk/news/world/rss.xml',                        enabled: true  },
     { name: 'New York Times',     url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',             enabled: true  },
+    { name: 'Associated Press',   url: 'https://feedx.net/rss/ap.xml',                                       enabled: true  },
   ],
   naringsliv: [
     { name: 'Dagens industri',    url: 'https://www.di.se/rss',                                              enabled: true  },
