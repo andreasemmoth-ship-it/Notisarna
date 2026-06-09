@@ -10,3 +10,74 @@
 ## Struktur & Sidor
 Eftersom Notisarna är byggd som en Single Page Application (SPA), nås alla funktioner och vyer direkt från startsidan via gränssnittet:
 - [Startsida / Flöde](https://notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
+
+## Våra Artiklar & Djupanalyser
+Här nedan följer våra egna djuplodande analyser om intressanta ämnen inom ekonomi, teknik och integritet:
+
+### Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google (2026-06-09)
+> Forskningen visar svart på vitt: Så här optimerar du din webbplats när AI-assistenterna tar över sökandet.
+
+# Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google
+
+## Skiftet från Google-sök till AI-svar
+ChatGPT har på kort tid samlat över 800 miljoner aktiva användare i veckan, och Perplexity hanterar över 780 miljoner sökningar varje månad. Användarna ställer inte längre sökfrågor på fyra ord för att sedan klicka sig igenom en lista med tio blå länkar. Istället skriver de in detaljerade frågor på uppåt 23 ord. Resultatet de väntar sig är ett färdigt, paketerat och direkt läsbart svar. Sökvolymen på traditionella sökmotorer faller nu kraftigt – med en beräknad minskning på 25 procent enligt analysföretaget Gartner – i takt med att AI-assistenterna tar över allt mer av den dagliga trafiken.
+
+För den som publicerar innehåll på nätet ritar detta om spelreglerna. Att ligga etta i en söklista spelar ingen roll när användaren får svaret direkt på skärmen utan att klicka sig vidare. Målet är istället att bli den källa som AI-assistenten bygger sitt svar på och väljer att referera till. Här kliver begreppet GEO, Generative Engine Optimization, in i handlingen. Meedan klassisk sökmotoroptimering (SEO) siktar på klick, syftar GEO till att säkra että ditt varumärke citeras när AI-modellen genererar sitt svar.
+
+## Vad forskningen säger om AI-motorernas algoritmer
+Forskare från Princeton University, Georgia Tech, Allen Institute for AI och IIT Delhi genomförde nyligen den första storskaliga akademiska studien om hur man anpassar innehåll för AI-motorer. Rapporten visar svart på vitt että AI-algoritmer utvärderar text helt annorlunda jämfört med traditionella sökmotorer.
+
+Google och liknande tjänster rankar sidor baserat på sökordsmatchning och inkommande länkar. AI-tjänster bygger istället på RAG-arkitektur (Retrieval-Augmented Generation). Det betyder att systemet först letar upp dokument som är relevanta för användarens fråga. Därefter låter den en stor språkmodell läsa, tolka och bryta ner de mest användbara bitarna för att formulera ett svar. Studien visar att AI-motorerna hårdgranskar vilken typ av avsändare informationen har. Där Google ofta ger en blandad mix av källor, har AI-modeller en extrem förkärlek för oberoende redaktionella källor, experttester och omdömen ("earned media"). De väljer aktivt bort företagens egna säljsidor och innehåll från sociala medier när de sätter ihop fakta.
+
+Princeton-studien levererar en mycket specifik insikt som gynnar mindre aktörer. Webbplatser som låg på femte plats i Googles sökresultat ökade sin synlighet i AI-svar med hela 115 procent när de använde rätt GEO-teknik. De högst rankade webbplatserna såg däremot sin synlighet minska något. AI värderar innehållet på meningsnivå istället för att gå på domänens övergripande länkprofil. Mindre bolag kan därför slå ut globala jättar i AI-svaren, förutsatt att deras innehåll är skrivet på ett sätt som AI:n enkelt kan verifiera och extrahera.
+
+## De mest effektiva strategierna enligt datan
+Princeton-forskarna konstruerade en databas, GEO-bench, med 10 000 sökfrågor hämtade från olika branscher. De testade nio skilda metoder för att skriva om texter och mätte vad som fick AI:n att välja dem som källa. Fem av dessa metoder lyfte citeringsgraden markant.
+
+* **Källhänvisningar direkt i texten** gav en ökning på 30 till 40 procent. När en webbplats har som rutin att länka till trovärdiga källor som backar upp den egna faktan, tolkar algoritmerna det som en skarp trovärdighetssignal.
+* **Expertcitat** ökade synligheten med 30 till 40 procent. Genom att flika in namngivna citat från riktiga branschexperter vinner texten auktoritet. AI-modellen registrerar citattecken och namn, vilket får hela stycket runtomkring att bedömas som meer pålitligt.
+* **Inslag av exakt statistik** drog upp AI-citeringarna med 30 till 40 procent. Skribenter som bytte ut svävande beskrivningar mot raka siffror, procentsatser och datapunkter belönades. AI-modeller greppar ren fakta snabbare än de förstår långa narrativ. Siffrorna bildar fasta komponenter som modellen plockar ut och lägger rakt in i sitt eget svar.
+* **Språkligt flyt (Fluency Optimization)** förbättrade synligheten med 15 till 30 procent. AI-modeller drillas på enorma volymer professionell text och premierar därför korrekt grammatik och god läsbarhet. Hackiga och oregelbundna texter klassas som låg kvalitet och gallras bort. Samtidigt slår generisk AI-skriven text tillbaka mot avsändaren. Om språket raderas på unika facktermer tappar texten sin förmåga att sticka ut.
+* **En auktoritativ ton** skapade en synlighetsökning på 10 till 20 procent. Text som är skriven rakt på sak, utan försiktiga reservationer som "det kan möjligen vara så että", prioriteras. AI-verktyg föredrar att presentera fakta med absolut säkerhet. De lånar därför sina formuleringar från källor som skriver med samma pondus.
+
+## Praktisk checklista: Så förbättrar du din hemsida för GEO
+Datan punkterar flera gamla sanningar. Att trycka in sökord i texten (keyword stuffing) ger noll effekt och sänkte till och med synligheten i tester med sökmotorn Perplexity. Att producera längre texter bara för att driva upp ordantalet (content padding) hjälper inte det heller, eftersom AI extraherar specifika påståenden och struntar i utfyllnad. Gör så här på din webbplats:
+
+* **Styr upp innehållets struktur:** Skriv H2-rubriker som tydligt deklarerar vad stycket handlar om. Textblocken ska fungera fristående, då AI rycker ut specifika bitar utan att läsa in hela sidans sammanhang.
+* **Koda rena tabeller och FAQ-sektioner:** Besvara vanliga frågor rakt upp och ner i en FAQ. Det ger maskinerna exakta "fråga-svar"-par att hämta. Använd rena HTML-tabeller för att jämföra data.
+* **Lägg till en llms.txt-fil:** Skapa en textfil i Markdown-format och lägg den i webbplatsens rotmapp. Den fungerar som en instruktionsbok för AI-bottar och markerar direkt var den tyngsta informationen ligger, så att algoritmen slipper navigera förbi säljsidor och inloggningsportaler. (Vi på Notiserna har exempelvis lagt till en egen sådan fil för att framtidssäkra vår struktur).
+
+Här är ett exempel på hur du skärper en text enligt strategin för statistik och auktoritet:
+
+> **Före (Otydligt och svagt för AI):** "Kundbortfall är en stor utmaning. Vår mjukvara hjälper er att minska detta problem."
+
+> **Efter (Maximerat för GEO):** "76 procent av mjukvaruföretagen anger kundbortfall som sin största utmaning, enligt ChartMoguls branschrapport. System X sänker detta bortfall med 12 procent under första året."
+
+Det andra exemplet matar AI:n med en precis siffra (76 procent), en definierad källa (ChartMogul) och en konkret effekt (12 procent). Denna kombination är precis vad generativa modeller söker efter.
+
+## Utmaningarna med GEO-optimering
+Spelplanen är instabil. AI-motorerna uppdaterar frekvent hur de silar och väljer ut information. En metod som fungerar hos Perplexity idag slår inte nödvändigtvis igenom på samma sätt hos Claude eller Gemini imorgon. Princeton-studien visade dessutom att motorerna prioriterar olika domäner beroende på vilket språk användaren ställer frågan på. När en fråga ställdes på tyska eller franska skiftade ChatGPT och Perplexity omedelbart till lokala, nationella domäner, medan vissa modeller envist fortsatte citera engelskspråkiga jättar. Denna lokalisering tvingar företag att bygga upp helt olika auktoriteter för olika marknader.
+
+Balansen mellan maskinläsbarhet och en riktig, krävande mänsklig läsare utgör en annan hård knut. En text som späckas för hårt med datapunkter, strikta listor och facktermer tappar snabbt sin rytm. Forskarna identifierar också problemet med "homogenisering". Om hela branscher strukturerar all text enligt en och samma GEO-mall, slutar AI-modellerna att göra skillnad på dem. De smälter ihop till en generisk massa. För att skära igenom bruset krävs exakta fakta förpackat i ett eget, mänskligt ordförråd ("distinctive vocabulary") som algoritmerna kan skilja ut från mängden.
+
+---
+
+### Vi lanserar Notiserna: Din personliga nyhetspanel (2026-06-08)
+> Välkommen till ett renare sätt att läsa nyheter. Läs om hur Notiserna föddes ur frustration över reklam och brus.
+
+Välkommen till **Notiserna**! Den här tjänsten skapades för att lösa ett enkelt problem: det är för mycket brus på dagens nyhetssajter. 
+
+Varje dag möts vi av blinkande annonser, cookies-banners, betalväggar och sensationella rubriker som är utformade för att fånga vår uppmärksamhet till varje pris. Notiserna är ett experiment i att gå tillbaka till grunderna.
+
+### Varför ett nytt sätt att läsa nyheter?
+Vi tror på ett mer medvetet och ostört nyhetsläsande. Genom att samla dina favoritkällor på en och samma plats utan algoritmer som bestämmer vad du ska tycka eller läsa, återtar du kontrollen över ditt flöde.
+
+*   **RSS-drivet**: Du väljer källorna, inte ett socialt nätverk eller en vinstmaximerande algoritm.
+*   **Distraktionsfritt läsläge**: Rensa bort all bråte på målhemsidan med ett enda klick.
+
+### Framtiden för Notiserna
+Det här är bara början. Vi bygger kontinuerligt ut plattformen med nya funktioner. I den senaste uppdateringen har vi till exempel lagt till denna artikelsektion där vi kommer att dela tankar om oberoende nyhetsbevakning, integritet och webbteknik.
+
+Tack för att du läser och för att du är en del av Notiserna!
+
+---
