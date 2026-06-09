@@ -3,7 +3,6 @@
 
 ## Huvudfunktioner
 - **Personligt nyhetsflöde**: Samlar artiklar inom teknik, näringsliv, skatt, kultur, lokala nyheter och globala händelser.
-- **AI-morgonbriefing**: En daglig AI-genererad sammanfattning av de viktigaste nyhetshändelserna.
 - **Läsläge**: Ett distraktionsfritt läsläge för att läsa artiklar direkt i applikationen.
 - **Arkiv & Bevakning**: Spara artiklar för att läsa senare samt möjlighet att bevaka specifika ämnen.
 - **Källhantering**: Hantera och koppla anpassade RSS-flöden per kategori.

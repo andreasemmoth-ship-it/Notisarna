@@ -11,6 +11,115 @@ const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 const PAGE_SIZE = 30
 const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
 
+
+// ----- Markdown / Frontmatter Parser & Static Posts Loader -----
+function parseFrontmatter(markdownText) {
+  const match = markdownText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
+  if (!match) return { attributes: {}, body: markdownText }
+  
+  const yamlBlock = match[1]
+  const body = match[2]
+  const attributes = {}
+  
+  yamlBlock.split('\n').forEach(line => {
+    const parts = line.split(':')
+    if (parts.length >= 2) {
+      const key = parts[0].trim()
+      let value = parts.slice(1).join(':').trim()
+      if (value.startsWith('"') && value.endsWith('"')) {
+        value = value.slice(1, -1)
+      } else if (value.startsWith("'") && value.endsWith("'")) {
+        value = value.slice(1, -1)
+      }
+      attributes[key] = value
+    }
+  })
+  
+  return { attributes, body }
+}
+
+function renderMarkdown(md) {
+  let html = md
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+  html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+  html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+
+  let inList = false
+  const lines = html.split('\n')
+  const processedLines = lines.map(line => {
+    const listMatch = line.match(/^[\*\-]\s+(.*?)$/)
+    if (listMatch) {
+      let result = ''
+      if (!inList) {
+        inList = true
+        result += '<ul>'
+      }
+      result += `<li>${listMatch[1]}</li>`
+      return result
+    } else {
+      let result = ''
+      if (inList) {
+        inList = false
+        result += '</ul>'
+      }
+      result += line
+      return result
+    }
+  })
+  if (inList) {
+    processedLines.push('</ul>')
+  }
+  html = processedLines.join('\n')
+
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>')
+
+  html = html.split('\n').map(line => {
+    const trimmed = line.trim()
+    if (!trimmed) return ''
+    if (trimmed.startsWith('<h') || trimmed.startsWith('</h') || trimmed.startsWith('<ul') || trimmed.startsWith('</ul') || trimmed.startsWith('<li') || trimmed.startsWith('</li')) {
+      return line
+    }
+    return `<p>${line}</p>`
+  }).join('\n')
+
+  return html
+}
+
+const rawPosts = import.meta.glob('./content/posts/*.md', { query: '?raw', import: 'default', eager: true })
+
+const POSTS = Object.entries(rawPosts).map(([path, content]) => {
+  const { attributes, body } = parseFrontmatter(content)
+  const sources = []
+  let index = 1
+  while (attributes[`source_url_${index}`]) {
+    sources.push({
+      url: attributes[`source_url_${index}`],
+      title: attributes[`source_title_${index}`] || attributes[`source_url_${index}`]
+    })
+    index++
+  }
+  if (attributes.source_url) {
+    sources.push({
+      url: attributes.source_url,
+      title: attributes.source_title || attributes.source_url
+    })
+  }
+  return {
+    title: attributes.title || 'Utan titel',
+    date: attributes.date || '',
+    description: attributes.description || '',
+    image: attributes.image || '',
+    sources,
+    slug: attributes.slug || path.split('/').pop().replace('.md', ''),
+    body,
+  }
+}).sort((a, b) => (b.date > a.date ? 1 : -1))
+
 // ----- Error Boundary -----
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -266,6 +375,47 @@ function LoginForm() {
 }
 
 // ----- Cards -----
+function BlogHeroCard({ post, onClick }) {
+  return (
+    <article className="hero-card blog-hero-card" onClick={onClick} style={{ cursor: 'pointer' }}>
+      <div className="hero-card__media" style={{ background: placeholderBg(220) }}>
+        <div className="placeholder-logo-wrap">
+          <div className="placeholder-logo">N</div>
+        </div>
+        {post.image && (
+          <img src={post.image} alt="" className="media-img"
+                 loading="lazy" decoding="async" />
+        )}
+      </div>
+      <div className="hero-card__body">
+        <div className="hero-card__meta">
+          <span className="cat-tag" style={{ background: 'var(--accent)', color: 'var(--on-accent)', borderColor: 'var(--accent)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{
+              width: '16px', height: '16px', borderRadius: '4px',
+              background: 'var(--on-accent)', color: 'var(--accent)',
+              display: 'grid', placeItems: 'center',
+              fontFamily: 'Instrument Serif, serif', fontSize: '11px',
+              fontStyle: 'italic', fontWeight: 'bold', lineHeight: 1
+            }}>N</span>
+            Notiserna.se
+          </span>
+          <span className="dot-sep">·</span>
+          <span>Redaktionen</span>
+          <span className="dot-sep">·</span>
+          <span>{post.date}</span>
+        </div>
+        <h1 className="hero-card__title">{post.title}</h1>
+        <p className="hero-card__summary">{post.description}</p>
+        <div className="card__footer">
+          <span className="read-more">
+            Läs hela artikeln <Icon name="arrow" size={15} />
+          </span>
+        </div>
+      </div>
+    </article>
+  )
+}
+
 function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <article className={`hero-card ${isRead ? 'is-read' : ''}`}>
@@ -581,7 +731,9 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
       </button>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
-           className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
+           className={active !== 'arkiv' && active !== 'artiklar' ? 'is-active' : ''}>Flöde</a>
+        <a href="#" onClick={e => { e.preventDefault(); onSetActive('artiklar') }}
+           className={active === 'artiklar' ? 'is-active' : ''}>Artiklar</a>
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('arkiv') }}
            className={active === 'arkiv' ? 'is-active' : ''}>Arkiv</a>
         <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
@@ -854,6 +1006,138 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
   )
 }
 
+// ----- ArticleView Component -----
+function ArticleView({ slug, onBack, onBackToFlow }) {
+  const post = useMemo(() => POSTS.find(p => p.slug === slug), [slug])
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [slug])
+
+  if (!post) {
+    return (
+      <div className="empty">
+        <h3>Artikeln hittades inte</h3>
+        <p>Den artikel du söker verkar inte finnas kvar.</p>
+        <button className="btn btn--primary" onClick={onBack}>Tillbaka</button>
+      </div>
+    )
+  }
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}?view=artiklar&slug=${post.slug}`
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  const htmlContent = useMemo(() => renderMarkdown(post.body), [post.body])
+
+  return (
+    <article className="article-view">
+      <div className="article-view__back-wrapper">
+        <button className="btn btn--ghost btn--sm" onClick={onBack}>
+          <Icon name="arrow" size={13} style={{ transform: 'rotate(180deg)', marginRight: '4px' }} /> Tillbaka till artiklar
+        </button>
+      </div>
+
+      <header className="article-view__header">
+        <div className="article-view__meta">
+          <span>EGEN ARTIKEL</span>
+          <span className="dot-sep">·</span>
+          <span>{post.date}</span>
+        </div>
+        <h1 className="article-view__title">{post.title}</h1>
+        {post.description && <p className="article-view__lead">{post.description}</p>}
+        {post.image && (
+          <div className="article-view__featured-image-wrapper">
+            <img src={post.image} alt={post.title} className="article-view__featured-image" />
+          </div>
+        )}
+      </header>
+
+      <div className="article-view__content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+
+      {post.sources && post.sources.length > 0 && (
+        <div className="article-view__sources">
+          <span className="article-view__sources-label">Källor &amp; vidareläsning:</span>
+          <ul className="article-view__sources-list">
+            {post.sources.map((src, i) => (
+              <li key={i} className="article-view__sources-item">
+                <a href={src.url} target="_blank" rel="noopener noreferrer" className="article-view__source-link">
+                  {src.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="article-view__divider">···</div>
+
+      <div className="article-view__info-box">
+        <h4>Notiserna Spaning</h4>
+        <p>Denna artikel är en del av våra egna djuplodande analyser om intressanta ämnen inom ekonomi och teknik. Vill du tipsa om ämnen eller ge feedback? Kontakta oss via Om-sidan.</p>
+      </div>
+
+      {/* Monochrome Share buttons */}
+      <div className="article-view__share">
+        <span className="article-view__share-label">Dela artikeln:</span>
+        <div className="article-view__share-buttons">
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="share-btn"
+            title="Dela på LinkedIn"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="share-btn"
+            title="Dela på X"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            X
+          </a>
+          <button
+            onClick={handleCopy}
+            className="share-btn share-btn--copy"
+            title="Kopiera länk"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Kopiera länk
+          </button>
+
+          {copied && <span className="share-toast">Länken kopierad!</span>}
+        </div>
+      </div>
+
+      <div className="article-view__footer-nav">
+        <button className="article-view__footer-nav-btn" onClick={onBackToFlow}>
+          &larr; Tillbaka till nyhetsflödet
+        </button>
+      </div>
+    </article>
+  )
+}
+
 function formatUpdated(iso) {
   if (!iso) return ''
   try {
@@ -893,7 +1177,14 @@ function App() {
 
   const [active,        setActive]        = useState(() => {
     const p = new URLSearchParams(window.location.search)
-    return p.get('view') === 'arkiv' ? 'arkiv' : (p.get('cat') ?? 'all')
+    const view = p.get('view')
+    if (view === 'arkiv') return 'arkiv'
+    if (view === 'artiklar') return 'artiklar'
+    return p.get('cat') ?? 'all'
+  })
+  const [activeSlug,    setActiveSlug]    = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    return p.get('view') === 'artiklar' ? p.get('slug') : null
   })
   const [query,         setQuery]         = useState(() =>
     new URLSearchParams(window.location.search).get('q') ?? ''
@@ -942,14 +1233,18 @@ function App() {
     document.documentElement.setAttribute('data-theme', colorScheme)
   }, [colorScheme])
 
-  // Synka active/query → URL (delningsbara länkar)
+  // Synka active/query/slug → URL (delningsbara länkar)
   useEffect(() => {
     const p = new URLSearchParams()
     if (active === 'arkiv')    p.set('view', 'arkiv')
+    else if (active === 'artiklar' && activeSlug) {
+      p.set('view', 'artiklar')
+      p.set('slug', activeSlug)
+    }
     else if (active !== 'all') p.set('cat', active)
     if (query.trim())          p.set('q', query.trim())
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
-  }, [active, query])
+  }, [active, activeSlug, query])
 
   const acceptGdpr = useCallback(() => {
     localStorage.setItem('gdpr_ok', '1')
@@ -958,8 +1253,14 @@ function App() {
 
   const goHome = useCallback(() => {
     setActive('all')
+    setActiveSlug(null)
     setQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  const handleSetActive = useCallback((tab) => {
+    setActive(tab)
+    setActiveSlug(null)
   }, [])
 
   useEffect(() => {
@@ -1164,9 +1465,8 @@ function App() {
       .then(({ error }) => { if (error) console.error('Mark all read:', error.message) })
   }, [filtered, readArticles, session?.user?.id])
 
-  const featured = filtered.find(i => i.featured) || filtered[0]
-  const rest      = filtered.filter(i => i !== featured)
-  const showHero  = featured && active === 'all' && !query
+  const latestPost = POSTS[0]
+  const showBlogHero = latestPost && active === 'all' && !query
 
   const unreadCount = filtered.filter(i => !readArticles.has(i.id)).length
 
@@ -1175,7 +1475,7 @@ function App() {
   return (
     <div className="shell">
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
-           active={active} onSetActive={setActive} onLogout={handleLogout}
+           active={active} onSetActive={handleSetActive} onLogout={handleLogout}
            isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)}
            onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
@@ -1258,6 +1558,61 @@ function App() {
             </div>
           )}
         </main>
+      ) : active === 'artiklar' && activeSlug ? (
+        <main className="content">
+          <ArticleView slug={activeSlug}
+                       onBack={() => {
+                         setActive('artiklar')
+                         setActiveSlug(null)
+                       }}
+                       onBackToFlow={() => {
+                         setActive('all')
+                         setActiveSlug(null)
+                       }} />
+        </main>
+      ) : active === 'artiklar' ? (
+        <main className="content">
+          {isAnon && (
+            <div className="anon-banner">
+              <span className="anon-banner__text">
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
+              </span>
+              <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
+                Skapa konto gratis
+              </button>
+            </div>
+          )}
+          <div className="article-archive-header">
+            <h2>Artiklar</h2>
+            <p>Våra egna fördjupningar och analyser</p>
+          </div>
+          {POSTS.length === 0 ? (
+            <div className="empty">
+              <h3>Inga artiklar hittades</h3>
+              <p>Vi fyller på med nytt innehåll inom kort.</p>
+            </div>
+          ) : (
+            <div className="article-archive-list">
+              {POSTS.map(post => (
+                <article key={post.slug} className="article-archive-item" onClick={() => setActiveSlug(post.slug)}>
+                  {post.image && (
+                    <div className="article-archive-item__img">
+                      <img src={post.image} alt={post.title} loading="lazy" />
+                    </div>
+                  )}
+                  <div className="article-archive-item__content">
+                    <span className="article-archive-item__date">{post.date}</span>
+                    <h3 className="article-archive-item__title">{post.title}</h3>
+                    <p className="article-archive-item__desc">{post.description}</p>
+                    <span className="article-archive-item__link">
+                      Läs artikeln <Icon name="arrow" size={13} />
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </main>
       ) : (
         <main className="content">
           {isAnon && (
@@ -1281,12 +1636,14 @@ function App() {
 
           {!loading && viewMode === 'grid' && (
             <>
-              {showHero && (
-                <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive}
-                          isRead={readArticles.has(featured.id)} onRead={markAsRead} onOpenReader={openReader} />
+              {showBlogHero && (
+                <BlogHeroCard post={latestPost} onClick={() => {
+                  setActive('artiklar')
+                  setActiveSlug(latestPost.slug)
+                }} />
               )}
               <div className="grid">
-                {(showHero ? rest : filtered).map(item => (
+                {filtered.map(item => (
                   <NewsCard key={item.id} item={item}
                             isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
                             isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
