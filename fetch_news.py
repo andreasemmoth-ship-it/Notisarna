@@ -42,6 +42,7 @@ FEEDS: dict = {
         'sources': [
             ('BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml', True),
             ('New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', True),
+            ('Associated Press', 'https://feedx.net/rss/ap.xml', True),
         ],
     },
     'naringsliv': {

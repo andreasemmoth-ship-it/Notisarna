@@ -42,6 +42,7 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml',     true],
       ['New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', true],
+      ['Associated Press', 'https://feedx.net/rss/ap.xml', true],
     ],
   },
   naringsliv: {
