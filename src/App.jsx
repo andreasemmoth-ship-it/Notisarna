@@ -184,6 +184,15 @@ function placeholderBg(hue) {
   return `linear-gradient(135deg, oklch(0.78 0.10 ${h}) 0%, oklch(0.62 0.13 ${h2}) 100%)`
 }
 
+function optimizeImageUrl(url) {
+  if (!url) return url
+  if (url.includes('svt') && url.includes('/1200/')) {
+    return url.replace('/1200/', '/600/')
+  }
+  return url
+}
+
+
 const Icon = ({ name, size = 16 }) => {
   const paths = {
     search:        <><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>,
@@ -424,7 +433,7 @@ function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -472,7 +481,7 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -519,7 +528,7 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpen
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                loading="lazy" decoding="async"
                onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -1190,11 +1199,48 @@ function App() {
     new URLSearchParams(window.location.search).get('q') ?? ''
   )
   const [drawer,        setDrawer]        = useState(false)
-  const [feeds,         setFeeds]         = useState(RSS_FEEDS)
-  const [categories,    setCategories]    = useState(CATEGORIES)
-  const [news,          setNews]          = useState([])
-  const [loading,       setLoading]       = useState(true)
-  const [updatedAt,     setUpdatedAt]     = useState(null)
+  const [feeds,         setFeeds]         = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_feeds')
+      return cached ? JSON.parse(cached) : RSS_FEEDS
+    } catch (e) {
+      return RSS_FEEDS
+    }
+  })
+  const [categories,    setCategories]    = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_categories')
+      return cached ? JSON.parse(cached) : CATEGORIES
+    } catch (e) {
+      return CATEGORIES
+    }
+  })
+  const [news,          setNews]          = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      return cached ? JSON.parse(cached) : []
+    } catch (e) {
+      return []
+    }
+  })
+  const [loading,       setLoading]       = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      return !cached
+    } catch (e) {
+      return true
+    }
+  })
+  const [updatedAt,     setUpdatedAt]     = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        return parsed[0]?.fetched_at ?? null
+      }
+    } catch (e) {}
+    return null
+  })
   const [saveStatus,    setSaveStatus]    = useState('idle')
   const [saveError,     setSaveError]     = useState('')
   const [archived,      setArchived]      = useState(new Set())
@@ -1267,13 +1313,22 @@ function App() {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
       .then(({ data, error }) => {
         if (error) { console.error('Supabase load:', error.code, error.message); return }
-        if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds)
+        if (data?.feeds && Object.keys(data.feeds).length > 0) {
+          setFeeds(data.feeds)
+          try {
+            localStorage.setItem('cached_feeds', JSON.stringify(data.feeds))
+          } catch (e) {}
+        }
         if (data?.categories?.length) {
-          setCategories([
+          const loadedCategories = [
             { key: 'all', label: 'Alla' },
             ...CATEGORIES.filter(c => c.key !== 'all'),
             ...data.categories,
-          ])
+          ]
+          setCategories(loadedCategories)
+          try {
+            localStorage.setItem('cached_categories', JSON.stringify(loadedCategories))
+          } catch (e) {}
         }
       })
   }, [])
@@ -1401,6 +1456,11 @@ function App() {
         if (error) { console.error('Supabase news:', error.message); return }
         const articles = (data || []).map(mapArticle)
         setNews(articles)
+        try {
+          localStorage.setItem('cached_news', JSON.stringify(articles))
+        } catch (e) {
+          console.error('Error writing news cache:', e)
+        }
         setHasMore(articles.length === PAGE_SIZE)
         if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at)
       })
@@ -1427,6 +1487,7 @@ function App() {
   }, [news.length, loadingMore, hasMore])
 
   useEffect(() => {
+    if (!authReady) return
     fetchNews()
     const interval = setInterval(fetchNews, 60000) // Fallback: hämta var 60:e sekund
 
@@ -1438,7 +1499,7 @@ function App() {
       clearInterval(interval)
       db.removeChannel(channel)
     }
-  }, [fetchNews, session?.user?.id])
+  }, [fetchNews, authReady, session?.user?.id])
 
   const filtered = useMemo(() => {
     let list = news
