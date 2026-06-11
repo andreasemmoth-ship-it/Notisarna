@@ -74,7 +74,11 @@ function svDate(d: Date) {
 }
 
 function clean(text: string) {
-  return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  return text
+    .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 async function makeId(catKey: string, str: string): Promise<string> {
