@@ -213,6 +213,7 @@ const Icon = ({ name, size = 16 }) => {
     moon:          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>,
     sun:           <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></>,
     lock:          <><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+    info:          <><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -386,7 +387,15 @@ function LoginForm() {
 // ----- Cards -----
 function BlogHeroCard({ post, onClick }) {
   return (
-    <article className="hero-card blog-hero-card" onClick={onClick} style={{ cursor: 'pointer' }}>
+    <a
+      href={`?view=artiklar&slug=${post.slug}`}
+      className="hero-card blog-hero-card"
+      onClick={(e) => {
+        e.preventDefault()
+        onClick()
+      }}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="hero-card__media" style={{ background: placeholderBg(220) }}>
         <div className="placeholder-logo-wrap">
           <div className="placeholder-logo">N</div>
@@ -421,7 +430,7 @@ function BlogHeroCard({ post, onClick }) {
           </span>
         </div>
       </div>
-    </article>
+    </a>
   )
 }
 
@@ -774,6 +783,42 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
         )}
       </div>
     </header>
+  )
+}
+
+// ----- MobileNav -----
+function MobileNav({ active, onSetActive, onOpenAbout }) {
+  return (
+    <nav className="mobile-nav">
+      <button 
+        className={`mobile-nav__item ${active !== 'arkiv' && active !== 'artiklar' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('all')}
+      >
+        <Icon name="rss" size={20} />
+        <span>Flöde</span>
+      </button>
+      <button 
+        className={`mobile-nav__item ${active === 'artiklar' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('artiklar')}
+      >
+        <Icon name="book-open" size={20} />
+        <span>Artiklar</span>
+      </button>
+      <button 
+        className={`mobile-nav__item ${active === 'arkiv' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('arkiv')}
+      >
+        <Icon name="bookmark" size={20} />
+        <span>Arkiv</span>
+      </button>
+      <button 
+        className="mobile-nav__item"
+        onClick={onOpenAbout}
+      >
+        <Icon name="info" size={20} />
+        <span>Om</span>
+      </button>
+    </nav>
   )
 }
 
@@ -1279,6 +1324,11 @@ function App() {
     document.documentElement.setAttribute('data-theme', colorScheme)
   }, [colorScheme])
 
+  // Scroll to top when active view/tab changes
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [active, activeSlug])
+
   // Synka active/query/slug → URL (delningsbara länkar)
   useEffect(() => {
     const p = new URLSearchParams()
@@ -1291,6 +1341,44 @@ function App() {
     if (query.trim())          p.set('q', query.trim())
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
   }, [active, activeSlug, query])
+
+  // Update document title, description and OG tags for SEO
+  useEffect(() => {
+    let title = "Notiserna — dina nyheter, samlat på ett ställe"
+    let description = "Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut."
+    let image = "https://notiserna.se/og-image.png"
+
+    if (active === 'artiklar' && activeSlug) {
+      const post = POSTS.find(p => p.slug === activeSlug)
+      if (post) {
+        title = `${post.title} — Notiserna`
+        description = post.description || ''
+        if (post.image) {
+          image = post.image.startsWith('http') ? post.image : `https://notiserna.se${post.image}`
+        }
+      }
+    } else if (active === 'arkiv') {
+      title = "Arkiv — Notiserna"
+      description = "Dina sparade artiklar på Notiserna."
+    }
+
+    document.title = title
+    
+    const metaTags = {
+      'meta[name="description"]': description,
+      'meta[property="og:title"]': title,
+      'meta[property="og:description"]': description,
+      'meta[property="og:image"]': image,
+      'meta[name="twitter:title"]': title,
+      'meta[name="twitter:description"]': description,
+      'meta[name="twitter:image"]': image,
+    }
+
+    Object.entries(metaTags).forEach(([selector, val]) => {
+      const el = document.querySelector(selector)
+      if (el) el.setAttribute('content', val)
+    })
+  }, [active, activeSlug])
 
   const acceptGdpr = useCallback(() => {
     localStorage.setItem('gdpr_ok', '1')
@@ -1655,7 +1743,16 @@ function App() {
           ) : (
             <div className="article-archive-list">
               {POSTS.map(post => (
-                <article key={post.slug} className="article-archive-item" onClick={() => setActiveSlug(post.slug)}>
+                <a
+                  key={post.slug}
+                  href={`?view=artiklar&slug=${post.slug}`}
+                  className="article-archive-item"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setActive('artiklar')
+                    setActiveSlug(post.slug)
+                  }}
+                >
                   {post.image && (
                     <div className="article-archive-item__img">
                       <img src={post.image} alt={post.title} loading="lazy" />
@@ -1669,7 +1766,7 @@ function App() {
                       Läs artikeln <Icon name="arrow" size={13} />
                     </span>
                   </div>
-                </article>
+                </a>
               ))}
             </div>
           )}
@@ -1756,6 +1853,8 @@ function App() {
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
+
+      <MobileNav active={active} onSetActive={handleSetActive} onOpenAbout={() => setAboutOpen(true)} />
 
       {isAdmin && (
         <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}

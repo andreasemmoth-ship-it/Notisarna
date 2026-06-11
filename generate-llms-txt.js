@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const postsDir = path.join(__dirname, 'src', 'content', 'posts');
 const outputFile = path.join(__dirname, 'public', 'llms.txt');
+const sitemapFile = path.join(__dirname, 'public', 'sitemap.xml');
 
 const intro = `# Notisarna
 > Notisarna är en ren och personlig nyhetsdashboard som samlar nyheter från svenska och internationella källor på ett ställe.
@@ -50,13 +51,43 @@ function parseFrontmatter(content) {
   return { attributes, body };
 }
 
+function generateSitemap(posts) {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  
+  // Base URL
+  xml += `  <url>\n`;
+  xml += `    <loc>https://notiserna.se/</loc>\n`;
+  xml += `    <lastmod>2026-06-11</lastmod>\n`;
+  xml += `    <changefreq>daily</changefreq>\n`;
+  xml += `    <priority>1.0</priority>\n`;
+  xml += `  </url>\n`;
+  
+  // Articles
+  for (const post of posts) {
+    const slug = post.slug;
+    const date = post.date || '2026-06-11';
+    xml += `  <url>\n`;
+    xml += `    <loc>https://notiserna.se/?view=artiklar&amp;slug=${slug}</loc>\n`;
+    xml += `    <lastmod>${date}</lastmod>\n`;
+    xml += `    <changefreq>monthly</changefreq>\n`;
+    xml += `    <priority>0.8</priority>\n`;
+    xml += `  </url>\n`;
+  }
+  
+  xml += `</urlset>\n`;
+  
+  fs.writeFileSync(sitemapFile, xml);
+  console.log('Successfully generated public/sitemap.xml');
+}
+
 function generate() {
   try {
     let output = intro.trim() + '\n\n';
+    const posts = [];
     
     if (fs.existsSync(postsDir)) {
       const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
-      const posts = [];
 
       for (const file of files) {
         const filePath = path.join(postsDir, file);
@@ -66,7 +97,8 @@ function generate() {
           title: attributes.title || 'Utan titel',
           date: attributes.date || '',
           description: attributes.description || '',
-          body: body.trim()
+          body: body.trim(),
+          slug: attributes.slug || file.replace('.md', '')
         });
       }
 
@@ -84,8 +116,11 @@ function generate() {
     
     fs.writeFileSync(outputFile, output.trim() + '\n');
     console.log('Successfully generated public/llms.txt');
+    
+    // Generate sitemap
+    generateSitemap(posts);
   } catch (err) {
-    console.error('Error generating llms.txt:', err);
+    console.error('Error generating build assets:', err);
     process.exit(1);
   }
 }
