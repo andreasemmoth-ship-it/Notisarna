@@ -20,7 +20,7 @@ const intro = `# Notisarna
 
 ## Struktur & Sidor
 Eftersom Notisarna är byggd som en Single Page Application (SPA), nås alla funktioner och vyer direkt från startsidan via gränssnittet:
-- [Startsida / Flöde](https://notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
+- [Startsida / Flöde](https://www.notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
 
 ## Våra Artiklar & Djupanalyser
 Här nedan följer våra egna djuplodande analyser om intressanta ämnen inom ekonomi, teknik och integritet:
@@ -57,7 +57,7 @@ function generateSitemap(posts) {
   
   // Base URL
   xml += `  <url>\n`;
-  xml += `    <loc>https://notiserna.se/</loc>\n`;
+  xml += `    <loc>https://www.notiserna.se/</loc>\n`;
   xml += `    <lastmod>2026-06-11</lastmod>\n`;
   xml += `    <changefreq>daily</changefreq>\n`;
   xml += `    <priority>1.0</priority>\n`;
@@ -68,7 +68,7 @@ function generateSitemap(posts) {
     const slug = post.slug;
     const date = post.date || '2026-06-11';
     xml += `  <url>\n`;
-    xml += `    <loc>https://notiserna.se/?view=artiklar&amp;slug=${slug}</loc>\n`;
+    xml += `    <loc>https://www.notiserna.se/?view=artiklar&amp;slug=${slug}</loc>\n`;
     xml += `    <lastmod>${date}</lastmod>\n`;
     xml += `    <changefreq>monthly</changefreq>\n`;
     xml += `    <priority>0.8</priority>\n`;

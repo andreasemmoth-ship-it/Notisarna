@@ -9,7 +9,7 @@
 
 ## Struktur & Sidor
 Eftersom Notisarna är byggd som en Single Page Application (SPA), nås alla funktioner och vyer direkt från startsidan via gränssnittet:
-- [Startsida / Flöde](https://notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
+- [Startsida / Flöde](https://www.notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
 
 ## Våra Artiklar & Djupanalyser
 Här nedan följer våra egna djuplodande analyser om intressanta ämnen inom ekonomi, teknik och integritet:

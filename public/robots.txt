@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://notiserna.se/sitemap.xml
+Sitemap: https://www.notiserna.se/sitemap.xml

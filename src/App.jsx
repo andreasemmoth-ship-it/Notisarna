@@ -1342,11 +1342,12 @@ function App() {
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
   }, [active, activeSlug, query])
 
-  // Update document title, description and OG tags for SEO
+  // Update document title, description, canonical and OG tags for SEO
   useEffect(() => {
     let title = "Notiserna — dina nyheter, samlat på ett ställe"
     let description = "Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut."
-    let image = "https://notiserna.se/og-image.png"
+    let image = "https://www.notiserna.se/og-image.png"
+    let canonical = "https://www.notiserna.se/"
 
     if (active === 'artiklar' && activeSlug) {
       const post = POSTS.find(p => p.slug === activeSlug)
@@ -1354,15 +1355,25 @@ function App() {
         title = `${post.title} — Notiserna`
         description = post.description || ''
         if (post.image) {
-          image = post.image.startsWith('http') ? post.image : `https://notiserna.se${post.image}`
+          image = post.image.startsWith('http') ? post.image : `https://www.notiserna.se${post.image}`
         }
+        canonical = `https://www.notiserna.se/?view=artiklar&slug=${activeSlug}`
       }
     } else if (active === 'arkiv') {
       title = "Arkiv — Notiserna"
       description = "Dina sparade artiklar på Notiserna."
+      canonical = "https://www.notiserna.se/?view=arkiv"
+    } else if (active !== 'all') {
+      canonical = `https://www.notiserna.se/?cat=${active}`
     }
 
     document.title = title
+
+    // Update canonical link in document head
+    const canonicalLink = document.querySelector('link[rel="canonical"]')
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', canonical)
+    }
     
     const metaTags = {
       'meta[name="description"]': description,
