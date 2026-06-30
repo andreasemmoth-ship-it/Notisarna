@@ -26,7 +26,6 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['SVT Nyheter', 'https://www.svt.se/rss.xml', true],
       ['Dagens Nyheter', 'https://www.dn.se/rss/', true],
-      ['Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', true],
     ],
   },
   teknik: {
@@ -43,6 +42,7 @@ const DEFAULT_FEEDS: Record<string, Category> = {
     sources: [
       ['BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml',     true],
       ['New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', true],
+      ['Associated Press', 'https://feedx.net/rss/ap.xml', true],
     ],
   },
   naringsliv: {
@@ -74,7 +74,11 @@ function svDate(d: Date) {
 }
 
 function clean(text: string) {
-  return text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+  return text
+    .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 async function makeId(catKey: string, str: string): Promise<string> {
@@ -109,17 +113,42 @@ async function fetchOgImage(url: string): Promise<string> {
 }
 
 function findFeedImage(block: string): string {
-  // Try media:content url="..."
-  let m = block.match(/<media:content[^>]+url=["']([^"']+)["']/i)
-  if (m) return m[1]
-  
+  // Try all media:content tags and find the first one that is NOT a video
+  const contentRegex = /<media:content([\s\S]*?)\/?>/gi
+  let match
+  while ((match = contentRegex.exec(block)) !== null) {
+    const tagContent = match[1]
+    const urlMatch = tagContent.match(/url=["']([^"']+)["']/i)
+    if (urlMatch) {
+      const url = urlMatch[1]
+      const mediumMatch = tagContent.match(/medium=["']([^"']+)["']/i)
+      const typeMatch = tagContent.match(/type=["']([^"']+)["']/i)
+      
+      const isVideo = (mediumMatch && mediumMatch[1].toLowerCase() === 'video') ||
+                      (typeMatch && typeMatch[1].toLowerCase().startsWith('video/')) ||
+                      url.toLowerCase().includes('.mp4') ||
+                      url.toLowerCase().includes('.m3u8') ||
+                      url.toLowerCase().includes('.webm')
+                      
+      if (!isVideo) {
+        return url
+      }
+    }
+  }
+
   // Try media:thumbnail url="..."
-  m = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
+  let m = block.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i)
   if (m) return m[1]
   
-  // Try enclosure url="..."
+  // Try enclosure url="..." (excluding videos)
   m = block.match(/<enclosure[^>]+url=["']([^"']+)["']/i)
-  if (m) return m[1]
+  if (m) {
+    const url = m[1]
+    const isVideo = url.toLowerCase().includes('.mp4') || 
+                    url.toLowerCase().includes('.m3u8') || 
+                    url.toLowerCase().includes('.webm')
+    if (!isVideo) return url
+  }
   
   // Try atom enclosure link rel="enclosure" href="..." or vice versa
   m = block.match(/<link[^>]+rel=["']enclosure["'][^>]+href=["']([^"']+)["']/i)
@@ -200,7 +229,8 @@ Deno.serve(async (req) => {
     const token = authHeader.replace('Bearer ', '').trim()
     const anonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    if (token !== anonKey && token !== serviceKey) {
+    const fallbackAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1enFxdmh1cGd2b2pkZXVpaG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDM1OTksImV4cCI6MjA5MzcxOTU5OX0.xwJik8yUoCbntl9X0_Ces0y4A_FDJyi9Ah3sOZy7FNQ'
+    if (token !== anonKey && token !== serviceKey && token !== fallbackAnonKey) {
       return new Response(JSON.stringify({ ok: false, error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' }

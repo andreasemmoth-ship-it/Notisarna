@@ -21,20 +21,7 @@ const THEME = {
   line:    'oklch(0.90 0.008 60)',
 };
 
-function getGreeting() {
-  const h = new Date().getHours();
-  if (h < 5)  return 'God natt';
-  if (h < 11) return 'God morgon';
-  if (h < 17) return 'God eftermiddag';
-  if (h < 22) return 'God kväll';
-  return 'God natt';
-}
 
-function isMorning() {
-  const d = new Date();
-  const h = d.getHours(), m = d.getMinutes();
-  return h < 9 || (h === 9 && m < 30);
-}
 
 function placeholderBg(hue) {
   const h = hue ?? 200;
@@ -192,27 +179,7 @@ function ListCard({ item, isArchived, onToggleArchive, onOpenReader }) {
   );
 }
 
-// ----- Morning briefing -----
-function MorningBriefing({ text }) {
-  if (!text) return null;
-  const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-  const hasBullets = lines.some(l => l.startsWith('•'));
-  return (
-    <div className="briefing">
-      <div className="briefing__icon"><Icon name="spark" size={18} /></div>
-      <div className="briefing__body">
-        <div className="briefing__label">AI-morgonbriefing</div>
-        {hasBullets ? (
-          <ul className="briefing__list">
-            {lines.map((l, i) => <li key={i} className="briefing__item">{l}</li>)}
-          </ul>
-        ) : (
-          <p className="briefing__text">{text}</p>
-        )}
-      </div>
-    </div>
-  );
-}
+
 
 // ----- Reader modal -----
 function ReaderModal({ state, onClose }) {
@@ -571,13 +538,6 @@ function App() {
   const [filterOpen,   setFilterOpen]   = useState(() => window.innerWidth > 880);
   const [reader,       setReader]       = useState({ open: false, loading: false, article: null, error: null, sourceUrl: '', image: '' });
   const [viewMode,     setViewMode]     = useState('grid');
-  const [aiSummary,    setAiSummary]    = useState('');
-
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    db.from('briefings').select('content').eq('date', today).limit(1)
-      .then(({ data }) => { if (data?.[0]?.content) setAiSummary(data[0].content); });
-  }, []);
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
@@ -654,11 +614,13 @@ function App() {
   const openReader = useCallback(async (item) => {
     setReader({ open: true, loading: true, article: null, error: null, sourceUrl: item.link, image: item.image || '' });
     try {
+      const session = (await db.auth.getSession()).data.session;
+      const token = session?.access_token || window.SUPABASE_ANON_KEY;
       const fnUrl = `${window.SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`;
       const res = await fetch(fnUrl, {
         headers: {
           'apikey': window.SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${window.SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${token}`,
         },
       });
       const data = await res.json();
@@ -749,24 +711,7 @@ function App() {
   const rest      = filtered.filter(i => i !== featured);
   const showHero  = featured && active === 'all' && !query;
 
-  const briefing = useMemo(() => {
-    if (!news.length) return '';
-    const seen = new Set();
-    const snippets = [];
-    for (const a of news) {
-      if (!a.headline || !a.categoryKey) continue;
-      if (!seen.has(a.categoryKey) && snippets.length < 3) {
-        seen.add(a.categoryKey);
-        snippets.push(`${a.headline.replace(/\.+$/, '')} (${a.source || ''})`);
-      }
-    }
-    const d = new Date();
-    const today = `${d.getDate()} ${['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'][d.getMonth()]} ${d.getFullYear()}`;
-    const catCount = new Set(news.map(a => a.categoryKey)).size;
-    let text = `${today}: ${news.length} artiklar från ${catCount} kategorier.`;
-    if (snippets.length) text += ` Höjdpunkter: ${snippets.join(' · ')}.`;
-    return text;
-  }, [news]);
+
 
   return (
     <div className="shell" style={{
@@ -780,18 +725,14 @@ function App() {
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
            active={active} onSetActive={setActive} onGoHome={goHome} />
 
-      <section className="hello">
-        <div className="hello__inner">
-          <button className="hello__brand" onClick={goHome}>
-            <div className="hello__logo">N</div>
-            <div className="hello__wordmark">Notiserna</div>
-          </button>
-          <h1 className="hello__greet">
-            <span className="hello__greet-line">{getGreeting()}, Andreas.</span>
-            <span className="hello__greet-line hello__greet-line--quiet">Här kommer dina senaste nyheter.</span>
-          </h1>
-        </div>
-      </section>
+      <header className="brand-header">
+        <button className="brand-header__link" onClick={goHome}>
+          <div className="brand-header__logo">N</div>
+          <span className="brand-header__name">Notiserna</span>
+          <span className="brand-header__sep">&mdash;</span>
+          <span className="brand-header__tagline">Dina nyheter, samlat på ett ställe</span>
+        </button>
+      </header>
 
       {active !== 'arkiv' && (
         <div className="filter-bar">
@@ -865,9 +806,7 @@ function App() {
             </div>
           )}
 
-          {!loading && active === 'all' && !query && isMorning() && (
-            <MorningBriefing text={aiSummary || briefing} />
-          )}
+
 
           {!loading && showHero && (
             <HeroCard item={featured} isArchived={archived.has(featured.id)}

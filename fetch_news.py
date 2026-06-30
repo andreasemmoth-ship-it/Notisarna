@@ -26,7 +26,6 @@ FEEDS: dict = {
         'sources': [
             ('SVT Nyheter', 'https://www.svt.se/rss.xml', True),
             ('Dagens Nyheter', 'https://www.dn.se/rss/', True),
-            ('Ekot', 'https://api.sr.se/rss/channel?id=83&formatId=1', True),
         ],
     },
     'teknik': {
@@ -43,6 +42,7 @@ FEEDS: dict = {
         'sources': [
             ('BBC News', 'https://feeds.bbci.co.uk/news/world/rss.xml', True),
             ('New York Times', 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml', True),
+            ('Associated Press', 'https://feedx.net/rss/ap.xml', True),
         ],
     },
     'naringsliv': {
@@ -75,26 +75,7 @@ SV_MONTHS = {
 }
 
 
-def generate_briefing(articles: list[dict]) -> str:
-    """Build a short morning briefing from today's top articles per category."""
-    if not articles:
-        return ''
-    seen: set = set()
-    snippets: list = []
-    for a in articles:
-        cat = a['categoryKey']
-        if cat not in seen:
-            seen.add(cat)
-            snippets.append(f"{a['headline'].rstrip('.')} ({a['source']})")
-        if len(snippets) >= 3:
-            break
-    today = sv_date(datetime.now(timezone.utc))
-    total = len(articles)
-    cat_count = len({a['categoryKey'] for a in articles})
-    text = f"{today}: {total} artiklar från {cat_count} kategorier."
-    if snippets:
-        text += " Höjdpunkter: " + " · ".join(snippets) + "."
-    return text
+
 MAX_ITEMS = 5
 MAX_SUMMARY = 220
 ATOM_NS = 'http://www.w3.org/2005/Atom'
@@ -191,15 +172,40 @@ def fetch_url(url: str) -> bytes | None:
 def find_feed_image_element(element) -> str:
     try:
         xml_str = ET.tostring(element, encoding='utf-8').decode('utf-8')
-        m = re.search(r'<[^:>]*:?content[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
-        if m:
-            return m.group(1)
+        
+        # Extract all media:content/content tags and find the first one that is NOT a video
+        content_tags = re.findall(r'<[^:>]*:?content\s+([^>]+)>', xml_str, re.IGNORECASE)
+        for tag_content in content_tags:
+            url_match = re.search(r'url=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+            if url_match:
+                url = url_match.group(1)
+                medium_match = re.search(r'medium=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+                type_match = re.search(r'type=["\']([^"\']+)["\']', tag_content, re.IGNORECASE)
+                
+                is_video = (
+                    (medium_match and medium_match.group(1).lower() == 'video') or
+                    (type_match and type_match.group(1).lower().startswith('video/')) or
+                    '.mp4' in url.lower() or
+                    '.m3u8' in url.lower() or
+                    '.webm' in url.lower()
+                )
+                if not is_video:
+                    return url
+                    
+        # Try media:thumbnail
         m = re.search(r'<[^:>]*:?thumbnail[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
             return m.group(1)
+            
+        # Try enclosure (excluding videos)
         m = re.search(r'<enclosure[^>]+url=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
-            return m.group(1)
+            url = m.group(1)
+            is_video = '.mp4' in url.lower() or '.m3u8' in url.lower() or '.webm' in url.lower()
+            if not is_video:
+                return url
+                
+        # Try link enclosure
         m = re.search(r'<link[^>]+rel=["\']enclosure["\'][^>]+href=["\']([^"\']+)["\']', xml_str, re.IGNORECASE)
         if m:
             return m.group(1)
@@ -327,7 +333,6 @@ def main() -> None:
         'articles': articles,
         'generated_at': datetime.now(timezone.utc).isoformat(),
         'count': len(articles),
-        'briefing': generate_briefing(articles),
     }
 
     with open('news.json', 'w', encoding='utf-8') as f:

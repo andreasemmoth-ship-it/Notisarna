@@ -29,6 +29,7 @@ INSERT INTO public_feeds (source_name) VALUES
   -- Världen
   ('Reuters'),
   ('BBC News'),
+  ('Associated Press'),
   -- Näringsliv
   ('Dagens industri'),
   ('SVD Näringsliv'),

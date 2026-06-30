@@ -1,0 +1,187 @@
+# Notisarna
+> Notisarna är en ren och personlig nyhetsdashboard som samlar nyheter från svenska och internationella källor på ett ställe.
+
+## Huvudfunktioner
+- **Personligt nyhetsflöde**: Samlar artiklar inom teknik, näringsliv, skatt, kultur, lokala nyheter och globala händelser.
+- **Läsläge**: Ett distraktionsfritt läsläge för att läsa artiklar direkt i applikationen.
+- **Arkiv & Bevakning**: Spara artiklar för att läsa senare samt möjlighet att bevaka specifika ämnen.
+- **Källhantering**: Hantera och koppla anpassade RSS-flöden per kategori.
+
+## Struktur & Sidor
+Eftersom Notisarna är byggd som en Single Page Application (SPA), nås alla funktioner och vyer direkt från startsidan via gränssnittet:
+- [Startsida / Flöde](https://www.notiserna.se/) — Huvudflödet med de senaste nyhetsnotiserna.
+
+## Våra Artiklar & Djupanalyser
+Här nedan följer våra egna djuplodande analyser om intressanta ämnen inom ekonomi, teknik och integritet:
+
+### Claude 5 Fable: Anthropics dyra supermotor kan vara en prisfälla (2026-06-12)
+> Vi granskar Anthropics nya flaggskeppsmodell Claude 5 Fable. Benchmarks visar imponerande kodningsförmåga, men oberoende säkerhetstester avslöjar allvarliga brister, paranoida filter och en ekonomisk prisfälla.
+
+## Skiftet från korta chattar till tunga bakgrundsjobb
+Anthropic har precis rullat ut Claude 5 Fable, den första tillgängliga modellen i deras nya, tyngre produktklass. Skillnaden mot den tidigare toppmodellen Opus ligger inte i hur snabbt den svarar på enkla frågor, utan i en helt ny förmåga att hålla den logiska röda tråden över enorma datamängder. 
+
+Där äldre system tenderar och drabbas av digital demens – de glömmer tidiga instruktioner eller tappar bort sig djupt inne i komplicerade kodstrukturer – är Fable 5 byggd för att behålla fokus över sessioner på upp till en miljon tokens. För att sätta det i ett sammanhang motsvarar det att hålla ett helt bokmanus eller tusentals rader källkod i det aktiva minnet samtidigt.
+
+Ett konkret exempel på denna uthållighet är hur modellen presterar när den sätts att spela det strategiska kortspelet *Slay the Spire*. Genom att använda ett filbaserat minne presterar Fable 5 tre gånger bättre än gamla Opus. Den förstår helt enkelt vad som är värt att spara i sitt minnesarkiv och exakt när informationen behöver hämtas tillbaka för att fatta rätt beslut. Det är samma typ av logiska uthållighet som ligger bakom betaljätten Stripes uppmärksammade test, där modellen på en enda dag migrerade en enorm kodbas på 50 miljoner rader i programmeringsspråket Ruby – ett monumentalt infrastrukturarbete som under normala omständigheter skulle kräva ett helt utvecklingsteam i flera månader.
+
+## En oslagbar kodare?
+Tittar vi på de rena prestandasiffrorna levererar Fable 5 imponerande resultat i isolerade programmeringstester. På *SWE-Bench Pro*, som mäter hur väl en AI kan lösa faktiska problem i öppna källkodsprojekt på GitHub, löser modellen hela 80,3 procent av uppgifterna. Det lämnar den äldre Opus (69,2 procent) och OpenAIs GPT-5.5 (58,6 procent) långt bakom sig. Gapet blir ännu tydligare i *FrontierCode Diamond*, som hårdtestar om koden faktiskt håller för skarpa produktionsmiljöer. Här når Fable 5 upp till 29,3 procent, vilket är mer än en fördubbling jämfört med tidigare generationer.
+
+Men så fort modellen ställs inför oberoende säkerhetsgranskningar utanför Anthropics egna kontrollerade miljöer, spricker bilden av den perfekta digitala medarbetaren. 
+
+När säkerhetsföretaget Endor Labs lät modellen bita i 200 verkliga sårbarheter och säkerhetshål, landade Fable 5 på mediokra 59,8 procent i funktionella lösningar. Värre var att den bara klarade 19 procent när det kom till att skriva de faktiska, säkra kodkorrigeringarna. 
+
+Här blir nackdelen med modellens djupa betänketid tydlig: hela 15 procent av körningarna avbröts helt eftersom AI:n fastnade i ändlösa interna tankeloopar som överskred tidsgränsen på 40 minuter per uppgift. I vanliga kodgranskningar skapade Fable 5 dessutom mer brus än nytta; den genererade sämre precision och betydligt fler irrelevanta kommentarer än sin föregångare. Testerna avslöjade också att modellen ibland förlitar sig mer på att memorera färdiga lösningar från sin träningsdata snarare än genuint problemlösande, vilket flaggades som rent fusk i 38 av fallen.
+
+## Den strategiska domen: Är det värt pengarna?
+Att köpa Anthropics marknadsföring om att detta förändrar allt för systemutveckling är att dra för hastiga slutsatser. Priset för Fable 5 är satt till 10 dollar per miljon inmatade tokens och 50 dollar för utdata – i runda slängar en fördubbling av kostnaden jämfört med tidigare modeller. Eftersom modellen dessutom har en ovana att bränna enorma mängder text under sina långa betänketider, kan IT-budgeten försvinna snabbt om systemet lämnas obevakat.
+
+Anthropic har även byggt in extremt känsliga säkerhetsfilter i Fable 5. Om en förfrågan från en utvecklare så mycket som tangerar cybersäkerhet, biologi eller känslig systemarkitektur, vägrar modellen ofta att svara. I stället faller den automatiskt tillbaka på den äldre och billigare Opus-motorn för att generera svaret.
+
+Slutsatsen är att Fable 5 inte är motorn du sätter som standard för ditt utvecklingsteam i det dagliga arbetet. Det är en specialbyggd och dyr resurs som ska sparas till specifika, komplicerade bakgrundsjobb där autonomi och extremt långt sammanhang är absolut nödvändigt – som vid stora databasmigreringar eller omfattande refaktorering av gamla system. För majoriteten av vanlig produktionskod, snabba buggfixar och daglig kodning visar all data att den billigare, snabbare och mindre filternojiga Opus förblir det mest ekonomiska och rationella valet. Fable 5 är ett imponerande kraftpaket, men den kräver en finansiell handbroms för att inte sluka hela utvecklingsbudgeten.
+
+---
+
+### SpaceX börsnotering en likviditetsfälla? – så blåses kursen upp (2026-06-11)
+> En analys av marknadsmekaniken bakom SpaceX börsnotering. Hur en extremt låg free float och tvingande indexflöden kommer blåsa upp kursen.
+
+## Konstruerad brist driver den första kursrusningen
+SpaceX planeras att noteras på Nasdaq den 12 juni till en värdering på 1,75 biljoner dollar. Prislappen på 135 dollar per aktie slår alla historiska rekord, men rymdbolagets inledande kursutveckling har egentligen väldigt lite med raketerna att göra. Den styrs i stället av en noga planerad marknadsstruktur. Det handlar om en ren mekanisk prissättning, skapad genom att medvetet strypa tillgången på aktier.
+
+SpaceX släpper nämligen bara ut omkring 4 procent av sina aktier till fri handel i början. De resterande 96 procenten är låsta för insiders under en längre tid. Samtidigt viker bolaget upp till 30 procent av de tillgängliga aktierna direkt till vanliga småsparare, vilket är tre gånger mer än normalt vid stora börsnoteringar. Denna fördelning garanterar ett omedelbart köptryck från privatmarknaden. När utbudet är minimalt och efterfrågan piskas upp bland de fonder som blev utan tilldelning, tvingas kursen uppåt i samma sekund som handeln öppnar. Det är en kontrollerad bristsituation.
+
+## Kryphålet i indexreglerna tvingar fonderna och ETF:er att köpa
+Den stora drivkraften i kursrusningen är dock inte småsparare, utan passiva indexfonder. Nasdaq har skapat ett snabbspår som gör att SpaceX plockas in i Nasdaq 100-indexet redan efter 15 handelsdagar. Som jämförelse har S&P 500 vägrat att ändra sina regler och stänger ute bolaget det första året.
+
+Denna snabba indexinkludering skapar ett automatiskt och helt blint köptryck. Eftersom indexfonder och globala teknikfonder enligt sina egna regelverk måste äga de bolag som ingår i indexet, tvingas de köpa aktien. De köper helt oavsett om priset är rimligt eller om kursen har skenat dagarna innan. 
+
+Det handlar om enorma summor. Analytiker uppskattar att SpaceX kommer att väga mellan 0,47 och 0,7 procent av Nasdaq 100, vilket innebär att runt 600 miljarder dollar i passivt kapital per automatik måste styras mot aktien. Det uppstår en situation där hundratals stora förvaltare ska trängas i dörren för att köpa de få aktier som finns tillgängliga på marknaden. 
+
+Fondernas mekaniska jakt kommer att driva upp kursen till helt konstgjorda nivåer, många månader innan lockup-perioderna löper ut och insiders överhuvudtaget tillåts börja sälja. Det skapar ett vakuum där kursen hålls artificiellt hög fram tills det att lockup-perioden passerat och insiders till slut tillåts sälja till marknaden.
+
+## Siffrorna bakom rymddrömmarna
+När den första köpvågen från indexfonderna är över och handeln normaliseras, talar det mesta för att kursen kommer att röra sig nedåt. Verkligheten blir tydlig om man tittar på siffrorna i prospektet.
+
+Till 135 dollar per aktie värderas SpaceX till nästan 94 gånger de årliga intäkterna. Som jämförelse visar en analys från Morningstar att bolagets faktiska substansvärde snarare ligger runt 63 dollar per aktie – alltså en rabatt på över 50 procent mot introduktionspriset.
+
+Satellitnätverket Starlink är i dagsläget den enda delen av verksamheten som går med vinst. Den traditionella raketverksamheten bränner fortfarande kapital, och förra årets köp av AI-bolaget xAI har dragit med sig stora förluster. AI-delen ensam backade med 6,36 miljarder dollar under 2025, vilket gjorde att SpaceX som helhet rapporterade en nettoförlust på 4,94 miljarder dollar för året.
+
+För att den extrema prislappen ska bli lönsam krävs att helt oprövade framtidsprojekt fungerar perfekt. Bolaget måste snabbt få Starship-raketen i kommersiell drift och dessutom lyckas bygga fungerande datacentraler uppe i rymden. Sannolikheten för att allt detta sker utan bakslag är mycket låg. När den första hypen lägger sig och de tidiga ägarna till slut tillåts sälja av sina låsta aktier efter det första halvåret, kommer ekonomiska realiteter att pressa ned kursen till rimliga nivåer.
+
+---
+
+### AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet (2026-06-10)
+> Medan molnbaserade AI-jättar kräver att du skickar iväg din data, sker en tyst revolution på din hårddisk. Vi granskar användarnyttan och forskningen bakom lokala språkmodeller.
+
+# AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet
+
+## Det tysta skiftet från molnet till kretskortet
+Under de senaste åren har vi vant oss vid att artificiell intelligens är någonting som bor i gigantiska datahallar på andra sidan Atlanten. Varje gång du ber om en textrevidering, ställer en fråga eller felsöker en kodrad skickas din data i bitar över internet till företag som OpenAI, Microsoft eller Google. Oavsett om det handlar om ett företags källkod eller helt privata konversationer uppstår omedelbara integritetsrisker, samtidigt som användare tvingas binda upp sig på löpande prenumerationsavgifter. 
+
+Men i skuggan av de centraliserade jättarna pågår en tyst revolution. Svaret stavas lokala språkmodeller (Local LLMs). Genom att flytta hela beräkningsprocessen bort från molnet och rulla den direkt på din egen dators kretskort, ritas spelreglerna för digital integritet om i grunden.
+
+## Skugganvändning och riskerna med centraliserad "memorering"
+Ett växande och ofta osynligt hot mot moderna organisationers säkerhet är så kallad "Shadow AI" – när anställda på eget bevåg matar in arbetsrelaterad information, känsliga kunduppgifter eller proprietär kod i publika AI-tjänster för att effektivisera sin vardag. 
+
+Akademisk forskning slår fast att denna oövervakade överföring av data till externa plattformar drastiskt ökar sannolikheten för oavsiktlig dataläcka. Generativa modeller bygger på RAG-arkitekturer och komplicerade träningsloopar, vilket innebär att de riskerar att "memorera" fragment av den inmatade datan. I förlängningen innebär det att personligt identifierbar information eller företagshemligheter potentiellt kan återskapas och avslöjas för helt andra användare om de ställer rätt typ av frågor till modellen.
+
+För att stoppa dessa läckage väljer allt fler aktörer att kapsla in tekniken lokalt. När forskare vid University of Andorra implementerade lokala servrar för sina anställda konstaterade de i sin rapport: *"Genom att behålla både AI-modellen och den behandlade datan i en kontrollerad miljö, kan organisationer etablera och garantera ett starkt ramverk för datasäkerhet"*. Datan lämnar helt enkelt aldrig byggnaden.
+
+## Kvantisering krymper AI-kraven till vanlig hårdvara
+Tidigare krävdes massiva serverhallar och industriella superkluster för att överhuvudtaget kunna starta en intelligent språkmodell. Anledningen till att vi nu kan köra dessa system på en vanlig konsumentdator stavas **kvantisering**. 
+
+Kvantisering är en matematisk optimeringsteknik som sänker precisionen på modellens vikter och parametrar – oftast från tunga 16-bitars format ner till INT8 eller Q4_0 (4-bitars precision). Detta komprimerar modellens storlek och minneskrav med upp till fyra gånger, utan att modellen tappar mätbar språklig intelligens eller logisk förmåga.
+
+Tack vare detta kan en modern open-source-modell med 8 miljarder parametrar plötsligt rymmas och köras på ett helt vanligt grafikkort med endast 4 GB till 8 GB VRAM. Som ett praktiskt exempel på denna effektivitet visar studien från University of Andorra hur de kunde driva en komplett lokal AI-miljö, fullt tillräcklig för att serva 50 anställda parallellt, på ett enda konsumentgrafikkort av modellen Nvidia RTX 4090 utrustat med 24 GB VRAM.
+
+## Breda användningsområden: Vad använder man en lokal AI till?
+När modellen väl är på plats på hårddisken öppnar sig ett brett spektrum av praktiska tillämpningar som sträcker sig långt bortom enkla chattfönster. Eftersom du har obegränsad tillgång till modellen utan att betala per tecken (tokens) eller drabbas av restriktiva moln-filter, kan tekniken användas till flera tunga vardagsuppgifter:
+
+* **Privat dokumentanalys och lokal kunskapsbank:** Genom att bygga ett lokalt RAG-system kan du mata AI:n med hundratals privata PDF-filer, gamla anteckningar, känsliga avtal eller hela din bokföring. Modellen fungerar som en blixtsnabb sökassistent som sammanfattar och hittar mönster i dina dokument, i fullständig offline-säkerhet.
+* **Offline-redigering och ocensurerat skrivande:** Kommersiella molntjänster har extremt strikta "guardrails" och filter som ofta slår fel och blockerar helt harmlösa texter inom känsliga ämnen, akademisk forskning eller skönlitteratur. En lokal modell är helt filterlös och lyder bara dig, vilket ger total intellektuell och konstnärlig frihet vid copywriting och textbearbetning.
+* **Blixtsnabb utveckling med lokal kodassistans:** Genom att koppla ihop en lokal motor med din kodredigerare (exempelvis VS Code via tillägget Continue) skapar du en helt privat ersättare till molnbaserade kodassistenter. Modellen analyserar din lokala källkod, hittar buggar och genererar dokumentation i realtid utan att en enda rad proprietär kod exponeras mot internet.
+* **Bakgrundsautomatisering via skript:** Du kan låta en lokal modell ligga och arbeta i bakgrunden dygnet runt. Med enkla Python-skript kan du låta den rensa och kategorisera data, sortera stora textmängder eller extrahera nyckelord ur löpande informationsflöden – helt gratis och utan dolda API-kostnader.
+
+## Snabbare svarstid offline med SLM
+För uppgifter där resurserna är begränsade, eller där du befinner dig helt utan internetuppkoppling, har **Små språkmodeller (SLMs)** blivit det nya spjutspetsalternativet. Dessa modeller, som ofta har mellan 1 och 3 miljarder parametrar, är optimerade för att köras direkt på moderna processorers dedikerade NPU-kretsar (Neural Processing Units).
+
+Fysiska prestandatester visar att en lokal, optimerad SLM kan leverera en svarstid (latency) på under 80 millisekunder per fråga. Det är nära tio gånger snabbare än en molnbaserad modell, som på grund av nätverksfördröjningar och serverbelastning ofta kräver mellan 150 och 250 millisekunder innan svaret börjar genereras. 
+
+Utöver hastigheten är offline-aspekten en enorm användarnytta. Din AI fungerar felfritt på flygplanet, djupt ute i skogen eller vid plötsliga ström- och nätverksavbrott. Du äger din egen produktivitet och är aldrig mer beroende av att en extern molntjänst lyckas hålla sina servrar online.
+
+## Installationen är enklare än någonsin
+Tack vare moderna open-source-projekt är tröskeln för att komma igång i princip raderad. Programvara som Ollama gör det möjligt att ladda ner och starta avancerade modeller med ett enda textkommando i terminalen, och gränssnitt som LM Studio ger dig en färdig, visuell ChatGPT-kopia på skärmen med en enkel installation.
+
+För maskiner med äldre eller mer begränsad hårdvara finns dessutom ramverk som Llama.cpp. Eftersom det är skrivet helt i ren C/C++ är det specifikt skapat för att krama ur maximal prestanda ur en helt vanlig processor (CPU), vilket gör att du inte ens behöver ett dyrt grafikkort för att ta del av den lokala AI-vågen. 
+
+Genom att kombinera den senaste tidens dramatiska hårdvaruoptimering med ett absolut skydd för din personliga data är slutsatsen tydlig: framtidens mest kraftfulla och säkra AI bor inte i molnet. Den bor på din egen hårddisk.
+
+---
+
+### Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google (2026-06-09)
+> Forskningen visar svart på vitt: Så här optimerar du din webbplats när AI-assistenterna tar över sökandet.
+
+# Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google
+
+## Skiftet från Google-sök till AI-svar
+ChatGPT har på kort tid samlat över 800 miljoner aktiva användare i veckan, och Perplexity hanterar över 780 miljoner sökningar varje månad. Användarna ställer inte längre sökfrågor på fyra ord för att sedan klicka sig igenom en lista med tio blå länkar. Istället skriver de in detaljerade frågor på uppåt 23 ord. Resultatet de väntar sig är ett färdigt, paketerat och direkt läsbart svar. Sökvolymen på traditionella sökmotorer faller nu kraftigt – med en beräknad minskning på 25 procent enligt analysföretaget Gartner – i takt med att AI-assistenterna tar över allt mer av den dagliga trafiken.
+
+För den som publicerar innehåll på nätet ritar detta om spelreglerna. Att ligga etta i en söklista spelar ingen roll när användaren får svaret direkt på skärmen utan att klicka sig vidare. Målet är istället att bli den källa som AI-assistenten bygger sitt svar på och väljer att referera till. Här kliver begreppet GEO, Generative Engine Optimization, in i handlingen. Meedan klassisk sökmotoroptimering (SEO) siktar på klick, syftar GEO till att säkra että ditt varumärke citeras när AI-modellen genererar sitt svar.
+
+## Vad forskningen säger om AI-motorernas algoritmer
+Forskare från Princeton University, Georgia Tech, Allen Institute for AI och IIT Delhi genomförde nyligen den första storskaliga akademiska studien om hur man anpassar innehåll för AI-motorer. Rapporten visar svart på vitt että AI-algoritmer utvärderar text helt annorlunda jämfört med traditionella sökmotorer.
+
+Google och liknande tjänster rankar sidor baserat på sökordsmatchning och inkommande länkar. AI-tjänster bygger istället på RAG-arkitektur (Retrieval-Augmented Generation). Det betyder att systemet först letar upp dokument som är relevanta för användarens fråga. Därefter låter den en stor språkmodell läsa, tolka och bryta ner de mest användbara bitarna för att formulera ett svar. Studien visar att AI-motorerna hårdgranskar vilken typ av avsändare informationen har. Där Google ofta ger en blandad mix av källor, har AI-modeller en extrem förkärlek för oberoende redaktionella källor, experttester och omdömen ("earned media"). De väljer aktivt bort företagens egna säljsidor och innehåll från sociala medier när de sätter ihop fakta.
+
+Princeton-studien levererar en mycket specifik insikt som gynnar mindre aktörer. Webbplatser som låg på femte plats i Googles sökresultat ökade sin synlighet i AI-svar med hela 115 procent när de använde rätt GEO-teknik. De högst rankade webbplatserna såg däremot sin synlighet minska något. AI värderar innehållet på meningsnivå istället för att gå på domänens övergripande länkprofil. Mindre bolag kan därför slå ut globala jättar i AI-svaren, förutsatt att deras innehåll är skrivet på ett sätt som AI:n enkelt kan verifiera och extrahera.
+
+## De mest effektiva strategierna enligt datan
+Princeton-forskarna konstruerade en databas, GEO-bench, med 10 000 sökfrågor hämtade från olika branscher. De testade nio skilda metoder för att skriva om texter och mätte vad som fick AI:n att välja dem som källa. Fem av dessa metoder lyfte citeringsgraden markant.
+
+* **Källhänvisningar direkt i texten** gav en ökning på 30 till 40 procent. När en webbplats har som rutin att länka till trovärdiga källor som backar upp den egna faktan, tolkar algoritmerna det som en skarp trovärdighetssignal.
+* **Expertcitat** ökade synligheten med 30 till 40 procent. Genom att flika in namngivna citat från riktiga branschexperter vinner texten auktoritet. AI-modellen registrerar citattecken och namn, vilket får hela stycket runtomkring att bedömas som meer pålitligt.
+* **Inslag av exakt statistik** drog upp AI-citeringarna med 30 till 40 procent. Skribenter som bytte ut svävande beskrivningar mot raka siffror, procentsatser och datapunkter belönades. AI-modeller greppar ren fakta snabbare än de förstår långa narrativ. Siffrorna bildar fasta komponenter som modellen plockar ut och lägger rakt in i sitt eget svar.
+* **Språkligt flyt (Fluency Optimization)** förbättrade synligheten med 15 till 30 procent. AI-modeller drillas på enorma volymer professionell text och premierar därför korrekt grammatik och god läsbarhet. Hackiga och oregelbundna texter klassas som låg kvalitet och gallras bort. Samtidigt slår generisk AI-skriven text tillbaka mot avsändaren. Om språket raderas på unika facktermer tappar texten sin förmåga att sticka ut.
+* **En auktoritativ ton** skapade en synlighetsökning på 10 till 20 procent. Text som är skriven rakt på sak, utan försiktiga reservationer som "det kan möjligen vara så että", prioriteras. AI-verktyg föredrar att presentera fakta med absolut säkerhet. De lånar därför sina formuleringar från källor som skriver med samma pondus.
+
+## Praktisk checklista: Så förbättrar du din hemsida för GEO
+Datan punkterar flera gamla sanningar. Att trycka in sökord i texten (keyword stuffing) ger noll effekt och sänkte till och med synligheten i tester med sökmotorn Perplexity. Att producera längre texter bara för att driva upp ordantalet (content padding) hjälper inte det heller, eftersom AI extraherar specifika påståenden och struntar i utfyllnad. Gör så här på din webbplats:
+
+* **Styr upp innehållets struktur:** Skriv H2-rubriker som tydligt deklarerar vad stycket handlar om. Textblocken ska fungera fristående, då AI rycker ut specifika bitar utan att läsa in hela sidans sammanhang.
+* **Koda rena tabeller och FAQ-sektioner:** Besvara vanliga frågor rakt upp och ner i en FAQ. Det ger maskinerna exakta "fråga-svar"-par att hämta. Använd rena HTML-tabeller för att jämföra data.
+* **Lägg till en llms.txt-fil:** Skapa en textfil i Markdown-format och lägg den i webbplatsens rotmapp. Den fungerar som en instruktionsbok för AI-bottar och markerar direkt var den tyngsta informationen ligger, så att algoritmen slipper navigera förbi säljsidor och inloggningsportaler. (Vi på Notiserna har exempelvis lagt till en egen sådan fil för att framtidssäkra vår struktur).
+
+Här är ett exempel på hur du skärper en text enligt strategin för statistik och auktoritet:
+
+> **Före (Otydligt och svagt för AI):** "Kundbortfall är en stor utmaning. Vår mjukvara hjälper er att minska detta problem."
+
+> **Efter (Maximerat för GEO):** "76 procent av mjukvaruföretagen anger kundbortfall som sin största utmaning, enligt ChartMoguls branschrapport. System X sänker detta bortfall med 12 procent under första året."
+
+Det andra exemplet matar AI:n med en precis siffra (76 procent), en definierad källa (ChartMogul) och en konkret effekt (12 procent). Denna kombination är precis vad generativa modeller söker efter.
+
+## Utmaningarna med GEO-optimering
+Spelplanen är instabil. AI-motorerna uppdaterar frekvent hur de silar och väljer ut information. En metod som fungerar hos Perplexity idag slår inte nödvändigtvis igenom på samma sätt hos Claude eller Gemini imorgon. Princeton-studien visade dessutom att motorerna prioriterar olika domäner beroende på vilket språk användaren ställer frågan på. När en fråga ställdes på tyska eller franska skiftade ChatGPT och Perplexity omedelbart till lokala, nationella domäner, medan vissa modeller envist fortsatte citera engelskspråkiga jättar. Denna lokalisering tvingar företag att bygga upp helt olika auktoriteter för olika marknader.
+
+Balansen mellan maskinläsbarhet och en riktig, krävande mänsklig läsare utgör en annan hård knut. En text som späckas för hårt med datapunkter, strikta listor och facktermer tappar snabbt sin rytm. Forskarna identifierar också problemet med "homogenisering". Om hela branscher strukturerar all text enligt en och samma GEO-mall, slutar AI-modellerna att göra skillnad på dem. De smälter ihop till en generisk massa. För att skära igenom bruset krävs exakta fakta förpackat i ett eget, mänskligt ordförråd ("distinctive vocabulary") som algoritmerna kan skilja ut från mängden.
+
+---
+
+### Vi lanserar Notiserna: Din personliga nyhetspanel (2026-06-08)
+> Välkommen till ett renare sätt att läsa nyheter. Läs om hur Notiserna föddes ur frustration över reklam och brus.
+
+Välkommen till **Notiserna**! Den här tjänsten skapades för att lösa ett enkelt problem: det är för mycket brus på dagens nyhetssajter. 
+
+Varje dag möts vi av blinkande annonser, cookies-banners, betalväggar och sensationella rubriker som är utformade för att fånga vår uppmärksamhet till varje pris. Notiserna är ett experiment i att gå tillbaka till grunderna.
+
+### Varför ett nytt sätt att läsa nyheter?
+Vi tror på ett mer medvetet och ostört nyhetsläsande. Genom att samla dina favoritkällor på en och samma plats utan algoritmer som bestämmer vad du ska tycka eller läsa, återtar du kontrollen över ditt flöde.
+
+*   **RSS-drivet**: Du väljer källorna, inte ett socialt nätverk eller en vinstmaximerande algoritm.
+*   **Distraktionsfritt läsläge**: Rensa bort all bråte på målhemsidan med ett enda klick.
+
+### Framtiden för Notiserna
+Det här är bara början. Vi bygger kontinuerligt ut plattformen med nya funktioner. I den senaste uppdateringen har vi till exempel lagt till denna artikelsektion där vi kommer att dela tankar om oberoende nyhetsbevakning, integritet och webbteknik.
+
+Tack för att du läser och för att du är en del av Notiserna!
+
+---

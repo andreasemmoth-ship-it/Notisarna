@@ -11,6 +11,115 @@ const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 const PAGE_SIZE = 30
 const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
 
+
+// ----- Markdown / Frontmatter Parser & Static Posts Loader -----
+function parseFrontmatter(markdownText) {
+  const match = markdownText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
+  if (!match) return { attributes: {}, body: markdownText }
+  
+  const yamlBlock = match[1]
+  const body = match[2]
+  const attributes = {}
+  
+  yamlBlock.split('\n').forEach(line => {
+    const parts = line.split(':')
+    if (parts.length >= 2) {
+      const key = parts[0].trim()
+      let value = parts.slice(1).join(':').trim()
+      if (value.startsWith('"') && value.endsWith('"')) {
+        value = value.slice(1, -1)
+      } else if (value.startsWith("'") && value.endsWith("'")) {
+        value = value.slice(1, -1)
+      }
+      attributes[key] = value
+    }
+  })
+  
+  return { attributes, body }
+}
+
+function renderMarkdown(md) {
+  let html = md
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+
+  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>')
+  html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>')
+  html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>')
+
+  let inList = false
+  const lines = html.split('\n')
+  const processedLines = lines.map(line => {
+    const listMatch = line.match(/^[\*\-]\s+(.*?)$/)
+    if (listMatch) {
+      let result = ''
+      if (!inList) {
+        inList = true
+        result += '<ul>'
+      }
+      result += `<li>${listMatch[1]}</li>`
+      return result
+    } else {
+      let result = ''
+      if (inList) {
+        inList = false
+        result += '</ul>'
+      }
+      result += line
+      return result
+    }
+  })
+  if (inList) {
+    processedLines.push('</ul>')
+  }
+  html = processedLines.join('\n')
+
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>')
+
+  html = html.split('\n').map(line => {
+    const trimmed = line.trim()
+    if (!trimmed) return ''
+    if (trimmed.startsWith('<h') || trimmed.startsWith('</h') || trimmed.startsWith('<ul') || trimmed.startsWith('</ul') || trimmed.startsWith('<li') || trimmed.startsWith('</li')) {
+      return line
+    }
+    return `<p>${line}</p>`
+  }).join('\n')
+
+  return html
+}
+
+const rawPosts = import.meta.glob('./content/posts/*.md', { query: '?raw', import: 'default', eager: true })
+
+const POSTS = Object.entries(rawPosts).map(([path, content]) => {
+  const { attributes, body } = parseFrontmatter(content)
+  const sources = []
+  let index = 1
+  while (attributes[`source_url_${index}`]) {
+    sources.push({
+      url: attributes[`source_url_${index}`],
+      title: attributes[`source_title_${index}`] || attributes[`source_url_${index}`]
+    })
+    index++
+  }
+  if (attributes.source_url) {
+    sources.push({
+      url: attributes.source_url,
+      title: attributes.source_title || attributes.source_url
+    })
+  }
+  return {
+    title: attributes.title || 'Utan titel',
+    date: attributes.date || '',
+    description: attributes.description || '',
+    image: attributes.image || '',
+    sources,
+    slug: attributes.slug || path.split('/').pop().replace('.md', ''),
+    body,
+  }
+}).sort((a, b) => (b.date > a.date ? 1 : -1))
+
 // ----- Error Boundary -----
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -75,6 +184,15 @@ function placeholderBg(hue) {
   return `linear-gradient(135deg, oklch(0.78 0.10 ${h}) 0%, oklch(0.62 0.13 ${h2}) 100%)`
 }
 
+function optimizeImageUrl(url) {
+  if (!url) return url
+  if (url.includes('svt') && url.includes('/1200/')) {
+    return url.replace('/1200/', '/600/')
+  }
+  return url
+}
+
+
 const Icon = ({ name, size = 16 }) => {
   const paths = {
     search:        <><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>,
@@ -95,6 +213,7 @@ const Icon = ({ name, size = 16 }) => {
     moon:          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>,
     sun:           <><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></>,
     lock:          <><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+    info:          <><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></>,
   }
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -167,10 +286,14 @@ function AboutModal({ onClose, onOpenPrivacy }) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const sourcesByCategory = Object.entries(RSS_FEEDS).map(([key, feeds]) => {
-    const cat = CATEGORIES.find(c => c.key === key)
-    return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
-  }).filter(g => g.feeds.length > 0)
+  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv'])
+
+  const sourcesByCategory = Object.entries(RSS_FEEDS)
+    .filter(([key]) => PUBLIC_ABOUT_CATS.has(key))
+    .map(([key, feeds]) => {
+      const cat = CATEGORIES.find(c => c.key === key)
+      return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
+    }).filter(g => g.feeds.length > 0)
 
   return (
     <div className="reader-overlay" onClick={onClose}>
@@ -262,6 +385,55 @@ function LoginForm() {
 }
 
 // ----- Cards -----
+function BlogHeroCard({ post, onClick }) {
+  return (
+    <a
+      href={`?view=artiklar&slug=${post.slug}`}
+      className="hero-card blog-hero-card"
+      onClick={(e) => {
+        e.preventDefault()
+        onClick()
+      }}
+      style={{ cursor: 'pointer' }}
+    >
+      <div className="hero-card__media" style={{ background: placeholderBg(220) }}>
+        <div className="placeholder-logo-wrap">
+          <div className="placeholder-logo">N</div>
+        </div>
+        {post.image && (
+          <img src={post.image} alt="" className="media-img"
+                 loading="lazy" decoding="async" />
+        )}
+      </div>
+      <div className="hero-card__body">
+        <div className="hero-card__meta">
+          <span className="cat-tag" style={{ background: 'var(--accent)', color: 'var(--on-accent)', borderColor: 'var(--accent)', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{
+              width: '16px', height: '16px', borderRadius: '4px',
+              background: 'var(--on-accent)', color: 'var(--accent)',
+              display: 'grid', placeItems: 'center',
+              fontFamily: 'Instrument Serif, serif', fontSize: '11px',
+              fontStyle: 'italic', fontWeight: 'bold', lineHeight: 1
+            }}>N</span>
+            Notiserna.se
+          </span>
+          <span className="dot-sep">·</span>
+          <span>Redaktionen</span>
+          <span className="dot-sep">·</span>
+          <span>{post.date}</span>
+        </div>
+        <h1 className="hero-card__title">{post.title}</h1>
+        <p className="hero-card__summary">{post.description}</p>
+        <div className="card__footer">
+          <span className="read-more">
+            Läs hela artikeln <Icon name="arrow" size={15} />
+          </span>
+        </div>
+      </div>
+    </a>
+  )
+}
+
 function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenReader }) {
   return (
     <article className={`hero-card ${isRead ? 'is-read' : ''}`}>
@@ -270,7 +442,7 @@ function HeroCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -318,7 +490,7 @@ function NewsCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpenRea
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                  loading="lazy" decoding="async"
                  onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -365,7 +537,7 @@ function CompactCard({ item, isArchived, onToggleArchive, isRead, onRead, onOpen
           <div className="placeholder-logo">N</div>
         </div>
         {item.image && (
-          <img src={item.image} alt="" className="media-img"
+          <img src={optimizeImageUrl(item.image)} alt="" className="media-img"
                loading="lazy" decoding="async"
                onError={e => { e.target.style.display = 'none' }} />
         )}
@@ -404,16 +576,24 @@ function ReaderModal({ item, onClose }) {
   const [errMsg,  setErrMsg]  = useState('')
 
   useEffect(() => {
-    fetch(
-      `${SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`,
-      { headers: { Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-    )
-      .then(r => r.json())
-      .then(json => {
-        if (json.error) { setErrMsg(json.error); setState('error') }
-        else { setData(json); setState('ok') }
-      })
-      .catch(err => { setErrMsg(String(err)); setState('error') })
+    db.auth.getSession().then(({ data: { session } }) => {
+      const token = session?.access_token || SUPABASE_ANON_KEY
+      fetch(
+        `${SUPABASE_URL}/functions/v1/reader-mode?url=${encodeURIComponent(item.link)}`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      )
+        .then(r => r.json())
+        .then(json => {
+          if (json.error) { setErrMsg(json.error); setState('error') }
+          else { setData(json); setState('ok') }
+        })
+        .catch(err => { setErrMsg(String(err)); setState('error') })
+    })
   }, [item.link])
 
   useEffect(() => {
@@ -569,7 +749,9 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
       </button>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
-           className={active !== 'arkiv' ? 'is-active' : ''}>Flöde</a>
+           className={active !== 'arkiv' && active !== 'artiklar' ? 'is-active' : ''}>Flöde</a>
+        <a href="#" onClick={e => { e.preventDefault(); onSetActive('artiklar') }}
+           className={active === 'artiklar' ? 'is-active' : ''}>Artiklar</a>
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('arkiv') }}
            className={active === 'arkiv' ? 'is-active' : ''}>Arkiv</a>
         <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
@@ -601,6 +783,42 @@ function Nav({ onOpenRss, query, setQuery, active, onSetActive, onLogout, isAnon
         )}
       </div>
     </header>
+  )
+}
+
+// ----- MobileNav -----
+function MobileNav({ active, onSetActive, onOpenAbout }) {
+  return (
+    <nav className="mobile-nav">
+      <button 
+        className={`mobile-nav__item ${active !== 'arkiv' && active !== 'artiklar' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('all')}
+      >
+        <Icon name="rss" size={20} />
+        <span>Flöde</span>
+      </button>
+      <button 
+        className={`mobile-nav__item ${active === 'artiklar' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('artiklar')}
+      >
+        <Icon name="book-open" size={20} />
+        <span>Artiklar</span>
+      </button>
+      <button 
+        className={`mobile-nav__item ${active === 'arkiv' ? 'is-active' : ''}`}
+        onClick={() => onSetActive('arkiv')}
+      >
+        <Icon name="bookmark" size={20} />
+        <span>Arkiv</span>
+      </button>
+      <button 
+        className="mobile-nav__item"
+        onClick={onOpenAbout}
+      >
+        <Icon name="info" size={20} />
+        <span>Om</span>
+      </button>
+    </nav>
   )
 }
 
@@ -842,6 +1060,138 @@ function RssDrawer({ open, onClose, feeds, setFeeds, categories, onAddCategory, 
   )
 }
 
+// ----- ArticleView Component -----
+function ArticleView({ slug, onBack, onBackToFlow }) {
+  const post = useMemo(() => POSTS.find(p => p.slug === slug), [slug])
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [slug])
+
+  if (!post) {
+    return (
+      <div className="empty">
+        <h3>Artikeln hittades inte</h3>
+        <p>Den artikel du söker verkar inte finnas kvar.</p>
+        <button className="btn btn--primary" onClick={onBack}>Tillbaka</button>
+      </div>
+    )
+  }
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}?view=artiklar&slug=${post.slug}`
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  const htmlContent = useMemo(() => renderMarkdown(post.body), [post.body])
+
+  return (
+    <article className="article-view">
+      <div className="article-view__back-wrapper">
+        <button className="btn btn--ghost btn--sm" onClick={onBack}>
+          <Icon name="arrow" size={13} style={{ transform: 'rotate(180deg)', marginRight: '4px' }} /> Tillbaka till artiklar
+        </button>
+      </div>
+
+      <header className="article-view__header">
+        <div className="article-view__meta">
+          <span>EGEN ARTIKEL</span>
+          <span className="dot-sep">·</span>
+          <span>{post.date}</span>
+        </div>
+        <h1 className="article-view__title">{post.title}</h1>
+        {post.description && <p className="article-view__lead">{post.description}</p>}
+        {post.image && (
+          <div className="article-view__featured-image-wrapper">
+            <img src={post.image} alt={post.title} className="article-view__featured-image" />
+          </div>
+        )}
+      </header>
+
+      <div className="article-view__content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+
+      {post.sources && post.sources.length > 0 && (
+        <div className="article-view__sources">
+          <span className="article-view__sources-label">Källor &amp; vidareläsning:</span>
+          <ul className="article-view__sources-list">
+            {post.sources.map((src, i) => (
+              <li key={i} className="article-view__sources-item">
+                <a href={src.url} target="_blank" rel="noopener noreferrer" className="article-view__source-link">
+                  {src.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="article-view__divider">···</div>
+
+      <div className="article-view__info-box">
+        <h4>Notiserna Spaning</h4>
+        <p>Denna artikel är en del av våra egna djuplodande analyser om intressanta ämnen inom ekonomi och teknik. Vill du tipsa om ämnen eller ge feedback? Kontakta oss via Om-sidan.</p>
+      </div>
+
+      {/* Monochrome Share buttons */}
+      <div className="article-view__share">
+        <span className="article-view__share-label">Dela artikeln:</span>
+        <div className="article-view__share-buttons">
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="share-btn"
+            title="Dela på LinkedIn"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+              <rect x="2" y="9" width="4" height="12" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="share-btn"
+            title="Dela på X"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            X
+          </a>
+          <button
+            onClick={handleCopy}
+            className="share-btn share-btn--copy"
+            title="Kopiera länk"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Kopiera länk
+          </button>
+
+          {copied && <span className="share-toast">Länken kopierad!</span>}
+        </div>
+      </div>
+
+      <div className="article-view__footer-nav">
+        <button className="article-view__footer-nav-btn" onClick={onBackToFlow}>
+          &larr; Tillbaka till nyhetsflödet
+        </button>
+      </div>
+    </article>
+  )
+}
+
 function formatUpdated(iso) {
   if (!iso) return ''
   try {
@@ -881,17 +1231,61 @@ function App() {
 
   const [active,        setActive]        = useState(() => {
     const p = new URLSearchParams(window.location.search)
-    return p.get('view') === 'arkiv' ? 'arkiv' : (p.get('cat') ?? 'all')
+    const view = p.get('view')
+    if (view === 'arkiv') return 'arkiv'
+    if (view === 'artiklar') return 'artiklar'
+    return p.get('cat') ?? 'all'
+  })
+  const [activeSlug,    setActiveSlug]    = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    return p.get('view') === 'artiklar' ? p.get('slug') : null
   })
   const [query,         setQuery]         = useState(() =>
     new URLSearchParams(window.location.search).get('q') ?? ''
   )
   const [drawer,        setDrawer]        = useState(false)
-  const [feeds,         setFeeds]         = useState(RSS_FEEDS)
-  const [categories,    setCategories]    = useState(CATEGORIES)
-  const [news,          setNews]          = useState([])
-  const [loading,       setLoading]       = useState(true)
-  const [updatedAt,     setUpdatedAt]     = useState(null)
+  const [feeds,         setFeeds]         = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_feeds')
+      return cached ? JSON.parse(cached) : RSS_FEEDS
+    } catch (e) {
+      return RSS_FEEDS
+    }
+  })
+  const [categories,    setCategories]    = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_categories')
+      return cached ? JSON.parse(cached) : CATEGORIES
+    } catch (e) {
+      return CATEGORIES
+    }
+  })
+  const [news,          setNews]          = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      return cached ? JSON.parse(cached) : []
+    } catch (e) {
+      return []
+    }
+  })
+  const [loading,       setLoading]       = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      return !cached
+    } catch (e) {
+      return true
+    }
+  })
+  const [updatedAt,     setUpdatedAt]     = useState(() => {
+    try {
+      const cached = localStorage.getItem('cached_news')
+      if (cached) {
+        const parsed = JSON.parse(cached)
+        return parsed[0]?.fetched_at ?? null
+      }
+    } catch (e) {}
+    return null
+  })
   const [saveStatus,    setSaveStatus]    = useState('idle')
   const [saveError,     setSaveError]     = useState('')
   const [archived,      setArchived]      = useState(new Set())
@@ -930,14 +1324,72 @@ function App() {
     document.documentElement.setAttribute('data-theme', colorScheme)
   }, [colorScheme])
 
-  // Synka active/query → URL (delningsbara länkar)
+  // Scroll to top when active view/tab changes
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [active, activeSlug])
+
+  // Synka active/query/slug → URL (delningsbara länkar)
   useEffect(() => {
     const p = new URLSearchParams()
     if (active === 'arkiv')    p.set('view', 'arkiv')
+    else if (active === 'artiklar' && activeSlug) {
+      p.set('view', 'artiklar')
+      p.set('slug', activeSlug)
+    }
     else if (active !== 'all') p.set('cat', active)
     if (query.trim())          p.set('q', query.trim())
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
-  }, [active, query])
+  }, [active, activeSlug, query])
+
+  // Update document title, description, canonical and OG tags for SEO
+  useEffect(() => {
+    let title = "Notiserna — dina nyheter, samlat på ett ställe"
+    let description = "Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut."
+    let image = "https://www.notiserna.se/og-image.png"
+    let canonical = "https://www.notiserna.se/"
+
+    if (active === 'artiklar' && activeSlug) {
+      const post = POSTS.find(p => p.slug === activeSlug)
+      if (post) {
+        title = `${post.title} — Notiserna`
+        description = post.description || ''
+        if (post.image) {
+          image = post.image.startsWith('http') ? post.image : `https://www.notiserna.se${post.image}`
+        }
+        canonical = `https://www.notiserna.se/?view=artiklar&slug=${activeSlug}`
+      }
+    } else if (active === 'arkiv') {
+      title = "Arkiv — Notiserna"
+      description = "Dina sparade artiklar på Notiserna."
+      canonical = "https://www.notiserna.se/?view=arkiv"
+    } else if (active !== 'all') {
+      canonical = `https://www.notiserna.se/?cat=${active}`
+    }
+
+    document.title = title
+
+    // Update canonical link in document head
+    const canonicalLink = document.querySelector('link[rel="canonical"]')
+    if (canonicalLink) {
+      canonicalLink.setAttribute('href', canonical)
+    }
+    
+    const metaTags = {
+      'meta[name="description"]': description,
+      'meta[property="og:title"]': title,
+      'meta[property="og:description"]': description,
+      'meta[property="og:image"]': image,
+      'meta[name="twitter:title"]': title,
+      'meta[name="twitter:description"]': description,
+      'meta[name="twitter:image"]': image,
+    }
+
+    Object.entries(metaTags).forEach(([selector, val]) => {
+      const el = document.querySelector(selector)
+      if (el) el.setAttribute('content', val)
+    })
+  }, [active, activeSlug])
 
   const acceptGdpr = useCallback(() => {
     localStorage.setItem('gdpr_ok', '1')
@@ -946,21 +1398,36 @@ function App() {
 
   const goHome = useCallback(() => {
     setActive('all')
+    setActiveSlug(null)
     setQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
+  const handleSetActive = useCallback((tab) => {
+    setActive(tab)
+    setActiveSlug(null)
   }, [])
 
   useEffect(() => {
     db.from('feed_config').select('feeds, categories').eq('id', 1).single()
       .then(({ data, error }) => {
         if (error) { console.error('Supabase load:', error.code, error.message); return }
-        if (data?.feeds && Object.keys(data.feeds).length > 0) setFeeds(data.feeds)
+        if (data?.feeds && Object.keys(data.feeds).length > 0) {
+          setFeeds(data.feeds)
+          try {
+            localStorage.setItem('cached_feeds', JSON.stringify(data.feeds))
+          } catch (e) {}
+        }
         if (data?.categories?.length) {
-          setCategories([
+          const loadedCategories = [
             { key: 'all', label: 'Alla' },
             ...CATEGORIES.filter(c => c.key !== 'all'),
             ...data.categories,
-          ])
+          ]
+          setCategories(loadedCategories)
+          try {
+            localStorage.setItem('cached_categories', JSON.stringify(loadedCategories))
+          } catch (e) {}
         }
       })
   }, [])
@@ -1080,12 +1547,19 @@ function App() {
   const fetchNews = useCallback(() => {
     db.from('news_articles')
       .select('*')
+      .not('image', 'is', null)
+      .neq('image', '')
       .order('published_at', { ascending: false })
       .range(0, PAGE_SIZE - 1)
       .then(({ data, error }) => {
         if (error) { console.error('Supabase news:', error.message); return }
         const articles = (data || []).map(mapArticle)
         setNews(articles)
+        try {
+          localStorage.setItem('cached_news', JSON.stringify(articles))
+        } catch (e) {
+          console.error('Error writing news cache:', e)
+        }
         setHasMore(articles.length === PAGE_SIZE)
         if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at)
       })
@@ -1098,6 +1572,8 @@ function App() {
     const from = news.length
     db.from('news_articles')
       .select('*')
+      .not('image', 'is', null)
+      .neq('image', '')
       .order('published_at', { ascending: false })
       .range(from, from + PAGE_SIZE - 1)
       .then(({ data, error }) => {
@@ -1110,6 +1586,7 @@ function App() {
   }, [news.length, loadingMore, hasMore])
 
   useEffect(() => {
+    if (!authReady) return
     fetchNews()
     const interval = setInterval(fetchNews, 60000) // Fallback: hämta var 60:e sekund
 
@@ -1121,7 +1598,7 @@ function App() {
       clearInterval(interval)
       db.removeChannel(channel)
     }
-  }, [fetchNews, session?.user?.id])
+  }, [fetchNews, authReady, session?.user?.id])
 
   const filtered = useMemo(() => {
     let list = news
@@ -1148,9 +1625,8 @@ function App() {
       .then(({ error }) => { if (error) console.error('Mark all read:', error.message) })
   }, [filtered, readArticles, session?.user?.id])
 
-  const featured = filtered.find(i => i.featured) || filtered[0]
-  const rest      = filtered.filter(i => i !== featured)
-  const showHero  = featured && active === 'all' && !query
+  const latestPost = POSTS[0]
+  const showBlogHero = latestPost && active === 'all' && !query
 
   const unreadCount = filtered.filter(i => !readArticles.has(i.id)).length
 
@@ -1159,7 +1635,7 @@ function App() {
   return (
     <div className="shell">
       <Nav onOpenRss={() => setDrawer(true)} query={query} setQuery={setQuery}
-           active={active} onSetActive={setActive} onLogout={handleLogout}
+           active={active} onSetActive={handleSetActive} onLogout={handleLogout}
            isAnon={isAnon} isAdmin={isAdmin} onOpenLogin={() => setLoginOpen(true)}
            onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
@@ -1217,7 +1693,7 @@ function App() {
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis
@@ -1242,12 +1718,76 @@ function App() {
             </div>
           )}
         </main>
+      ) : active === 'artiklar' && activeSlug ? (
+        <main className="content">
+          <ArticleView slug={activeSlug}
+                       onBack={() => {
+                         setActive('artiklar')
+                         setActiveSlug(null)
+                       }}
+                       onBackToFlow={() => {
+                         setActive('all')
+                         setActiveSlug(null)
+                       }} />
+        </main>
+      ) : active === 'artiklar' ? (
+        <main className="content">
+          {isAnon && (
+            <div className="anon-banner">
+              <span className="anon-banner__text">
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
+              </span>
+              <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
+                Skapa konto gratis
+              </button>
+            </div>
+          )}
+          <div className="article-archive-header">
+            <h2>Artiklar</h2>
+            <p>Våra egna fördjupningar och analyser</p>
+          </div>
+          {POSTS.length === 0 ? (
+            <div className="empty">
+              <h3>Inga artiklar hittades</h3>
+              <p>Vi fyller på med nytt innehåll inom kort.</p>
+            </div>
+          ) : (
+            <div className="article-archive-list">
+              {POSTS.map(post => (
+                <a
+                  key={post.slug}
+                  href={`?view=artiklar&slug=${post.slug}`}
+                  className="article-archive-item"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setActive('artiklar')
+                    setActiveSlug(post.slug)
+                  }}
+                >
+                  {post.image && (
+                    <div className="article-archive-item__img">
+                      <img src={post.image} alt={post.title} loading="lazy" />
+                    </div>
+                  )}
+                  <div className="article-archive-item__content">
+                    <span className="article-archive-item__date">{post.date}</span>
+                    <h3 className="article-archive-item__title">{post.title}</h3>
+                    <p className="article-archive-item__desc">{post.description}</p>
+                    <span className="article-archive-item__link">
+                      Läs artikeln <Icon name="arrow" size={13} />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </main>
       ) : (
         <main className="content">
           {isAnon && (
             <div className="anon-banner">
               <span className="anon-banner__text">
-                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att anpassa ditt nyhetsflöde, låsa upp fler kategorier (Skatt &amp; juridik, Lokalt, Kultur) och bevara dina bokmärken på alla enheter.
+                <strong>Du läser anonymt</strong> — Skapa ett gratis konto för att lägga till egna RSS-källor, anpassa dina kategorier och få ett helt personligt nyhetsflöde sparat på alla dina enheter.
               </span>
               <button className="btn btn--primary" onClick={() => setLoginOpen(true)}>
                 Skapa konto gratis
@@ -1265,12 +1805,14 @@ function App() {
 
           {!loading && viewMode === 'grid' && (
             <>
-              {showHero && (
-                <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive}
-                          isRead={readArticles.has(featured.id)} onRead={markAsRead} onOpenReader={openReader} />
+              {showBlogHero && (
+                <BlogHeroCard post={latestPost} onClick={() => {
+                  setActive('artiklar')
+                  setActiveSlug(latestPost.slug)
+                }} />
               )}
               <div className="grid">
-                {(showHero ? rest : filtered).map(item => (
+                {filtered.map(item => (
                   <NewsCard key={item.id} item={item}
                             isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
                             isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
@@ -1322,6 +1864,8 @@ function App() {
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
+
+      <MobileNav active={active} onSetActive={handleSetActive} onOpenAbout={() => setAboutOpen(true)} />
 
       {isAdmin && (
         <RssDrawer open={drawer} onClose={() => setDrawer(false)} feeds={feeds} setFeeds={setAndSaveFeeds}

@@ -7,7 +7,6 @@ export const RSS_FEEDS = {
   sverige: [
     { name: 'SVT Nyheter',        url: 'https://www.svt.se/rss.xml',                                         enabled: true  },
     { name: 'Dagens Nyheter',     url: 'https://www.dn.se/rss/',                                             enabled: true  },
-    { name: 'Ekot',               url: 'https://api.sr.se/rss/channel?id=83&formatId=1',                      enabled: true  },
   ],
   teknik: [
     { name: 'The Verge',          url: 'https://www.theverge.com/rss/index.xml',                             enabled: true  },
@@ -18,6 +17,7 @@ export const RSS_FEEDS = {
   varlden: [
     { name: 'BBC News',           url: 'https://feeds.bbci.co.uk/news/world/rss.xml',                        enabled: true  },
     { name: 'New York Times',     url: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',             enabled: true  },
+    { name: 'Associated Press',   url: 'https://feedx.net/rss/ap.xml',                                       enabled: true  },
   ],
   naringsliv: [
     { name: 'Dagens industri',    url: 'https://www.di.se/rss',                                              enabled: true  },
