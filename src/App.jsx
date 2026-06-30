@@ -1625,8 +1625,15 @@ function App() {
       .then(({ error }) => { if (error) console.error('Mark all read:', error.message) })
   }, [filtered, readArticles, session?.user?.id])
 
-  const latestPost = POSTS[0]
-  const showBlogHero = latestPost && active === 'all' && !query
+  const featured = useMemo(() => {
+    return filtered.find(i => i.featured) || filtered[0]
+  }, [filtered])
+
+  const rest = useMemo(() => {
+    return filtered.filter(i => i.id !== featured?.id)
+  }, [filtered, featured])
+
+  const showHero = featured && active === 'all' && !query
 
   const unreadCount = filtered.filter(i => !readArticles.has(i.id)).length
 
@@ -1805,14 +1812,12 @@ function App() {
 
           {!loading && viewMode === 'grid' && (
             <>
-              {showBlogHero && (
-                <BlogHeroCard post={latestPost} onClick={() => {
-                  setActive('artiklar')
-                  setActiveSlug(latestPost.slug)
-                }} />
+              {showHero && (
+                <HeroCard item={featured} isArchived={archived.has(featured.id)} onToggleArchive={toggleArchive}
+                          isRead={readArticles.has(featured.id)} onRead={markAsRead} onOpenReader={openReader} />
               )}
               <div className="grid">
-                {filtered.map(item => (
+                {(showHero ? rest : filtered).map(item => (
                   <NewsCard key={item.id} item={item}
                             isArchived={archived.has(item.id)} onToggleArchive={toggleArchive}
                             isRead={readArticles.has(item.id)} onRead={markAsRead} onOpenReader={openReader} />
