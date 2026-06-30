@@ -4,19 +4,19 @@
 create or replace function public.trigger_select_hero()
 returns void language plpgsql as $$
 declare
-  service_key text;
+  anon_key text;
 begin
-  -- Hämta service_role-nyckeln från Supabase Vault för säker autentisering
-  select decrypted_secret into service_key
+  -- Hämta anon_key från Supabase Vault för säker autentisering
+  select decrypted_secret into anon_key
   from vault.decrypted_secrets
-  where name = 'service_role_key'
+  where name = 'anon_key'
   limit 1;
 
   perform net.http_post(
     url     := 'https://juzqqvhupgvojdeuihok.supabase.co/functions/v1/select-hero',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || service_key
+      'Authorization', 'Bearer ' || anon_key
     ),
     body    := '{}'::jsonb
   );
