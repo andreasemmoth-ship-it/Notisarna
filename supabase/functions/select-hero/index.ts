@@ -91,10 +91,12 @@ Deno.serve(async (req) => {
 
     const db = createClient(supabaseUrl, supabaseKey)
 
-    // Hämta 30 senaste artiklarna sorterat efter publiceringsdatum
+    // Hämta 30 senaste artiklarna med bilder sorterat efter publiceringsdatum
     const { data: articles, error: fetchErr } = await db
       .from('news_articles')
       .select('id, headline, summary, source, category')
+      .not('image', 'is', null)
+      .neq('image', '')
       .order('published_at', { ascending: false })
       .limit(30)
 
