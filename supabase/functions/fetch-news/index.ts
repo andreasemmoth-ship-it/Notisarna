@@ -214,7 +214,6 @@ async function parseFeed(
       hue,
       link,
       image:        feedImage,
-      featured:     false,
       published_at: ok ? dt!.toISOString() : null,
       fetched_at:   new Date().toISOString(),
     })
@@ -284,7 +283,6 @@ Deno.serve(async (req) => {
     }
 
     articles.sort((a, b) => ((b.published_at as string) > (a.published_at as string) ? 1 : -1))
-    if (articles[0]) articles[0].featured = true
 
     // Hämta og:image för de 20 nyaste artiklarna som saknar bild från flödet
     const needsOgImage = articles.filter(a => !a.image && a.link).slice(0, 20)
