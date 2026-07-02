@@ -1,4 +1,6 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { decode } from 'https://esm.sh/he@1.2.0'
+
 
 const db = createClient(
   Deno.env.get('SUPABASE_URL')!,
@@ -74,7 +76,7 @@ function svDate(d: Date) {
 }
 
 function clean(text: string) {
-  return text
+  return decode(text || '')
     .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
@@ -155,6 +157,11 @@ function findFeedImage(block: string): string {
   if (m) return m[1]
   m = block.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']enclosure["']/i)
   if (m) return m[1]
+
+  // Try img tag in description (unescape first to support HTML-in-XML description)
+  const unescaped = decode(block)
+  const imgMatch = unescaped.match(/<img[^>]+src=["']([^"']+)["']/i)
+  if (imgMatch) return imgMatch[1]
   
   return ''
 }
