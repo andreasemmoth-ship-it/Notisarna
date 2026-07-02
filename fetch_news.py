@@ -133,7 +133,8 @@ def parse_date(s: str) -> datetime | None:
 
 
 def clean(text: str) -> str:
-    text = _TAG_RE.sub(' ', text or '')
+    text = html_lib.unescape(text or '')
+    text = _TAG_RE.sub(' ', text)
     return _WS_RE.sub(' ', text).strip()
 
 
@@ -210,6 +211,12 @@ def find_feed_image_element(element) -> str:
         if m:
             return m.group(1)
         m = re.search(r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']enclosure["\']', xml_str, re.IGNORECASE)
+        if m:
+            return m.group(1)
+
+        # Try img tag in description (unescape first to support HTML-in-XML description)
+        unescaped = html_lib.unescape(xml_str)
+        m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', unescaped, re.IGNORECASE)
         if m:
             return m.group(1)
     except Exception:
