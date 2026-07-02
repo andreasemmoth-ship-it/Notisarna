@@ -106,7 +106,11 @@ async function fetchOgImage(url: string): Promise<string> {
     )
     if (m) {
       const rawUrl = m[1] || m[2] || ''
-      return rawUrl.replace(/&amp;/g, '&').trim()
+      const imgUrl = rawUrl.replace(/&amp;/g, '&').trim()
+      if (imgUrl.toLowerCase().includes('defaultshareimage')) {
+        return ''
+      }
+      return imgUrl
     }
     return ''
   } catch {
@@ -115,6 +119,13 @@ async function fetchOgImage(url: string): Promise<string> {
 }
 
 function findFeedImage(block: string): string {
+  const url = findFeedImageRaw(block)
+  if (!url) return ''
+  if (url.toLowerCase().includes('defaultshareimage')) return ''
+  return url
+}
+
+function findFeedImageRaw(block: string): string {
   // Try all media:content tags and find the first one that is NOT a video
   const contentRegex = /<media:content([\s\S]*?)\/?>/gi
   let match
@@ -303,6 +314,11 @@ Deno.serve(async (req) => {
     if (error) {
       throw new Error(`Database upsert failed: ${error.message}`)
     }
+
+    // Clean up old corrupted articles with placeholder images or bad summaries
+    await db.from('news_articles').delete().like('summary', '%&lt;p&gt;%')
+    await db.from('news_articles').delete().like('image', '%defaultshareimage%')
+
 
     const { count: dbCount } = await db.from('news_articles').select('*', { count: 'exact', head: true })
 

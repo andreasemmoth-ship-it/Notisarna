@@ -154,7 +154,10 @@ def fetch_og_image(url: str) -> str:
         m = _OG_RE.search(html)
         if m:
             img_url = html_lib.unescape((m.group(1) or m.group(2) or '').strip())
-            return img_url.replace('&amp;', '&')
+            img_url = img_url.replace('&amp;', '&')
+            if 'defaultshareimage' in img_url.lower():
+                return ''
+            return img_url
     except Exception:
         pass
     return ''
@@ -171,6 +174,15 @@ def fetch_url(url: str) -> bytes | None:
 
 
 def find_feed_image_element(element) -> str:
+    url = _find_feed_image_element_raw(element)
+    if not url:
+        return ''
+    if 'defaultshareimage' in url.lower():
+        return ''
+    return url
+
+
+def _find_feed_image_element_raw(element) -> str:
     try:
         xml_str = ET.tostring(element, encoding='utf-8').decode('utf-8')
         

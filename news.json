@@ -1,6 +1,67 @@
 {
   "articles": [
     {
+      "id": "naringsliv_9b0b272d",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "2 jul 2026",
+      "headline": "Katolsk fejd: Vatikanen utesluter nya biskopar",
+      "summary": "Vatikanen har på torsdagen beslutat att exkommunicera de fyra biskopar som under onsdagen vigdes.",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/katolsk-fejd-vatikanen-utesluter-nya-biskopar/",
+      "image": "https://static.bonniernews.se/ba/e0854c76-98dd-4cc6-bfe3-11a7368f6800.jpg?width=600",
+      "featured": true
+    },
+    {
+      "id": "naringsliv_130372be",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "Dagens industri",
+      "date": "2 jul 2026",
+      "headline": "AIK:s vd petas efter omtumlande året",
+      "summary": "Den allsvenska fotbollsklubben AIK:s vd Fredrik Söderberg petas efter ”de senaste tuffa åren”. De senaste tre åren har det börsnoterade bolag tyngts av stora förluster. ”Vi kommit fram till att vi behöver ett annat ledar…",
+      "hue": 150,
+      "link": "https://www.di.se/nyheter/aiks-vd-petas-efter-omtumlande-aret/",
+      "image": "https://static.bonniernews.se/ba/eae8795a-a135-475b-bc5b-b7dc7d26ad3c.jpeg?width=600"
+    },
+    {
+      "id": "sverige_4b84aeef",
+      "category": "Sverige",
+      "categoryKey": "sverige",
+      "source": "Dagens Nyheter",
+      "date": "2 jul 2026",
+      "headline": "Så avslöjade Per-Åke den avancerade hotellbluffen",
+      "summary": "Läckta bokningsuppgifter från hotell och bokningssajter används i avancerade bedrägerier mot svenska resenärer. Med namn, telefonnummer och resmål får bluffmeddelanden ett sken av att vara äkta. Per-Åke Lindestad fick et…",
+      "hue": 0,
+      "link": "https://www.dn.se/sverige/sa-avslojade-per-ake-den-avancerade-hotellbluffen/",
+      "image": "https://static.bonniernews.se/ba/0443de4c-621e-4b1f-b13c-15bbfdc29204.jpeg?io=1&amp;width=1000"
+    },
+    {
+      "id": "naringsliv_ffb5a98b",
+      "category": "Näringsliv",
+      "categoryKey": "naringsliv",
+      "source": "SVD Näringsliv",
+      "date": "2 jul 2026",
+      "headline": "Skabbutbrott på Chalmers",
+      "summary": "",
+      "hue": 150,
+      "link": "https://www.svd.se/a/zO6mx9/skabbutbrott-pa-chalmers",
+      "image": "https://static.svd.se/assets/assets/images/logo-sharing-backup.png"
+    },
+    {
+      "id": "teknik_53c95a39",
+      "category": "Teknik",
+      "categoryKey": "teknik",
+      "source": "Feber",
+      "date": "2 jul 2026",
+      "headline": "Par som köper städhjälp skiljer sig mer sällan",
+      "summary": "Slipp bråka om dammråttorna forskning från Lunds universitet visar att det är färre skilsmässor bland par som köper städhjälp. De som gör det skiljer sig nästan hälften så ofta som andra par. Anledningen till detta ska v…",
+      "hue": 220,
+      "link": "https://feber.se/samhalle/par-som-koper-stadhjalp-skiljer-sig-mer-sallan/493654/?utm_source=rss&utm_medium=feed",
+      "image": "https://static.feber.se/article_images/65/90/81/659081_980.jpg"
+    },
+    {
       "id": "naringsliv_ce953e78",
       "category": "Näringsliv",
       "categoryKey": "naringsliv",
@@ -10,8 +71,7 @@
       "summary": "Fler sysselsatta förutsätter högre tillväxt. Om Sverige på allvar vill få ned arbetslösheten måste den politiska diskussionen i mycket högre grad fokusera hur bättre förutsättningar för ekonomisk tillväxt kan skapas, skr…",
       "hue": 150,
       "link": "https://www.di.se/debatt/fokus-for-politiken-maste-vara-hogre-tillvaxt/",
-      "image": "https://static.bonniernews.se/ba/e63e01f4-2cae-4b48-823d-51aab129ec75.jpeg?width=600",
-      "featured": true
+      "image": "https://static.bonniernews.se/ba/e63e01f4-2cae-4b48-823d-51aab129ec75.jpeg?width=600"
     },
     {
       "id": "varlden_f071811a",
@@ -23,7 +83,7 @@
       "summary": "2026-07-02T07:56:34Z JOHANNESBURG (AP) — At least 16 people have been killed and 20 others injured when a bus transporting passengers to South Africa’s Eastern Cape province overturned in the early hours of Thursday. Acc…",
       "hue": 280,
       "link": "https://apnews.com/article/south-africa-bus-crash-cape-town-idutywa-f642d13ef745bad1904d60bb9d07ee67",
-      "image": "https://dims.apnews.com/dims4/default/295c329/2147483647/strip/true/crop/675x450+12+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F90%2F29%2F4e3c1cc7446089a9101a7bdff4c8%2Fdefaultshareimage-copy.png"
+      "image": ""
     },
     {
       "id": "varlden_3ba0b8fe",
@@ -35,7 +95,7 @@
       "summary": "2026-07-02T08:07:05Z BANDA ACEH, Indonesia (AP) — A young couple in Indonesia’s conservative Aceh province were publicly caned on Thursday after an Islamic Shariah court convicted them of violating Islamic law by kissing…",
       "hue": 280,
       "link": "https://apnews.com/article/indonesia-aceh-caning-sharia-law-tiktok-kissing-7225fcb804f62fbd8987c25bbd501415",
-      "image": "https://dims.apnews.com/dims4/default/295c329/2147483647/strip/true/crop/675x450+12+0/resize/980x653!/quality/90/?url=https%3A%2F%2Fassets.apnews.com%2F90%2F29%2F4e3c1cc7446089a9101a7bdff4c8%2Fdefaultshareimage-copy.png"
+      "image": ""
     },
     {
       "id": "naringsliv_959f6362",
@@ -120,30 +180,6 @@
       "hue": 0,
       "link": "https://www.dn.se/sport/politiken-avgor-om-du-foredrar-ronaldo-framfor-messi/",
       "image": "https://static.bonniernews.se/ba/2d59b542-3629-430c-a848-234948376d8b.jpeg?io=1&amp;width=1000"
-    },
-    {
-      "id": "naringsliv_fb36c4ca",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "2 jul 2026",
-      "headline": "Efter ”tuffa åren”: Fotbollsklubbens vd får sparken",
-      "summary": "Den allsvenska fotbollsklubben AIK:s vd Fredrik Söderberg får lämna efter ”de senaste tuffa åren”, heter det i ett pressmeddelande. I ett mejl till Aftonbladet skriver ordförande Mikael Jomer att ”initiativet till avsked…",
-      "hue": 150,
-      "link": "https://www.di.se/nyheter/efter-tuffa-aren-fotbollsklubbens-vd-far-sparken/",
-      "image": "https://static.bonniernews.se/ba/10bba001-0f4f-47f9-a71e-70f9a4cbe73b.jpeg?width=600"
-    },
-    {
-      "id": "naringsliv_5076f822",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "Dagens industri",
-      "date": "2 jul 2026",
-      "headline": "Carlsberg ansöker om indisk börsnotering – kan ske i år",
-      "summary": "Den danska dryckesjätten Carlsberg har lämnat in en konfidentiell ansökan om en börsnotering för sin indiska verksamhet, rapporterar Bloomberg.",
-      "hue": 150,
-      "link": "https://www.di.se/live/carlsberg-ansoker-om-indisk-borsnotering-kan-ske-i-ar/",
-      "image": "https://static.bonniernews.se/ba/56722362-6158-4440-8ec2-80bab4f2ba77.jpeg?width=600"
     },
     {
       "id": "teknik_06428c4d",
@@ -386,30 +422,6 @@
       "image": "https://static.feber.se/article_images/65/90/79/659079_980.jpg"
     },
     {
-      "id": "sverige_4ed9f75c",
-      "category": "Sverige",
-      "categoryKey": "sverige",
-      "source": "Dagens Nyheter",
-      "date": "2 jul 2026",
-      "headline": "Nu sätter succéserien ”Heartstopper” punkt: ”Vi behöver fler queera berättelser”",
-      "summary": "Efter tio år, miljontals sålda bokexemplar och en framgångsrik Netflixserie sätter nu ”Heartstopper” punkt. DN pratar med skaparen Alice Oseman om censuren som drabbat böckerna, att ta farväl – och drömmen om fler hbtqi-…",
-      "hue": 0,
-      "link": "https://www.dn.se/kultur/nu-satter-succeserien-heartstopper-punkt-vi-behover-fler-queera-berattelser/",
-      "image": "https://static.bonniernews.se/ba/5a12f5b4-ed27-4374-87ba-20a79b738287.jpeg?io=1&amp;width=1000"
-    },
-    {
-      "id": "teknik_3c72694d",
-      "category": "Teknik",
-      "categoryKey": "teknik",
-      "source": "Feber",
-      "date": "2 jul 2026",
-      "headline": "Lamborghini kände att Urus behövde 150 hästar till",
-      "summary": "Nu får även Performante laddhybrid-teknik 2024 släppte Lamborghini suven Urus med laddhybrid-teknik. Nu får även den vassare Performante-versionen tekniken vilket bland annat innebär 150 hästar till. Bilen var knappast s…",
-      "hue": 220,
-      "link": "https://feber.se/bil/lamborghini-kande-att-urus-behovde-150-hastar-till/493649/?utm_source=rss&utm_medium=feed",
-      "image": "https://static.feber.se/article_images/65/90/49/659049_980.jpg"
-    },
-    {
       "id": "teknik_0f069411",
       "category": "Teknik",
       "categoryKey": "teknik",
@@ -444,18 +456,6 @@
       "hue": 150,
       "link": "https://www.svd.se/a/k0m5ga/skakigt-for-techjattar-sa-mycket-foll-de-i-juni",
       "image": "https://akamai.vgc.no/v2/images/1fa3ad03-f956-3067-8bf7-bef8291d864f?format=auto&w=720&s=bf71d7cc080de6e44207a7e3a4ad1a09ac5e141b"
-    },
-    {
-      "id": "naringsliv_46dacdb6",
-      "category": "Näringsliv",
-      "categoryKey": "naringsliv",
-      "source": "SVD Näringsliv",
-      "date": "2 jul 2026",
-      "headline": "Så kan du hjälpa barnen att minnas matten i sommar",
-      "summary": "Veckor av lek, pyssel och bus ger stora möjligheter. Spela spel, bygga saker, baka och använda recept hjälper barn att inte glömma bort sina kunskaper i matematik under sommarlovet.",
-      "hue": 150,
-      "link": "https://www.svd.se/a/BxkpXe/sa-kan-du-hjalpa-barnen-att-minnas-matten-i-sommar",
-      "image": "https://akamai.vgc.no/v2/images/82241d3b-f82a-3bd1-ae52-06bafecbf63e?format=auto&w=1080&s=8a2abcfdeaaab61b640e736a114a6eae53abcfe5"
     },
     {
       "id": "teknik_b3e1e96e",
@@ -524,10 +524,10 @@
       "source": "SVT Nyheter",
       "date": "2 jul 2026",
       "headline": "Omfattande attack mot Ukraina – flera döda i Kiev",
-      "summary": "Under natten har flera explosioner hörts i Ukrainas huvudstad Kiev. Attackerna, som ska ha inletts på onsdagskvällen ska ha dödat minst 13 personer och skadat närmare 80, enligt stadens borgmästare Vitalj Klytjko.",
+      "summary": "Under natten har flera explosioner hörts i Ukrainas huvudstad Kiev. Attackerna, som ska ha inletts på onsdagskvällen ska ha dödat minst 13 personer och skadat närmare 80, enligt stadens borgmästare Vitalj Klytjko. – Det …",
       "hue": 0,
       "link": "https://www.svt.se/nyheter/utrikes/omfattande-attack-mot-ukraina-flera-doda-i-kiev",
-      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/473994f41d04a4e6cd749924ab693ee3d9bf15099f00c3d407e326f56d559ce7"
+      "image": "https://www.svtstatic.se/image-news/1200/1.91:1/0.5/0.5/06ec2575dc5efb6710b3016fb413416e5b4703b176b4559636887f336d6bae0e"
     },
     {
       "id": "sverige_da784297",
@@ -842,6 +842,6 @@
       "image": "https://static-cdn.sr.se/images/2795/3defa11b-0882-43f9-a54f-e61ac0e41f5f.jpeg?preset=api-default-rectangle"
     }
   ],
-  "generated_at": "2026-07-02T08:28:26.563212+00:00",
+  "generated_at": "2026-07-02T08:35:23.862300+00:00",
   "count": 70
 }
