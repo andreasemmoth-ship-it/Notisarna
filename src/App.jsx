@@ -1,4 +1,4 @@
-import React, { Component, useState, useMemo, useEffect, useCallback } from 'react'
+import React, { Component, useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { RSS_FEEDS, CATEGORIES } from './data.js'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
@@ -1296,6 +1296,7 @@ function App() {
   const [loginOpen,     setLoginOpen]     = useState(false)
   const [hasMore,       setHasMore]       = useState(true)
   const [loadingMore,   setLoadingMore]   = useState(false)
+  const loadedCount = useRef(Math.max(PAGE_SIZE, news.length))
 
   const openReader  = useCallback((item) => setReaderItem(item), [])
   const closeReader = useCallback(() => setReaderItem(null), [])
@@ -1346,7 +1347,7 @@ function App() {
   useEffect(() => {
     let title = "Notiserna — dina nyheter, samlat på ett ställe"
     let description = "Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut."
-    let image = "https://www.notiserna.se/og-image.png"
+    let image = "https://www.notiserna.se/images/blogg/notiserna.jpeg"
     let canonical = "https://www.notiserna.se/"
 
     if (active === 'artiklar' && activeSlug) {
@@ -1545,22 +1546,25 @@ function App() {
   }, [])
 
   const fetchNews = useCallback(() => {
+    const limit = loadedCount.current
     db.from('news_articles')
       .select('*')
       .not('image', 'is', null)
       .neq('image', '')
       .order('published_at', { ascending: false })
-      .range(0, PAGE_SIZE - 1)
+      .range(0, limit - 1)
       .then(({ data, error }) => {
         if (error) { console.error('Supabase news:', error.message); return }
+        if (limit < loadedCount.current) return // Ett äldre svar ska inte dölja nyss inlästa sidor.
         const articles = (data || []).map(mapArticle)
         setNews(articles)
+        loadedCount.current = Math.max(PAGE_SIZE, articles.length)
         try {
           localStorage.setItem('cached_news', JSON.stringify(articles))
         } catch (e) {
           console.error('Error writing news cache:', e)
         }
-        setHasMore(articles.length === PAGE_SIZE)
+        setHasMore(articles.length === limit)
         if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at)
       })
       .finally(() => setLoading(false))
@@ -1580,6 +1584,7 @@ function App() {
         if (error) { console.error('Load more:', error.message); return }
         const articles = (data || []).map(mapArticle)
         setNews(prev => [...prev, ...articles])
+        loadedCount.current = from + articles.length
         setHasMore(articles.length === PAGE_SIZE)
       })
       .finally(() => setLoadingMore(false))
@@ -1589,13 +1594,19 @@ function App() {
     if (!authReady) return
     fetchNews()
     const interval = setInterval(fetchNews, 60000) // Fallback: hämta var 60:e sekund
+    let refreshTimer
+    const scheduleRefresh = () => {
+      clearTimeout(refreshTimer)
+      refreshTimer = setTimeout(fetchNews, 500)
+    }
 
     const channel = db.channel('news-updates')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, fetchNews)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, scheduleRefresh)
       .subscribe()
 
     return () => {
       clearInterval(interval)
+      clearTimeout(refreshTimer)
       db.removeChannel(channel)
     }
   }, [fetchNews, authReady, session?.user?.id])
@@ -1836,7 +1847,7 @@ function App() {
             </div>
           )}
 
-          {!loading && hasMore && !query && (
+          {!loading && hasMore && (
             <div className="load-more">
               <button className="btn btn--ghost" onClick={loadMore} disabled={loadingMore}>
                 {loadingMore ? 'Hämtar…' : 'Ladda fler nyheter'}

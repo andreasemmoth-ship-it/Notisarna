@@ -162,3 +162,12 @@ Webbplatsen är konfigurerad för att hostas direkt på **Vercel**:
 1.  **Frontend:** Vercel bevakar ditt Git-repository och bygger automatiskt om din React/Vite-applikation (`npm run build`) så fort du pushar ändringar till `main`.
 2.  **Miljövariabler:** Inga komplexa miljövariabler krävs på klientsidan då anslutningssträngen till Supabase läses direkt från [src/config.js](file:///c:/Users/andre/Notisarna/src/config.js).
 3.  **Backend:** Supabase Edge-funktioner distribueras oberoende av Vercel-bygget via Supabase CLI (`supabase db push` / `supabase functions deploy`).
+
+### Säker schemaläggning av `fetch-news`
+
+`fetch-news` körs var 15:e minut via **Supabase Cron**. Funktionen kräver en separat, slumpmässig hemlighet i headern `X-Cron-Secret`; den publika anon-nyckeln räcker inte för att starta en hämtning. GitHub Actions används inte längre som en andra schemaläggare.
+
+1. Lägg samma hemliga värde i Edge Function Secrets som `FETCH_NEWS_CRON_SECRET` och i Supabase Vault som `fetch_news_cron_secret`. Lägg även projektets publika anon-nyckel i Vault som `anon_key` för Edge-gatewayens JWT-kontroll. Lägg aldrig hemligheten i Git.
+2. Kör [scripts/secure_fetch_news_cron.sql](scripts/secure_fetch_news_cron.sql) i databasen för att uppdatera cron-anropet och ta bort publik `EXECUTE`-rättighet från triggerfunktionen.
+3. Driftsätt Edge-funktionen `fetch-news`. Kontrollera att anrop utan `X-Cron-Secret` får HTTP 401 och att ett cron-anrop lyckas.
+4. Kör [scripts/upgrade_bbc_images.sql](scripts/upgrade_bbc_images.sql) en gång för att uppgradera äldre BBC-miniatyrer i databasen.

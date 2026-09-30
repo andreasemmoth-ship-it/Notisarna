@@ -122,7 +122,11 @@ function findFeedImage(block: string): string {
   const url = findFeedImageRaw(block)
   if (!url) return ''
   if (url.toLowerCase().includes('defaultshareimage')) return ''
-  return url
+  // BBC:s RSS-flöde länkar till 240 px-miniatyrer. Samma bild finns i större storlek.
+  return url.replace(
+    /^(https:\/\/ichef\.bbci\.co\.uk\/ace\/standard\/)\d+(\/)/i,
+    (_, prefix, slash) => `${prefix}1024${slash}`,
+  )
 }
 
 function findFeedImageRaw(block: string): string {
@@ -241,13 +245,23 @@ async function parseFeed(
 
 Deno.serve(async (req) => {
   try {
-    // ----- Authorization check -----
-    const authHeader = req.headers.get('Authorization') ?? ''
-    const token = authHeader.replace('Bearer ', '').trim()
-    const anonKey = Deno.env.get('SUPABASE_ANON_KEY')
-    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-    const fallbackAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp1enFxdmh1cGd2b2pkZXVpaG9rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNDM1OTksImV4cCI6MjA5MzcxOTU5OX0.xwJik8yUoCbntl9X0_Ces0y4A_FDJyi9Ah3sOZy7FNQ'
-    if (token !== anonKey && token !== serviceKey && token !== fallbackAnonKey) {
+    if (req.method !== 'POST') {
+      return new Response(JSON.stringify({ ok: false, error: 'Method not allowed' }), {
+        status: 405,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
+    // Publika API-nycklar får inte starta en körning med service role-behörighet.
+    const cronSecret = Deno.env.get('FETCH_NEWS_CRON_SECRET')
+    if (!cronSecret) {
+      console.error('FETCH_NEWS_CRON_SECRET is not configured')
+      return new Response(JSON.stringify({ ok: false, error: 'Service unavailable' }), {
+        status: 503,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+    if (req.headers.get('X-Cron-Secret') !== cronSecret) {
       return new Response(JSON.stringify({ ok: false, error: 'Unauthorized' }), {
         status: 401,
         headers: { 'Content-Type': 'application/json' }
@@ -338,6 +352,7 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error("Critical error during news fetch:", err)
     return new Response(JSON.stringify({ ok: false, error: String(err) }), {
+      status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
   }
