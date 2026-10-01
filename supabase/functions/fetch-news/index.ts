@@ -1,3 +1,4 @@
+import { normalizeFeedUrl } from '../_shared/feed-urls.js'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { decode } from 'https://esm.sh/he@1.2.0'
 
@@ -15,12 +16,23 @@ type Source   = [name: string, url: string, enabled: boolean]
 type Category = { label: string; hue: number; sources: Source[] }
 
 const DEFAULT_FEEDS: Record<string, Category> = {
+  ai: {
+    label: 'AI', hue: 260,
+    sources: [
+      ['Anthropic News', 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml', true],
+      ['Claude Blog', 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/claude-blog.xml', true],
+      ['OpenAI', 'https://openai.com/news/rss.xml', true],
+      ['Google Gemini', 'https://blog.google/products-and-platforms/products/gemini/rss/', true],
+      ['Google AI', 'https://blog.google/innovation-and-ai/technology/ai/rss/', true],
+      ['TechCrunch AI', 'https://techcrunch.com/category/artificial-intelligence/feed/', true],
+    ],
+  },
   skatt: {
     label: 'Skatt & juridik', hue: 24,
     sources: [
       ['Skatteverket',   'https://www.skatteverket.se/rss/nyheter.rss',  true],
-      ['HFD nyheter',    'https://www.domstol.se/hfd/feed',              true],
-      ['PwC Tax Matters','https://taxmatters.pwc.se/feed',               true],
+      ['HFD nyheter',    'https://www.domstol.se/feed/56?searchPageId=1092&scope=news',              true],
+      ['PwC Tax Matters','https://blogg.pwc.se/taxmatters/rss.xml',               true],
     ],
   },
   sverige: {
@@ -194,7 +206,15 @@ function xmlAttr(block: string, tag: string, attr: string): string {
 
 function xmlBlocks(xml: string, tag: string): string[] {
   const re = new RegExp(`<${tag}[\\s>][\\s\\S]*?<\\/${tag}>`, 'gi')
-  return Array.from(xml.matchAll(re), m => m[0]).slice(0, MAX_ITEMS)
+  // Vissa flöden (Anthropic News) är sorterade från äldst till nyast.
+  // Välj de nyaste innan vi begränsar antalet artiklar.
+  const published = (block: string) => {
+    const date = Date.parse(xmlTag(block, 'pubDate') || xmlTag(block, 'published') || xmlTag(block, 'updated'))
+    return Number.isFinite(date) ? date : 0
+  }
+  return Array.from(xml.matchAll(re), m => m[0])
+    .sort((a, b) => published(b) - published(a))
+    .slice(0, MAX_ITEMS)
 }
 
 async function parseFeed(
@@ -294,7 +314,7 @@ Deno.serve(async (req) => {
 
     for (const [catKey, cat] of Object.entries(allFeeds)) {
       const sources: Source[] = feedConfig[catKey]
-        ? feedConfig[catKey].map(f => [f.name, f.url, f.enabled] as Source)
+        ? feedConfig[catKey].map(f => [f.name, normalizeFeedUrl(f.url), f.enabled] as Source)
         : cat.sources
 
       for (const [name, url, enabled] of sources) {
@@ -305,6 +325,7 @@ Deno.serve(async (req) => {
             signal:  AbortSignal.timeout(15000),
             headers: { 'User-Agent': 'Notiserna-bot/1.0' },
           })
+          if (!resp.ok) throw new Error('RSS returned HTTP ' + resp.status)
           const items = await parseFeed(await resp.text(), name, catKey, cat.label, cat.hue)
           articles.push(...items)
           console.log(`  → ${items.length} artiklar`)

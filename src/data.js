@@ -1,8 +1,18 @@
+import { normalizeFeedUrl } from '../supabase/functions/_shared/feed-urls.js'
+
 export const RSS_FEEDS = {
+  ai: [
+    { name: 'Anthropic News', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml', enabled: true },
+    { name: 'Claude Blog', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/claude-blog.xml', enabled: true },
+    { name: 'OpenAI', url: 'https://openai.com/news/rss.xml', enabled: true },
+    { name: 'Google Gemini', url: 'https://blog.google/products-and-platforms/products/gemini/rss/', enabled: true },
+    { name: 'Google AI', url: 'https://blog.google/innovation-and-ai/technology/ai/rss/', enabled: true },
+    { name: 'TechCrunch AI', url: 'https://techcrunch.com/category/artificial-intelligence/feed/', enabled: true },
+  ],
   skatt: [
     { name: 'Skatteverket',       url: 'https://www.skatteverket.se/rss/nyheter.rss',                        enabled: true  },
-    { name: 'HFD',                url: 'https://www.domstol.se/hfd/feed',                                    enabled: true  },
-    { name: 'PWC Tax Matters',    url: 'https://taxmatters.pwc.se/feed',                                     enabled: true  },
+    { name: 'HFD',                url: 'https://www.domstol.se/feed/56?searchPageId=1092&scope=news',                                    enabled: true  },
+    { name: 'PWC Tax Matters',    url: 'https://blogg.pwc.se/taxmatters/rss.xml',                                     enabled: true  },
   ],
   sverige: [
     { name: 'SVT Nyheter',        url: 'https://www.svt.se/rss.xml',                                         enabled: true  },
@@ -34,11 +44,30 @@ export const RSS_FEEDS = {
   ],
 }
 
+export const NEWS_TABS = [
+  { key: 'all', label: 'Nyheter' },
+  { key: 'ai', label: 'AI' },
+  { key: 'skatt', label: 'Skatt' },
+]
+
+// Behåll underkategorierna för RSS-inställningar och befintliga artiklar.
+export function mergeCategories(saved = []) {
+  return [...CATEGORIES, ...saved.filter(c => !CATEGORIES.some(defaultCat => defaultCat.key === c.key))]
+}
+
 export const CATEGORIES = [
-  { key: 'all',        label: 'Alla'          },
+  { key: 'ai', label: 'AI', hue: 260 },
+  { key: 'skatt', label: 'Skatt', hue: 24 },
+  { key: 'all',        label: 'Nyheter'          },
   { key: 'sverige',    label: 'Sverige'       },
   { key: 'teknik',     label: 'Teknik'        },
   { key: 'varlden',    label: 'Världen'       },
   { key: 'naringsliv', label: 'Näringsliv'    },
   { key: 'kultur',     label: 'Kultur'        },
 ]
+
+export function mergeFeeds(saved = {}) {
+  return Object.fromEntries(Object.entries({ ...RSS_FEEDS, ...saved }).map(([key, feeds]) => [
+    key, feeds.map(feed => ({ ...feed, url: normalizeFeedUrl(feed.url) })),
+  ]))
+}

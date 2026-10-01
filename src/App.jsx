@@ -1,12 +1,12 @@
 import React, { Component, useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@supabase/supabase-js'
-import { RSS_FEEDS, CATEGORIES } from './data.js'
+import { RSS_FEEDS, CATEGORIES, NEWS_TABS, mergeCategories, mergeFeeds } from './data.js'
 import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const DEFAULT_CAT_KEYS = new Set(['all', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
-const HIDDEN_ANON_CATS = new Set(['skatt', 'lokalt', 'kultur'])
+const DEFAULT_CAT_KEYS = new Set(['all', 'ai', 'skatt', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
+const HIDDEN_ANON_CATS = new Set(['lokalt', 'kultur'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 const PAGE_SIZE = 30
 const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
@@ -275,7 +275,7 @@ function PrivacyModal({ onClose }) {
 }
 
 // ----- Om Notiserna -----
-function AboutModal({ onClose, onOpenPrivacy }) {
+function AboutModal({ onClose, onOpenPrivacy, feeds, categories }) {
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -286,12 +286,12 @@ function AboutModal({ onClose, onOpenPrivacy }) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv'])
+  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv', 'ai', 'skatt'])
 
-  const sourcesByCategory = Object.entries(RSS_FEEDS)
+  const sourcesByCategory = Object.entries(feeds)
     .filter(([key]) => PUBLIC_ABOUT_CATS.has(key))
     .map(([key, feeds]) => {
-      const cat = CATEGORIES.find(c => c.key === key)
+      const cat = categories.find(c => c.key === key)
       return { label: cat?.label ?? key, feeds: feeds.filter(f => f.enabled) }
     }).filter(g => g.feeds.length > 0)
 
@@ -1234,7 +1234,8 @@ function App() {
     const view = p.get('view')
     if (view === 'arkiv') return 'arkiv'
     if (view === 'artiklar') return 'artiklar'
-    return p.get('cat') ?? 'all'
+    const cat = p.get('cat')
+    return cat === 'nyheter' ? 'all' : cat ?? 'all'
   })
   const [activeSlug,    setActiveSlug]    = useState(() => {
     const p = new URLSearchParams(window.location.search)
@@ -1247,7 +1248,7 @@ function App() {
   const [feeds,         setFeeds]         = useState(() => {
     try {
       const cached = localStorage.getItem('cached_feeds')
-      return cached ? JSON.parse(cached) : RSS_FEEDS
+      return mergeFeeds(cached ? JSON.parse(cached) : {})
     } catch (e) {
       return RSS_FEEDS
     }
@@ -1255,14 +1256,14 @@ function App() {
   const [categories,    setCategories]    = useState(() => {
     try {
       const cached = localStorage.getItem('cached_categories')
-      return cached ? JSON.parse(cached) : CATEGORIES
+      return mergeCategories(cached ? JSON.parse(cached) : [])
     } catch (e) {
       return CATEGORIES
     }
   })
   const [news,          setNews]          = useState(() => {
     try {
-      const cached = localStorage.getItem('cached_news')
+      const cached = localStorage.getItem(`cached_news_${active}`)
       return cached ? JSON.parse(cached) : []
     } catch (e) {
       return []
@@ -1270,7 +1271,7 @@ function App() {
   })
   const [loading,       setLoading]       = useState(() => {
     try {
-      const cached = localStorage.getItem('cached_news')
+      const cached = localStorage.getItem(`cached_news_${active}`)
       return !cached
     } catch (e) {
       return true
@@ -1278,7 +1279,7 @@ function App() {
   })
   const [updatedAt,     setUpdatedAt]     = useState(() => {
     try {
-      const cached = localStorage.getItem('cached_news')
+      const cached = localStorage.getItem(`cached_news_${active}`)
       if (cached) {
         const parsed = JSON.parse(cached)
         return parsed[0]?.fetched_at ?? null
@@ -1297,6 +1298,8 @@ function App() {
   const [hasMore,       setHasMore]       = useState(true)
   const [loadingMore,   setLoadingMore]   = useState(false)
   const loadedCount = useRef(Math.max(PAGE_SIZE, news.length))
+  const newsGeneration = useRef(0)
+  const [newsError, setNewsError] = useState('')
 
   const openReader  = useCallback((item) => setReaderItem(item), [])
   const closeReader = useCallback(() => setReaderItem(null), [])
@@ -1414,17 +1417,13 @@ function App() {
       .then(({ data, error }) => {
         if (error) { console.error('Supabase load:', error.code, error.message); return }
         if (data?.feeds && Object.keys(data.feeds).length > 0) {
-          setFeeds(data.feeds)
+          setFeeds(mergeFeeds(data.feeds))
           try {
             localStorage.setItem('cached_feeds', JSON.stringify(data.feeds))
           } catch (e) {}
         }
         if (data?.categories?.length) {
-          const loadedCategories = [
-            { key: 'all', label: 'Alla' },
-            ...CATEGORIES.filter(c => c.key !== 'all'),
-            ...data.categories,
-          ]
+          const loadedCategories = mergeCategories(data.categories)
           setCategories(loadedCategories)
           try {
             localStorage.setItem('cached_categories', JSON.stringify(loadedCategories))
@@ -1545,66 +1544,80 @@ function App() {
     localStorage.setItem('viewMode', mode)
   }, [])
 
+  // Filtrera före paginering så AI och Skatt får egna, kompletta sidor.
+  const newsQuery = useCallback(() => {
+    let request = db.from('news_articles').select('*')
+    if (active === 'all' || active === 'arkiv' || active === 'artiklar') {
+      request = request.not('category_key', 'in', '(ai,skatt)').not('image', 'is', null).neq('image', '')
+      if (isAnon) request = request.not('category_key', 'in', '(lokalt,kultur)')
+    } else {
+      request = request.eq('category_key', active)
+    }
+    return request.order('published_at', { ascending: false }).order('id')
+  }, [active, isAnon])
+
   const fetchNews = useCallback(() => {
+    const generation = newsGeneration.current
     const limit = loadedCount.current
-    db.from('news_articles')
-      .select('*')
-      .not('image', 'is', null)
-      .neq('image', '')
-      .order('published_at', { ascending: false })
-      .range(0, limit - 1)
-      .then(({ data, error }) => {
-        if (error) { console.error('Supabase news:', error.message); return }
-        if (limit < loadedCount.current) return // Ett äldre svar ska inte dölja nyss inlästa sidor.
-        const articles = (data || []).map(mapArticle)
-        setNews(articles)
-        loadedCount.current = Math.max(PAGE_SIZE, articles.length)
-        try {
-          localStorage.setItem('cached_news', JSON.stringify(articles))
-        } catch (e) {
-          console.error('Error writing news cache:', e)
-        }
-        setHasMore(articles.length === limit)
-        if (articles[0]?.fetched_at) setUpdatedAt(articles[0].fetched_at)
-      })
-      .finally(() => setLoading(false))
-  }, []) // stabil – inga beroenden som ändras
+    return newsQuery().range(0, limit - 1).then(({ data, error }) => {
+      if (generation !== newsGeneration.current) return
+      if (error) { setNewsError('Kunde inte hämta nyheter. Försök igen om en stund.'); return }
+      if (limit < loadedCount.current) return
+      const articles = (data || []).map(mapArticle)
+      setNewsError('')
+      setNews(articles)
+      loadedCount.current = Math.max(PAGE_SIZE, articles.length)
+      try { localStorage.setItem('cached_news_' + active, JSON.stringify(articles)) } catch {}
+      setHasMore(articles.length === limit)
+      setUpdatedAt(articles[0]?.fetched_at ?? null)
+    }).finally(() => {
+      if (generation === newsGeneration.current) setLoading(false)
+    })
+  }, [newsQuery, active])
 
   const loadMore = useCallback(() => {
     if (loadingMore || !hasMore) return
     setLoadingMore(true)
+    const generation = newsGeneration.current
     const from = news.length
-    db.from('news_articles')
-      .select('*')
-      .not('image', 'is', null)
-      .neq('image', '')
-      .order('published_at', { ascending: false })
-      .range(from, from + PAGE_SIZE - 1)
-      .then(({ data, error }) => {
-        if (error) { console.error('Load more:', error.message); return }
-        const articles = (data || []).map(mapArticle)
-        setNews(prev => [...prev, ...articles])
-        loadedCount.current = from + articles.length
-        setHasMore(articles.length === PAGE_SIZE)
+    newsQuery().range(from, from + PAGE_SIZE - 1).then(({ data, error }) => {
+      if (generation !== newsGeneration.current) return
+      if (error) { setNewsError('Kunde inte ladda fler nyheter. Försök igen.'); return }
+      setNewsError('')
+      const articles = (data || []).map(mapArticle)
+      setNews(prev => {
+        const ids = new Set(prev.map(item => item.id))
+        return [...prev, ...articles.filter(item => !ids.has(item.id))]
       })
-      .finally(() => setLoadingMore(false))
-  }, [news.length, loadingMore, hasMore])
+      loadedCount.current = from + articles.length
+      setHasMore(articles.length === PAGE_SIZE)
+    }).finally(() => {
+      if (generation === newsGeneration.current) setLoadingMore(false)
+    })
+  }, [newsQuery, news.length, loadingMore, hasMore])
 
   useEffect(() => {
     if (!authReady) return
+    newsGeneration.current += 1
+    loadedCount.current = PAGE_SIZE
+    setNews([])
+    setUpdatedAt(null)
+    setLoading(true)
+    setLoadingMore(false)
+    setHasMore(true)
+    setNewsError('')
     fetchNews()
-    const interval = setInterval(fetchNews, 60000) // Fallback: hämta var 60:e sekund
+    const interval = setInterval(fetchNews, 60000)
     let refreshTimer
     const scheduleRefresh = () => {
       clearTimeout(refreshTimer)
       refreshTimer = setTimeout(fetchNews, 500)
     }
-
     const channel = db.channel('news-updates')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'news_articles' }, scheduleRefresh)
       .subscribe()
-
     return () => {
+      newsGeneration.current += 1
       clearInterval(interval)
       clearTimeout(refreshTimer)
       db.removeChannel(channel)
@@ -1614,7 +1627,8 @@ function App() {
   const filtered = useMemo(() => {
     let list = news
     if (isAnon) list = list.filter(i => !HIDDEN_ANON_CATS.has(i.categoryKey))
-    if (active !== 'all') list = list.filter(i => i.categoryKey === active)
+    if (active === 'all') list = list.filter(i => !['ai', 'skatt'].includes(i.categoryKey))
+    else list = list.filter(i => i.categoryKey === active)
     if (query.trim()) {
       const q = query.toLowerCase()
       list = list.filter(i =>
@@ -1668,21 +1682,16 @@ function App() {
       </header>
 
 
-      {active !== 'arkiv' && (
+      {active !== 'arkiv' && active !== 'artiklar' && (
         <div className="filter-bar">
           <div className="filter-bar__inner">
-            {categories
-              .filter(c => !isAnon || !HIDDEN_ANON_CATS.has(c.key))
-              .map(c => (
+            {NEWS_TABS.map(c => (
               <button key={c.key}
                       className={`pill ${active === c.key ? 'is-active' : ''}`}
-                      onClick={() => setActive(c.key)}>
+                      onClick={() => handleSetActive(c.key)}
+                      aria-pressed={active === c.key}>
                 {c.label}
-                <span className="pill__count">
-                  {c.key === 'all'
-                    ? (isAnon ? news.filter(n => !HIDDEN_ANON_CATS.has(n.categoryKey)).length : news.length)
-                    : news.filter(n => n.categoryKey === c.key).length}
-                </span>
+                {active === c.key && <span className="pill__count">{filtered.length}</span>}
               </button>
             ))}
             <div className="filter-bar__tools">
@@ -1813,11 +1822,12 @@ function App() {
             </div>
           )}
 
+          {newsError && <div className="empty" role="alert"><p>{newsError}</p></div>}
           {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
-          {!loading && filtered.length === 0 && (
+          {!loading && !newsError && filtered.length === 0 && (
             <div className="empty">
               <h3>Inga artiklar matchar</h3>
-              <p>Prova att rensa sökningen eller välj en annan kategori.</p>
+              <p>{active === 'ai' && !query ? 'AI-nyheter visas här när RSS-hämtaren har hämtat de nya källorna.' : 'Prova att rensa sökningen eller välj en annan flik.'}</p>
             </div>
           )}
 
@@ -1878,7 +1888,7 @@ function App() {
       {readerItem && <ReaderModal item={readerItem} onClose={closeReader} />}
       {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} isAnon={isAnon} />}
       {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
+      {aboutOpen && <AboutModal feeds={feeds} categories={categories} onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
       <MobileNav active={active} onSetActive={handleSetActive} onOpenAbout={() => setAboutOpen(true)} />

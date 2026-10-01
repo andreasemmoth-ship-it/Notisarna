@@ -155,10 +155,10 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   margin: 0 2px;
 }
 .brand-header__tagline {
-  font-size: 16px; color: var(--muted);
-  letter-spacing: 0.01em; font-style: italic;
-  font-family: 'Instrument Serif', serif;
-  line-height: 1.2;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 22px; font-weight: 400; font-style: normal;
+  color: var(--muted); letter-spacing: -0.01em;
+  line-height: 1.25; text-wrap: balance;
 }
 @media (max-width: 720px) {
   .brand-header { padding: 28px 20px 14px; justify-content: center; } /* centrera på mobil */
@@ -166,7 +166,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   .brand-header__logo { width: 50px; height: 50px; font-size: 32px; border-radius: 13px; }
   .brand-header__name { font-size: 32px; }
   .brand-header__sep { display: none; }
-  .brand-header__tagline { width: 100%; text-align: center; font-size: 14px; }
+  .brand-header__tagline { width: 100%; text-align: center; font-size: 18px; }
 }
 
 /* ===== Quick-add categories (Settings drawer) ===== */

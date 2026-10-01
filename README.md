@@ -171,3 +171,11 @@ Webbplatsen är konfigurerad för att hostas direkt på **Vercel**:
 2. Kör [scripts/secure_fetch_news_cron.sql](scripts/secure_fetch_news_cron.sql) i databasen för att uppdatera cron-anropet och ta bort publik `EXECUTE`-rättighet från triggerfunktionen.
 3. Driftsätt Edge-funktionen `fetch-news`. Kontrollera att anrop utan `X-Cron-Secret` får HTTP 401 och att ett cron-anrop lyckas.
 4. Kör [scripts/upgrade_bbc_images.sql](scripts/upgrade_bbc_images.sql) en gång för att uppgradera äldre BBC-miniatyrer i databasen.
+
+### Nyheter, AI och Skatt
+
+Huvudflödet har tre flikar: Nyheter (befintliga nyhetskategorier), AI och Skatt. RSS-inställningarna behåller underkategorierna och sparade källor. Artiklar hämtas och pagineras per flik; AI och Skatt visar även artiklar utan bild.
+
+AI använder Anthropic News och Claude Blog via Alan Turing Institutes RSS-flöden, OpenAI, Google Gemini, Google AI och TechCrunch AI. Hämtaren sorterar RSS-poster efter datum innan de fem senaste väljs. De gamla HFD- och PwC-adresserna ersätts vid läsning med aktuella adresser utan att ändra sparad aktiveringsstatus.
+
+För att aktivera ändringen på den publicerade sidan behöver frontend publiceras via det befintliga Vercel-flödet och Supabase-funktionen fetch-news driftsättas. Vid nästa cron-körning hämtas de nya AI-källorna och de reparerade skatteflödena.
