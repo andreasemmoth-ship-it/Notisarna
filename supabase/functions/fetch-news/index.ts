@@ -345,7 +345,12 @@ Deno.serve(async (req) => {
       })
     )
 
-    const { error } = await db.from('news_articles').upsert(articles, { onConflict: 'id' })
+    // AI-flöden kan länka till samma artikel. Upsert kräver unika id:n per batch.
+    // Behåll den första källan enligt flödesordningen.
+    const uniqueArticles = Array.from(new Map(
+      articles.slice().reverse().map(article => [article.id, article]),
+    ).values())
+    const { error } = await db.from('news_articles').upsert(uniqueArticles, { onConflict: 'id' })
     if (error) {
       throw new Error(`Database upsert failed: ${error.message}`)
     }
