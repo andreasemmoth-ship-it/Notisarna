@@ -1,6 +1,11 @@
 import { normalizeFeedUrl } from '../supabase/functions/_shared/feed-urls.js'
 
 export const RSS_FEEDS = {
+  sport: [
+    { name: 'SVT Sport', url: 'https://www.svt.se/sport/rss.xml', enabled: true },
+    { name: 'Sportbladet', url: 'https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/', enabled: true },
+    { name: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/rss.xml', enabled: true },
+  ],
   ai: [
     { name: 'Anthropic News', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml', enabled: true },
     { name: 'Claude Blog', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/claude-blog.xml', enabled: true },
@@ -48,6 +53,7 @@ export const NEWS_TABS = [
   { key: 'all', label: 'Nyheter' },
   { key: 'ai', label: 'AI' },
   { key: 'skatt', label: 'Skatt' },
+  { key: 'sport', label: 'Sport' },
 ]
 
 // Behåll underkategorierna för RSS-inställningar och befintliga artiklar.
@@ -56,6 +62,7 @@ export function mergeCategories(saved = []) {
 }
 
 export const CATEGORIES = [
+  { key: 'sport', label: 'Sport', hue: 130 },
   { key: 'ai', label: 'AI', hue: 260 },
   { key: 'skatt', label: 'Skatt', hue: 24 },
   { key: 'all',        label: 'Nyheter'          },

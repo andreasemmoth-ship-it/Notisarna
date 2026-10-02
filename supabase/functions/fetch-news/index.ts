@@ -16,6 +16,14 @@ type Source   = [name: string, url: string, enabled: boolean]
 type Category = { label: string; hue: number; sources: Source[] }
 
 const DEFAULT_FEEDS: Record<string, Category> = {
+  sport: {
+    label: 'Sport', hue: 130,
+    sources: [
+      ['SVT Sport', 'https://www.svt.se/sport/rss.xml', true],
+      ['Sportbladet', 'https://rss.aftonbladet.se/rss2/small/pages/sections/sportbladet/', true],
+      ['BBC Sport', 'https://feeds.bbci.co.uk/sport/rss.xml', true],
+    ],
+  },
   ai: {
     label: 'AI', hue: 260,
     sources: [

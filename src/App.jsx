@@ -5,7 +5,7 @@ import { SUPABASE_URL, SUPABASE_ANON_KEY, ADMIN_EMAIL } from './config.js'
 
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-const DEFAULT_CAT_KEYS = new Set(['all', 'ai', 'skatt', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
+const DEFAULT_CAT_KEYS = new Set(['all', 'ai', 'skatt', 'sport', 'sverige', 'teknik', 'varlden', 'naringsliv', 'kultur'])
 const HIDDEN_ANON_CATS = new Set(['lokalt', 'kultur'])
 const HUE_PALETTE = [180, 30, 260, 120, 340, 200, 80, 300, 45, 160]
 const PAGE_SIZE = 30
@@ -286,7 +286,7 @@ function AboutModal({ onClose, onOpenPrivacy, feeds, categories }) {
     return () => { document.body.style.overflow = '' }
   }, [])
 
-  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv', 'ai', 'skatt'])
+  const PUBLIC_ABOUT_CATS = new Set(['sverige', 'teknik', 'varlden', 'naringsliv', 'ai', 'skatt', 'sport'])
 
   const sourcesByCategory = Object.entries(feeds)
     .filter(([key]) => PUBLIC_ABOUT_CATS.has(key))
@@ -1544,11 +1544,11 @@ function App() {
     localStorage.setItem('viewMode', mode)
   }, [])
 
-  // Filtrera före paginering så AI och Skatt får egna, kompletta sidor.
+  // Filtrera före paginering så varje flik får egna, kompletta sidor.
   const newsQuery = useCallback(() => {
     let request = db.from('news_articles').select('*')
     if (active === 'all' || active === 'arkiv' || active === 'artiklar') {
-      request = request.not('category_key', 'in', '(ai,skatt)').not('image', 'is', null).neq('image', '')
+      request = request.not('category_key', 'in', '(ai,skatt,sport)').not('image', 'is', null).neq('image', '')
       if (isAnon) request = request.not('category_key', 'in', '(lokalt,kultur)')
     } else {
       request = request.eq('category_key', active)
@@ -1627,7 +1627,7 @@ function App() {
   const filtered = useMemo(() => {
     let list = news
     if (isAnon) list = list.filter(i => !HIDDEN_ANON_CATS.has(i.categoryKey))
-    if (active === 'all') list = list.filter(i => !['ai', 'skatt'].includes(i.categoryKey))
+    if (active === 'all') list = list.filter(i => !['ai', 'skatt', 'sport'].includes(i.categoryKey))
     else list = list.filter(i => i.categoryKey === active)
     if (query.trim()) {
       const q = query.toLowerCase()
@@ -1827,7 +1827,7 @@ function App() {
           {!loading && !newsError && filtered.length === 0 && (
             <div className="empty">
               <h3>Inga artiklar matchar</h3>
-              <p>{active === 'ai' && !query ? 'AI-nyheter visas här när RSS-hämtaren har hämtat de nya källorna.' : 'Prova att rensa sökningen eller välj en annan flik.'}</p>
+              <p>{['ai', 'sport'].includes(active) && !query ? `${active === 'sport' ? 'Sportnyheter' : 'AI-nyheter'} visas här när RSS-hämtaren har hämtat de nya källorna.` : 'Prova att rensa sökningen eller välj en annan flik.'}</p>
             </div>
           )}
 
