@@ -27,6 +27,9 @@ const DEFAULT_FEEDS: Record<string, Category> = {
   ai: {
     label: 'AI', hue: 260,
     sources: [
+      ['Computer Sweden', 'https://computersweden.se/feed/', true],
+      ['WIRED AI', 'https://www.wired.com/feed/tag/ai/latest/rss', true],
+      ['The Verge AI', 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', true],
       ['Anthropic News', 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml', true],
       ['Claude Blog', 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/claude-blog.xml', true],
       ['OpenAI', 'https://openai.com/news/rss.xml', true],

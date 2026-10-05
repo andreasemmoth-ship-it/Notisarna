@@ -7,6 +7,9 @@ export const RSS_FEEDS = {
     { name: 'BBC Sport', url: 'https://feeds.bbci.co.uk/sport/rss.xml', enabled: true },
   ],
   ai: [
+    { name: 'Computer Sweden', url: 'https://computersweden.se/feed/', enabled: true },
+    { name: 'WIRED AI', url: 'https://www.wired.com/feed/tag/ai/latest/rss', enabled: true },
+    { name: 'The Verge AI', url: 'https://www.theverge.com/rss/ai-artificial-intelligence/index.xml', enabled: true },
     { name: 'Anthropic News', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/anthropic-news.xml', enabled: true },
     { name: 'Claude Blog', url: 'https://raw.githubusercontent.com/alan-turing-institute/ai-rss-feeds/refs/heads/main/feeds/claude-blog.xml', enabled: true },
     { name: 'OpenAI', url: 'https://openai.com/news/rss.xml', enabled: true },
