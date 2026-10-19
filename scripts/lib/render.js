@@ -466,8 +466,7 @@ export function renderAboutPage({ headAssets }) {
 <p>Sajten kan innehålla annonslänkar (affiliatelänkar). Om du använder en tjänst via en sådan länk kan Notiserna få ersättning, utan att det kostar dig något extra. Annonslänkar är alltid märkta med texten ”Annonslänk” ovanför den första länken i artikeln. Ersättningen påverkar inte vad vi skriver.</p>
 
 <h2>Kontakt</h2>
-<p>Notiserna drivs av [NAMN/KONTAKT].</p>
-<p>E-post: [NAMN/KONTAKT]</p>
+<p>Notiserna drivs av Andreas Emmoth. Hör av dig med frågor, rättelser eller tips på <a href="mailto:kontakt@notiserna.se">kontakt@notiserna.se</a>.</p>
 <p>Läs om hur vi hanterar personuppgifter i vår <a href="/integritet">integritetspolicy</a>.</p>`,
   })
 }
@@ -507,9 +506,9 @@ export function renderPrivacyPage({ headAssets }) {
 <p>Nyheter och annonslänkar leder till andra webbplatser. När du klickar dig vidare gäller deras villkor och integritetspolicyer, och de kan sätta egna kakor.</p>
 
 <h2>Tidigare versioner av sajten</h2>
-<p>Tidigare kunde besökare spara bokmärken och läst-historik via anonym inloggning. Funktionen är borttagen. [BEKRÄFTA: Sparade uppgifter raderades ÅÅÅÅ-MM-DD.]</p>
+<p>Tidigare kunde besökare spara bokmärken och läst-historik via anonym inloggning. Funktionen är borttagen från notiserna.se.</p>
 
 <h2>Dina rättigheter och kontakt</h2>
-<p>Personuppgiftsansvarig är [NAMN/KONTAKT]. Du har rätt att begära information om, rättelse av och radering av personuppgifter som rör dig. Kontakta oss på [NAMN/KONTAKT]. Du kan också lämna klagomål till Integritetsskyddsmyndigheten (IMY).</p>`,
+<p>Personuppgiftsansvarig är Andreas Emmoth. Du har rätt att begära information om, rättelse av och radering av personuppgifter som rör dig. Kontakta oss på <a href="mailto:kontakt@notiserna.se">kontakt@notiserna.se</a>. Du kan också lämna klagomål till Integritetsskyddsmyndigheten (IMY).</p>`,
   })
 }

@@ -510,11 +510,11 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 
 .article-view__content {
   font-size: 17px;
-  line-height: 1.8;
+  line-height: 1.65;
   color: var(--ink);
 }
 .article-view__content p {
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
   text-wrap: pretty;
 }
 .article-view__content h2, .article-view__content h3 {
@@ -522,20 +522,21 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   font-weight: 500;
   letter-spacing: -0.015em;
   color: var(--ink);
-  margin: 1.8em 0 0.6em;
+  line-height: 1.2;
+  margin: 1.3em 0 0.35em;
 }
 .article-view__content h2 {
-  font-size: 1.6em;
+  font-size: 1.5em;
 }
 .article-view__content h3 {
   font-size: 1.3em;
 }
 .article-view__content ul, .article-view__content ol {
   padding-left: 1.5em;
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
 }
 .article-view__content li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.3em;
 }
 .article-view__content blockquote {
   border-left: 3px solid var(--ink);
@@ -544,6 +545,7 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   font-style: italic;
   margin: 1.5em 0;
 }
+.article-view__content > :first-child { margin-top: 0; }
 .article-view__content strong {
   color: var(--ink);
   font-weight: 600;
