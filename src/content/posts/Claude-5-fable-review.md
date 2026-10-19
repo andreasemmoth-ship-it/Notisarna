@@ -10,6 +10,7 @@ source_title_2: "Models and Capabilities | Claude API Docs"
 source_url_2: "https://platform.claude.com/docs/en/about-claude/models"
 source_title_3: "My Claw: Claude Fable 5 Review"
 source_url_3: "https://myclaw.ai/sv/blog/claude-fable-5-review"
+publicerad: false
 ---
 ## Skiftet från korta chattar till tunga bakgrundsjobb
 Anthropic har precis rullat ut Claude 5 Fable, den första tillgängliga modellen i deras nya, tyngre produktklass. Skillnaden mot den tidigare toppmodellen Opus ligger inte i hur snabbt den svarar på enkla frågor, utan i en helt ny förmåga att hålla den logiska röda tråden över enorma datamängder. 

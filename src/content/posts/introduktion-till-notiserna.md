@@ -4,6 +4,7 @@ date: "2026-06-08"
 description: "Välkommen till ett renare sätt att läsa nyheter. Läs om hur Notiserna föddes ur frustration över reklam och brus."
 image: "/images/blogg/notiserna.jpeg"
 slug: "introduktion-till-notiserna"
+publicerad: false
 ---
 Välkommen till **Notiserna**! Den här tjänsten skapades för att lösa ett enkelt problem: det är för mycket brus på dagens nyhetssajter. 
 

@@ -93,6 +93,8 @@ function generate() {
         const filePath = path.join(postsDir, file);
         const fileContent = fs.readFileSync(filePath, 'utf-8');
         const { attributes, body } = parseFrontmatter(fileContent);
+        // Opublicerade artiklar hamnar varken i llms.txt eller sitemap.
+        if (attributes.publicerad !== 'true') continue;
         posts.push({
           title: attributes.title || 'Utan titel',
           date: attributes.date || '',

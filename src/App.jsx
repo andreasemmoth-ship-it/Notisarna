@@ -92,8 +92,10 @@ function renderMarkdown(md) {
 
 const rawPosts = import.meta.glob('./content/posts/*.md', { query: '?raw', import: 'default', eager: true })
 
-const POSTS = Object.entries(rawPosts).map(([path, content]) => {
-  const { attributes, body } = parseFrontmatter(content)
+// Endast artiklar med publicerad: true visas.
+const POSTS = Object.entries(rawPosts).map(([path, content]) => ({ path, ...parseFrontmatter(content) }))
+  .filter(({ attributes }) => attributes.publicerad === 'true')
+  .map(({ path, attributes, body }) => {
   const sources = []
   let index = 1
   while (attributes[`source_url_${index}`]) {

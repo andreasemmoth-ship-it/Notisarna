@@ -14,6 +14,7 @@ source_title_4: "AnythingLLM: Local RAG and document analysis"
 source_url_4: "https://anythingllm.com"
 source_title_5: "Llama.cpp: CPU-optimized LLM inference (GitHub)"
 source_url_5: "https://github.com/ggerganov/llama.cpp"
+publicerad: false
 ---
 
 # AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet

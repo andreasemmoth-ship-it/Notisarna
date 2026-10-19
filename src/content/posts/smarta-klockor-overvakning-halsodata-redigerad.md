@@ -12,6 +12,7 @@ source_title_3: "Lunds universitet - Forskning om hälsoappar och medicinska rå
 source_url_3: "https://www.lu.se/artikel/hog-risk-felaktiga-medicinska-rad-med-halsoappar"
 source_title_4: "E-hälsomyndigheten - Det europeiska hälsodataområdet (EHDS)"
 source_url_4: "https://www.ehalsomyndigheten.se/verksamhet/ndi/ehds/om-det-europeiska-halsodataomradet/"
+publicerad: false
 ---
 
 ## Din smarta klocka vet mer om dig än du tror

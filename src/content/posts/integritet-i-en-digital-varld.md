@@ -8,6 +8,7 @@ source_title_1: "Generative Engine Optimization: How to Dominate AI Search"
 source_url_1: "https://arxiv.org/abs/2311.09738"
 source_title_2: "GEO: Generative Engine Optimization"
 source_url_2: "https://arxiv.org/pdf/2311.09735"
+publicerad: false
 ---
 
 # Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google
