@@ -1,160 +1,59 @@
-# Notiserna — Personlig Nyhetsöversikt 📰
+# Notiserna — nyheter och vardagsekonomi
 
-**Notiserna** är en elegant, modern och personlig nyhetspanel som samlar de viktigaste nyheterna från dina favoritkällor på ett och samma ställe. Applikationen är byggd med fokus på premiumestetik, snabbhet och läsbarhet, helt fri från reklam och onödigt brus.
+**Notiserna** har två delar:
 
-Sidan är fullt responsiv, anpassad för både desktop och mobil, och hostas på **Vercel** med **Supabase** som molndatabas och serverless backend.
+- **Nyheter** (startsidan `/`): ett flöde med rubriker från svenska och internationella källor, hämtade
+  automatiskt från RSS var 15:e minut. Flikar: *Nyheter* (Sverige, Teknik, Världen, Näringsliv) och *AI*.
+- **Artiklar** (`/artiklar`): egna förklarande artiklar om vardagsekonomi. Korta videor på TikTok, Reels och
+  YouTube Shorts hänvisar hit.
 
----
-
-## 🏗️ Systemarkitektur & Dataflöde
-
-Hemsidan bygger på en modern serverlös arkitektur där frontend och backend samarbetar i realtid via Supabase PostgreSQL-databasen.
-
-```mermaid
-graph TD
-    %% Frontend / Klient
-    subgraph Klient [Frontend - Vercel Hosting]
-        React[React / Vite Web App]
-        ReaderUI[Distraktionsfritt Läsläge]
-        SettingsUI[Inställningar / RSS-drawer]
-    end
-
-    %% Supabase Edge Functions & Crons
-    subgraph Serverless [Backend - Supabase Edge Functions]
-        FetchCron[pg_cron: var 15:e minut] --> FetchNewsFunc[Edge Function: fetch-news]
-        ReaderReq[Läsbegäran] --> ReaderFunc[Edge Function: reader-mode]
-    end
-
-    %% Externa Tjänster
-    subgraph ExternaTjänster [Externa Tjänster & RSS]
-        RSS[RSS- & Atom-flöden]
-        TargetWeb[Målhemsidor för nyheter]
-    end
-
-    %% Database & Auth
-    subgraph Databas [Database & Security - Supabase]
-        DB[(PostgreSQL)]
-        Auth[Supabase Auth]
-        RLS[Row Level Security Policy]
-    end
-
-    %% Kopplingar
-    FetchNewsFunc -->|1. Läser källor| DB
-    RSS -->|2. Hämtar XML| FetchNewsFunc
-    FetchNewsFunc -->|3. Sparar artiklar| DB
-
-    React -->|1. Realtidsprenumeration| DB
-    React -->|2. Loggar in Anon / Konto| Auth
-    Auth -->|Styr rättigheter| RLS
-    RLS -->|Filtrerar artiklar| DB
-    
-    React -->|Begär städad text| ReaderReq
-    ReaderFunc -->|Hämtar rå HTML| TargetWeb
-    ReaderFunc -->|Städar med Mozilla Readability| ReaderUI
-```
+Besökare har inga konton och loggar inte in. Sajten hostas på **Vercel**, nyheterna ligger i **Supabase**.
 
 ---
 
-## ✨ Nyckelfunktioner
+## 🏗️ Så hänger det ihop
 
-### 1. Tvånivå-användare (Anonymous + Authenticated)
-*   **Anonym profil:** Besökare loggas automatiskt in anonymt (`db.auth.signInAnonymously()`). Detta tillåter läsare att direkt bokmärka nyheter och markera dem som lästa. Row Level Security (RLS) i databasen ser till att anonyma användare endast får tillgång till ett urval av förgodkända standardkällor (lagrade i tabellen `public_feeds`).
-*   **Uppgradering till fullt konto:** Med ett enkelt klick ("Spara mina inställningar") kan användaren ange e-post och lösenord för att skapa ett permanent konto. Eftersom databasens `user_id` bibehålls följer all läshistorik och alla bokmärken med automatiskt, redo att synkas på tvärs av alla enheter!
+| Del | Hur den byggs | Fungerar utan JS |
+| --- | --- | --- |
+| `/` nyhetsflödet | React-app (Vite), läser `news_articles` från Supabase med anon-nyckeln | Nej |
+| `/artiklar`, `/artiklar/<slug>` | Statisk HTML från Markdown, `scripts/build-static.js` | Ja |
+| `/om`, `/integritet` | Statisk HTML, `scripts/lib/render.js` | Ja |
+| `sitemap.xml`, `llms.txt`, `404.html` | Genereras vid build | – |
 
-### 2. Fullt anpassningsbara nyhetskällor
-*   Inloggade administratörer kan öppna en inställningspanel (drawer) för att hantera flödet.
-*   Möjlighet att lägga till egna RSS-flöden, skapa nya kategorier samt ändra namn, tilldela färgteman (hues) eller ta bort befintliga kategorier. Inställningarna sparas och lagras i tabellen `feed_config` i Supabase.
+`npm run build` kör `vite build`, sedan `scripts/build-static.js` och `generate-llms-txt.js`.
+Resultatet hamnar i `dist/`.
 
-### 3. Distraktionsfritt läsläge (Reader Mode)
-*   När en användare vill fördjupa sig i en artikel öppnas ett inbyggt läsläge genom att klicka på boksymbolen.
-*   Detta anropar Edge-funktionen `reader-mode` som laddar ner artikelsidan i bakgrunden, rensar bort cookies-banners, popups, annonser och menyer med hjälp av Mozillas beprövade **Readability**-algoritm samt skickar tillbaka en stilren, välformaterad artikelkropp.
-
-### 4. Premium Designsystem
-*   Byggt med ren, modern CSS (utan tunga ramverk som Tailwind) och använder moderna typsnitt (som *Instrument Serif* för rubriker och *Inter Tight* för läsbarhet).
-*   Sidan utnyttjar dynamisk färgsättning i form av HSL/OKLCH-paletter där varje nyhetskategori får ett eget harmoniskt färg-id.
-*   Användaren kan sömlöst växla mellan ett modernt **rutnät (Grid)** och en **kompakt lista** eller **lista** för maximal överblick.
-
-### 5. Egna Artiklar och Blogg (Markdown)
-*   Möjlighet att publicera egna lokala artiklar/ledare direkt i applikationen genom att lägga till Markdown-filer (`.md`) under `src/content/posts/`.
-*   Systemet läser dynamiskt in och parsar frontmatter (titel, datum, beskrivning, bild, etc.) samt renderar artiklarna i ett skräddarsytt, premium läsläge.
-*   Artiklarna sammanställs automatiskt för LLM-klienter i `/llms.txt` via skriptet `generate-llms-txt.js`.
+### Varför statiska artikelsidor?
+Artiklarna är rent innehåll och behöver ingen React-logik. Ett eget byggskript skriver färdig HTML med hela
+texten, title, meta description, canonical, Open Graph/Twitter och JSON-LD (`Article`). Sökmotorer och
+länkförhandsvisningar i appar får allt utan att köra JavaScript, och sidorna laddar snabbt på mobilen.
 
 ---
 
+## ✍️ Skriva en artikel
 
-## 🛠️ Teknisk Stack
+1. Kopiera [docs/artikelmall.md](docs/artikelmall.md) till `src/content/posts/<slug>.md`.
+2. Fyll i frontmatter:
 
-### Frontend
-*   **React (18.3.1) & Vite:** För ett blixtsnabbt, modulärt och modernt användgränssnitt.
-*   **CSS Custom Properties & OKLCH:** För responsiv design, mörkt läge, glassmorphism-effekter och harmoniska färgövergångar.
+| Fält | Krav | Beskrivning |
+| --- | --- | --- |
+| `titel` | ja | Rubrik (sidans h1 och `<title>`) |
+| `beskrivning` | ja | Ingress och meta description |
+| `slug` | ja | Adressen `/artiklar/<slug>` (a–z, 0–9, bindestreck) |
+| `datum` | ja | Publiceringsdatum `ÅÅÅÅ-MM-DD` |
+| `senastGranskad` | ja | Visas som "Senast granskad" och blir `dateModified` |
+| `publicerad` | ja | `true` = visas, byggs och hamnar i sitemap. Allt annat = dold |
+| `video` | nej | Länk till TikTok (`…/video/<id>`) eller YouTube Shorts |
+| `affiliate` | ja | `true` om texten har annonslänkar |
+| `kallor` | nej | Lista: `- titel: "…"` + `url: …`, eller bara text |
+| `bild` | nej | Bild överst, t.ex. `/images/blogg/bild.jpeg` |
 
-### Backend (Supabase)
-*   **PostgreSQL:** Huvuddatabas för lagring av artiklar, lässtatus, bokmärken och feed-konfiguration.
-*   **Supabase Auth:** Hanterar både anonyma sessioner och fullständiga e-postkonton.
-*   **PostgreSQL RLS (Row Level Security):** Styr exakt vem som får se vad (anonyma ser endast `public_feeds`, inloggade ser allt och skyddar privata bokmärken/lässtatus).
-*   **Supabase Edge Functions (Deno / TypeScript):**
-    *   `/fetch-news`: Hämtar, parsar och sparar RSS-flöden samt rensar artiklar äldre än 30 dagar.
-    *   `/reader-mode`: Parsar artikellänkar via `@mozilla/readability` och returnerar städad text.
+3. Annonslänkar skrivs `[Tjänsten](https://… "annons")`. De får `rel="sponsored noopener"`, och märkningen
+   "Annonslänk – Notiserna kan få ersättning om du använder tjänsten." visas ovanför den första. Bygget stoppas om
+   en artikel har annonslänkar men `affiliate: false`.
+4. Kontrollera med `npm run dev` (artikelsidorna visas även i dev-servern) eller `npm run build && npm run preview`.
 
-### Databasschemaläggning (pg_cron & pg_net)
-*   I databasen körs schemalagda jobb (Crons) som regelbundet gör interna anrop till våra Edge Functions:
-    *   `fetch-news` triggas var 15:e minut.
-
----
-
-## 📁 Projektstruktur
-
-```text
-├── .github/                 # GitHub workflows & inställningar
-├── scripts/                 # SQL-skript för databasen och tabeller
-│   ├── setup_news_table.sql # Sätter upp artikeltabell, RLS och RSS-hämtare (cron)
-│   ├── add_read_and_briefings.sql # Sätter upp lässtatus och databasschema
-│   └── setup_two_tier.sql   # Sätter upp RLS-skydd för anonyma vs inloggade profiler
-├── src/                     # React källkod
-│   ├── App.jsx              # Appens huvudkomponent, auth-hantering, vyer och blogg/artikel-renderare
-│   ├── main.jsx             # React entrypoint
-│   ├── data.js              # Standardkällor och kategorier
-│   ├── config.js            # Anslutningsuppgifter till Supabase (URL & Anon Key)
-│   └── content/             # Statiskt innehåll och artiklar
-│       └── posts/           # Egna artiklar och blogginlägg i Markdown-format (.md)
-├── supabase/                # Supabase Edge Functions
-│   └── functions/
-│       ├── fetch-news/      # Deno-funktion som hämtar och parsar RSS-flöden
-│       └── reader-mode/     # Deno-funktion för städat läsläge (Readability)
-├── fetch_news.py            # Fristående Python-skript för lokal parsningskontroll
-├── index.html               # Huvudsida för Vite
-├── styles.css               # Omfattande premium CSS-designsystem
-└── package.json             # Projektberoenden och skript
-```
-
----
-
-## ⚡ Lokal Utveckling
-
-Följ dessa steg för att köra projektet lokalt:
-
-### 1. Installera beroenden
-Navigera till projektets rotkatalog och installera alla Node-moduler:
-```bash
-npm install
-```
-
-### 2. Starta utvecklingsservern
-Starta den lokala Vite-servern för att förhandsgranska sidan:
-```bash
-npm run dev
-```
-Sidan startar vanligtvis på `http://localhost:5173`.
-
-### 3. Testa den lokala Python-hämtaren (valfritt)
-Om du vill simulera en RSS-insamling lokalt utan Supabase-Edge-funktioner kan du köra Python-skriptet (kräver Python 3):
-```bash
-pip install defusedxml
-python fetch_news.py
-```
-Detta genererar en lokal fil `news.json` baserad på dina förinställda nyhetsflöden.
-
----
+Videon laddas först när besökaren trycker på den, så att TikTok/YouTube inte sätter kakor innan dess.
 
 ## 🔗 Korta länkar för videor
 
@@ -174,12 +73,16 @@ Videorna hänvisar till korta adresser som `notiserna.se/flyg`. De ligger som 30
 Omdirigeringarna kontrolleras innan statiska filer och rewrites, så en kort länk får inte heta
 samma sak som en befintlig sida (`/artiklar`, `/om`, `/integritet`).
 
-## 🚀 Drift & Driftsättning (Vercel)
+## 🚀 Drift (Vercel och Supabase)
 
-Webbplatsen är konfigurerad för att hostas direkt på **Vercel**:
-1.  **Frontend:** Vercel bevakar ditt Git-repository och bygger automatiskt om din React/Vite-applikation (`npm run build`) så fort du pushar ändringar till `main`.
-2.  **Miljövariabler:** Inga komplexa miljövariabler krävs på klientsidan då anslutningssträngen till Supabase läses direkt från [src/config.js](file:///c:/Users/andre/Notisarna/src/config.js).
-3.  **Backend:** Supabase Edge-funktioner distribueras oberoende av Vercel-bygget via Supabase CLI (`supabase db push` / `supabase functions deploy`).
+- **Frontend:** Vercel bygger med `npm run build` vid push till `main`. `vercel.json` innehåller korta länkar,
+  omdirigering av gamla adresser (`?view=artiklar&slug=X` → `/artiklar/X`) och rewrites för de statiska sidorna.
+- **Supabase:** nyheterna läses av besökare med rollen `anon`. Kör
+  [scripts/public_read_news.sql](scripts/public_read_news.sql) en gång så att `anon` får läsa alla nyheter
+  (tidigare såg bara inloggade allt). Filen innehåller också valfria steg för att ta bort gamla tabeller och
+  anonyma konton.
+- **Källor** hanteras direkt i Supabase, i tabellen `feed_config` (kolumnen `feeds`). Sajten visar bara
+  kategorierna i `src/data.js` (`NEWS_CATEGORY_KEYS` och fliken `ai`). Andra kategorier som hämtas syns inte.
 
 ### Säker schemaläggning av `fetch-news`
 
@@ -190,12 +93,33 @@ Webbplatsen är konfigurerad för att hostas direkt på **Vercel**:
 3. Driftsätt Edge-funktionen `fetch-news`. Kontrollera att anrop utan `X-Cron-Secret` får HTTP 401 och att ett cron-anrop lyckas.
 4. Kör [scripts/upgrade_bbc_images.sql](scripts/upgrade_bbc_images.sql) en gång för att uppgradera äldre BBC-miniatyrer i databasen.
 
-### Nyheter, AI, Skatt och Sport
+## ⚡ Lokal utveckling
 
-Huvudflödet har fyra flikar: Nyheter (befintliga nyhetskategorier), AI, Skatt och Sport. RSS-inställningarna behåller underkategorierna och sparade källor. Artiklar hämtas och pagineras per flik; AI, Skatt och Sport visar även artiklar utan bild.
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # bygger till dist/
+npm run preview    # http://localhost:4173, beter sig som Vercel för statiska sidor och korta länkar
+```
 
-AI använder Anthropic News och Claude Blog via Alan Turing Institutes RSS-flöden, OpenAI, Google Gemini, Google AI och TechCrunch AI. Hämtaren sorterar RSS-poster efter datum innan de fem senaste väljs. De gamla HFD- och PwC-adresserna ersätts vid läsning med aktuella adresser utan att ändra sparad aktiveringsstatus.
+## 📁 Struktur
 
-För att aktivera ändringen på den publicerade sidan behöver frontend publiceras via det befintliga Vercel-flödet och Supabase-funktionen fetch-news driftsättas. Vid nästa cron-körning hämtas de nya AI-källorna och de reparerade skatteflödena.
-
-Sport använder SVT Sport och Sportbladet för svensk sport samt BBC Sport för internationell sport. Källorna hämtas via samma RSS-hämtare och schemaläggning som övriga flöden.
+```text
+├── index.html                 # Startsidan (React-appen)
+├── src/
+│   ├── App.jsx                # Nyhetsflödet
+│   ├── main.jsx               # Startpunkt, omdirigering av gamla länkar
+│   ├── data.js                # Flikar och kategorier som visas
+│   ├── config.js              # Supabase-URL och publik anon-nyckel
+│   └── content/posts/         # Artiklar i Markdown
+├── scripts/
+│   ├── build-static.js        # Statiska sidor, 404 och sitemap.xml
+│   ├── lib/posts.js           # Läser och validerar artiklar
+│   ├── lib/render.js          # HTML-mallar och Markdown
+│   └── *.sql                  # Databasskript
+├── generate-llms-txt.js       # dist/llms.txt med publicerade artiklar
+├── docs/artikelmall.md        # Mall för nya artiklar
+├── styles.css                 # All CSS
+├── vercel.json                # Korta länkar, omdirigeringar, rewrites
+└── supabase/functions/        # Edge-funktioner (fetch-news m.fl.)
+```
