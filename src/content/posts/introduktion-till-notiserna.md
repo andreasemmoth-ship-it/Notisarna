@@ -1,21 +1,32 @@
 ---
-title: "Vi lanserar Notiserna: Din personliga nyhetspanel"
-date: "2026-06-08"
-description: "Välkommen till ett renare sätt att läsa nyheter. Läs om hur Notiserna föddes ur frustration över reklam och brus."
-image: "/images/blogg/notiserna.jpeg"
-slug: "introduktion-till-notiserna"
+titel: "Välkommen till Notiserna: nyheter och vardagsekonomi"
+beskrivning: "Notiserna samlar dagens nyheter och förklarar vardagsekonomi i korta videor och artiklar. Så fungerar sajten och så tar vi fram innehållet."
+slug: introduktion-till-notiserna
+datum: 2026-10-19
+senastGranskad: 2026-10-19
+publicerad: true
+affiliate: false
+kallor: []
+bild: /images/blogg/valkommen.jpeg
 ---
-Välkommen till **Notiserna**! Den här tjänsten skapades för att lösa ett enkelt problem: det är för mycket brus på dagens nyhetssajter. 
+Notiserna har två delar: ett nyhetsflöde och egna artiklar om vardagsekonomi. Har du kommit hit från en video på TikTok, Instagram eller YouTube hittar du artikeln som videon hänvisar till under [Artiklar](/artiklar).
 
-Varje dag möts vi av blinkande annonser, cookies-banners, betalväggar och sensationella rubriker som är utformade för att fånga vår uppmärksamhet till varje pris. Notiserna är ett experiment i att gå tillbaka till grunderna.
+## Nyheterna
 
-### Varför ett nytt sätt att läsa nyheter?
-Vi tror på ett mer medvetet och ostört nyhetsläsande. Genom att samla dina favoritkällor på en och samma plats utan algoritmer som bestämmer vad du ska tycka eller läsa, återtar du kontrollen över ditt flöde.
+Nyhetsflödet på [startsidan](/) hämtar rubriker från svenska och internationella nyhetskällor och uppdateras automatiskt ungefär var femtonde minut. Vi skriver inte om nyheterna. Du ser rubrik, källa och en kort sammanfattning, och klickar dig vidare till originalartikeln för att läsa mer.
 
-*   **RSS-drivet**: Du väljer källorna, inte ett socialt nätverk eller en vinstmaximerande algoritm.
-*   **Distraktionsfritt läsläge**: Rensa bort all bråte på målhemsidan med ett enda klick.
+## Artiklarna
 
-### Framtiden för Notiserna
-Det här är bara början. Vi bygger kontinuerligt ut plattformen med nya funktioner. I den senaste uppdateringen har vi till exempel lagt till denna artikelsektion där vi kommer att dela tankar om oberoende nyhetsbevakning, integritet och webbteknik.
+Artiklarna är våra egna. De förklarar saker som påverkar privatekonomin, till exempel avgifter, avtal, skatter och priser. Varje artikel visar när den senast granskades och vilka källor vi har använt.
 
-Tack för att du läser och för att du är en del av Notiserna!
+## Videorna
+
+Till många artiklar finns en kort video. Text, presentatör och röst i videorna är AI-genererade. En människa granskar innehållet innan det publiceras.
+
+## Annonslänkar
+
+En del artiklar kan innehålla annonslänkar. Det betyder att Notiserna kan få ersättning om du använder tjänsten. Sådana länkar är alltid märkta.
+
+## Bra att veta
+
+Det vi skriver är allmän information och inte personlig rådgivning. Läs mer om hur sajten fungerar på sidan [Om Notiserna](/om).

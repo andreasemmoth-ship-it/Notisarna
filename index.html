@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Notiserna — dina nyheter, samlat på ett ställe</title>
-  <meta name="description" content="Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut." />
+  <title>Notiserna – nyheter och vardagsekonomi</title>
+  <meta name="description" content="Dagens nyheter och korta, begripliga förklaringar om vardagsekonomi: avgifter, avtal, skatter och priser som påverkar din plånbok." />
 
   <!-- Open Graph / Facebook / Slack / iMessage -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://www.notiserna.se/" />
-  <meta property="og:title"       content="Notiserna — dina nyheter, samlat på ett ställe" />
-  <meta property="og:description" content="Nyheter från svenska och internationella källor i ett rent, personligt flöde. Uppdateras automatiskt var 15:e minut." />
+  <meta property="og:title"       content="Notiserna – nyheter och vardagsekonomi" />
+  <meta property="og:description" content="Dagens nyheter och enkla förklaringar om vardagsekonomi – det som påverkar din plånbok." />
   <meta property="og:image"       content="https://www.notiserna.se/images/blogg/notiserna.jpeg" />
   <meta property="og:locale"      content="sv_SE" />
   <meta property="og:site_name"   content="Notiserna" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Notiserna — dina nyheter, samlat på ett ställe" />
-  <meta name="twitter:description" content="Nyheter från svenska och internationella källor i ett rent, personligt flöde. Uppdateras automatiskt var 15:e minut." />
+  <meta name="twitter:title"       content="Notiserna – nyheter och vardagsekonomi" />
+  <meta name="twitter:description" content="Dagens nyheter och enkla förklaringar om vardagsekonomi – det som påverkar din plånbok." />
   <meta name="twitter:image"       content="https://www.notiserna.se/images/blogg/notiserna.jpeg" />
 
   <!-- Canonical & robots -->
@@ -30,9 +30,9 @@
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "Notisarna",
+      "name": "Notiserna",
       "url": "https://www.notiserna.se/",
-      "description": "Notisarna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde.",
+      "description": "Dagens nyheter och enkla förklaringar om vardagsekonomi – det som påverkar din plånbok.",
       "inLanguage": "sv"
     }
   </script>
@@ -40,9 +40,11 @@
   <!-- Förhindra blixt av fel tema vid sidladdning -->
   <script>
     (function(){
-      var s = localStorage.getItem('colorScheme');
-      var t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', t);
+      try {
+        var s = localStorage.getItem('colorScheme');
+        var t = s || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
     })();
   </script>
 
@@ -50,9 +52,6 @@
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="root"></div>

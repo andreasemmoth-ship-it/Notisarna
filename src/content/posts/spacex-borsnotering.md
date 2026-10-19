@@ -1,13 +1,17 @@
 ---
-title: "SpaceX börsnotering en likviditetsfälla? – så blåses kursen upp"
-date: "2026-06-11"
-description: "En analys av marknadsmekaniken bakom SpaceX börsnotering. Hur en extremt låg free float och tvingande indexflöden kommer blåsa upp kursen."
-slug: "spacex-ipo-likviditetsfalla"
-image: "/images/blogg/spacex-ipo.jpeg"
-source_title_1: "Why We Think the SpaceX IPO Is Overvalued | Morningstar"
-source_url_1: "https://www.morningstar.com/stocks/why-we-think-spacex-ipo-is-overvalued"
-source_title_2: "SpaceX IPO Deep Dive: The Hype, the Price, and the Opportunity | Morningstar"
-source_url_2: "https://www.morningstar.com/stocks/spacex-ipo-deep-dive-hype-price-opportunity"
+titel: "SpaceX börsnotering en likviditetsfälla? – så blåses kursen upp"
+beskrivning: "En analys av marknadsmekaniken bakom SpaceX börsnotering. Hur en extremt låg free float och tvingande indexflöden kommer blåsa upp kursen."
+slug: spacex-ipo-likviditetsfalla
+datum: 2026-06-11
+senastGranskad: 2026-06-11
+publicerad: false
+affiliate: false
+bild: /images/blogg/spacex-ipo.jpeg
+kallor:
+  - titel: "Why We Think the SpaceX IPO Is Overvalued | Morningstar"
+    url: https://www.morningstar.com/stocks/why-we-think-spacex-ipo-is-overvalued
+  - titel: "SpaceX IPO Deep Dive: The Hype, the Price, and the Opportunity | Morningstar"
+    url: https://www.morningstar.com/stocks/spacex-ipo-deep-dive-hype-price-opportunity
 ---
 
 ## Konstruerad brist driver den första kursrusningen

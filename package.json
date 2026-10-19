@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node generate-llms-txt.js && vite build",
+    "build": "vite build && node scripts/build-static.js && node generate-llms-txt.js",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource/instrument-serif": "^5.3.0",
+    "@fontsource/inter-tight": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
     "@supabase/supabase-js": "^2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -17,6 +20,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4",
-    "vite": "^5"
+    "marked": "^18.1.1",
+    "vite": "^5",
+    "yaml": "^2.9.1"
   }
 }
