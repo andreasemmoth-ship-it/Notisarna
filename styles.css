@@ -1,3 +1,21 @@
+/* ===== Typsnitt (självhostade via @fontsource, samma vikter som tidigare från Google Fonts) ===== */
+@import '@fontsource/instrument-serif/latin-400.css';
+@import '@fontsource/instrument-serif/latin-ext-400.css';
+@import '@fontsource/instrument-serif/latin-400-italic.css';
+@import '@fontsource/instrument-serif/latin-ext-400-italic.css';
+@import '@fontsource/inter-tight/latin-400.css';
+@import '@fontsource/inter-tight/latin-ext-400.css';
+@import '@fontsource/inter-tight/latin-500.css';
+@import '@fontsource/inter-tight/latin-ext-500.css';
+@import '@fontsource/inter-tight/latin-600.css';
+@import '@fontsource/inter-tight/latin-ext-600.css';
+@import '@fontsource/inter-tight/latin-700.css';
+@import '@fontsource/inter-tight/latin-ext-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-ext-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-ext-500.css';
+
 /* ===== CSS-variabler — ljust läge ===== */
 :root {
   --accent:    #0a0a0a;
@@ -73,9 +91,9 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .icon-btn { padding: 8px; border-radius: 8px; color: var(--muted); }
 .icon-btn:hover { background: var(--bg); color: var(--ink); }
 
-/* ===== Brand header ===== */
+/* ===== Brand header (kompakt, en rad) ===== */
 .brand-header {
-  padding: 44px 40px 22px;
+  padding: 20px 40px 14px;
   max-width: 1240px;
   width: 100%;
   margin: 0 auto;
@@ -84,44 +102,44 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .brand-header__link {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
   cursor: pointer;
   transition: opacity 0.15s;
 }
 .brand-header__link:hover { opacity: 0.8; }
 .brand-header__logo {
-  width: 64px; height: 64px; border-radius: 16px;
+  width: 36px; height: 36px; border-radius: 9px;
   background: var(--ink); color: var(--surface);
   display: grid; place-items: center;
   font-family: 'Instrument Serif', serif;
-  font-size: 40px; font-style: italic; font-weight: 500;
+  font-size: 23px; font-style: italic; font-weight: 500;
   letter-spacing: -0.02em; line-height: 1;
-  box-shadow: 0 8px 24px -10px color-mix(in oklch, var(--ink) 50%, transparent);
+  box-shadow: 0 6px 16px -8px color-mix(in oklch, var(--ink) 50%, transparent);
   flex-shrink: 0;
 }
 .brand-header__name {
   font-family: 'Instrument Serif', serif;
-  font-size: 44px; font-weight: 500;
-  letter-spacing: -0.025em; line-height: 1;
+  font-size: 26px; font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1;
   color: var(--ink);
 }
 .brand-header__sep {
-  color: var(--line); font-size: 24px; line-height: 1;
-  margin: 0 2px;
+  color: var(--line); font-size: 18px; line-height: 1;
 }
 .brand-header__tagline {
   font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 22px; font-weight: 400; font-style: normal;
+  font-size: 18px; font-weight: 400;
   color: var(--muted); letter-spacing: -0.01em;
-  line-height: 1.25; text-wrap: balance;
+  line-height: 1.25; white-space: nowrap;
 }
 @media (max-width: 720px) {
-  .brand-header { padding: 28px 20px 14px; justify-content: center; } /* centrera på mobil */
-  .brand-header__link { flex-wrap: wrap; justify-content: center; gap: 12px; }
-  .brand-header__logo { width: 50px; height: 50px; font-size: 32px; border-radius: 13px; }
-  .brand-header__name { font-size: 32px; }
-  .brand-header__sep { display: none; }
-  .brand-header__tagline { width: 100%; text-align: center; font-size: 18px; }
+  .brand-header { padding: 16px 20px 12px; }
+}
+/* Mobil: menyn visar redan loggan, så bara sloganen ligger kvar, mindre */
+@media (max-width: 600px) {
+  .brand-header { padding: 10px 16px 8px; justify-content: center; }
+  .brand-header__logo, .brand-header__name, .brand-header__sep { display: none; }
+  .brand-header__tagline { font-size: 15px; }
 }
 
 /* ===== Filter bar ===== */
@@ -390,7 +408,6 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
   .hero-card__title { font-size: 24px; }
   .hero-card__summary { font-size: 14px; margin-bottom: 18px; }
   .grid { gap: 20px; }
-  .brand-header { padding: 20px 16px 12px; }
 }
 
 /* Compact-rad: tillåt 2 rader på mobil */
@@ -885,3 +902,4 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .article-view__content table { width: 100%; border-collapse: collapse; margin-bottom: 1.5em; font-size: 15px; }
 .article-view__content th, .article-view__content td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
 .article-view__disclaimer p { color: var(--ink); }
+.article-view__share-fallback { display: contents; }

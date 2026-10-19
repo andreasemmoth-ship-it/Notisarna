@@ -200,9 +200,6 @@ ${page.extraHead ?? ''}
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   ${page.headAssets}
 </head>
 <body>
@@ -242,14 +239,19 @@ function sourcesHtml(sources) {
 }
 
 function shareHtml(post) {
-  const url = encodeURIComponent(`${SITE_URL}${articleUrl(post.slug)}`)
+  const url = `${SITE_URL}${articleUrl(post.slug)}`
+  const whatsapp = `https://wa.me/?text=${encodeURIComponent(`${post.titel} ${url}`)}`
+  const facebook = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
   return `
       <div class="article-view__share">
         <span class="article-view__share-label">Dela artikeln:</span>
         <div class="article-view__share-buttons">
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=${url}" target="_blank" rel="noopener" class="share-btn">LinkedIn</a>
-          <a href="https://twitter.com/intent/tweet?url=${url}&amp;text=${encodeURIComponent(post.titel)}" target="_blank" rel="noopener" class="share-btn">X</a>
-          <button type="button" class="share-btn share-btn--copy" data-share hidden>Kopiera länk</button>
+          <button type="button" class="share-btn" data-share-native hidden>Dela</button>
+          <span class="article-view__share-fallback" data-share-fallback>
+            <a href="${escapeHtml(whatsapp)}" target="_blank" rel="noopener" class="share-btn">WhatsApp</a>
+            <a href="${escapeHtml(facebook)}" target="_blank" rel="noopener" class="share-btn">Facebook</a>
+            <button type="button" class="share-btn share-btn--copy" data-share-copy hidden>Kopiera länk</button>
+          </span>
           <span class="share-toast" data-share-toast hidden>Länken kopierad!</span>
         </div>
       </div>`
@@ -275,7 +277,9 @@ function videoHtml(post) {
 const VIDEO_SCRIPT = `<script>document.querySelectorAll('[data-video-embed]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');f.src=a.getAttribute('data-video-embed');f.title=a.getAttribute('data-video-title')||'Video';f.className='article-video__frame';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');a.replaceWith(f)})})</script>`
 
 // Delningsknappen kräver JavaScript och visas bara när den fungerar.
-const SHARE_SCRIPT = `<script>(function(){var b=document.querySelector('[data-share]');if(!b)return;var t=document.querySelector('[data-share-toast]');var canShare=!!navigator.share;if(!canShare&&!navigator.clipboard)return;b.textContent=canShare?'Dela':'Kopiera länk';b.hidden=false;b.addEventListener('click',function(){var u=document.querySelector('link[rel=canonical]').href;if(canShare){navigator.share({title:document.title,url:u}).catch(function(){});return}navigator.clipboard.writeText(u).then(function(){t.hidden=false;setTimeout(function(){t.hidden=true},2000)})})})();</script>`
+// Mobil med delningsmeny (navigator.share): en Dela-knapp. Annars WhatsApp,
+// Facebook och Kopiera länk. Utan JavaScript visas WhatsApp och Facebook.
+const SHARE_SCRIPT = `<script>(function(){var u=document.querySelector('link[rel=canonical]').href;var n=document.querySelector('[data-share-native]'),f=document.querySelector('[data-share-fallback]'),c=document.querySelector('[data-share-copy]'),t=document.querySelector('[data-share-toast]');if(!n)return;if(navigator.share&&matchMedia('(pointer: coarse)').matches){n.hidden=false;f.hidden=true;n.addEventListener('click',function(){navigator.share({title:document.title,url:u}).catch(function(){})});return}if(navigator.clipboard){c.hidden=false;c.addEventListener('click',function(){navigator.clipboard.writeText(u).then(function(){t.hidden=false;setTimeout(function(){t.hidden=true},2000)})})}})();</script>`
 
 export function renderArticlePage(post, { headAssets }) {
   const path = articleUrl(post.slug)
@@ -496,7 +500,6 @@ export function renderPrivacyPage({ headAssets }) {
 <ul>
 <li><strong>Vercel</strong> – driftar sajten. Som alla webbservrar tar Vercel emot din IP-adress för att kunna skicka sidan till dig.</li>
 <li><strong>Supabase</strong> – databasen som nyhetsflödet hämtas från. Din webbläsare hämtar nyheterna direkt därifrån, och Supabase tar då emot din IP-adress.</li>
-<li><strong>Google Fonts</strong> – typsnitten hämtas från Google, som då tar emot din IP-adress.</li>
 <li><strong>TikTok och YouTube</strong> – videor i artiklarna laddas först när du trycker på dem. Då hämtas innehåll från plattformen, och dess egen integritetspolicy gäller.</li>
 </ul>
 

@@ -37,7 +37,8 @@ function posts() {
       server.ws.send({ type: 'full-reload' })
     },
     configureServer(server) {
-      const headAssets = '<link rel="stylesheet" href="/styles.css">'
+      // ?direct gör att Vite returnerar bearbetad CSS (med typsnittens @import).
+      const headAssets = '<link rel="stylesheet" href="/styles.css?direct">'
       server.middlewares.use((req, res, next) => {
         const pathname = (req.url ?? '').split('?')[0].replace(/\/$/, '')
         let html = null
