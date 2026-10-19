@@ -85,7 +85,6 @@ const Icon = ({ name, size = 16 }) => {
     search:        <><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></>,
     arrow:         <><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></>,
     rss:           <><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1.5"/></>,
-    close:         <><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>,
     rows:          <><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></>,
     grid:          <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
     'book-open':   <><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>,
@@ -98,113 +97,6 @@ const Icon = ({ name, size = 16 }) => {
          stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
       {paths[name]}
     </svg>
-  )
-}
-
-// ----- Privacy modal -----
-function PrivacyModal({ onClose }) {
-  useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
-
-  return (
-    <div className="reader-overlay" onClick={onClose}>
-      <div className="privacy-modal" onClick={e => e.stopPropagation()}>
-        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
-          <Icon name="close" size={18} />
-        </button>
-        <h2>Integritetspolicy</h2>
-        <p className="privacy-updated">Senast uppdaterad: juni 2026</p>
-
-        <h3>Vad vi samlar in</h3>
-        <p>Notiserna använder anonym inloggning (via Supabase) för att ge dig en personlig upplevelse utan att du behöver skapa ett konto. Vi sparar:</p>
-        <ul>
-          <li>Ett anonymt sessions-ID i din webbläsare (via cookie/localStorage)</li>
-          <li>Vilka artiklar du har markerat som lästa</li>
-          <li>Artiklar du sparar till arkivet</li>
-        </ul>
-        <p>Om du väljer att skapa ett konto sparas dessutom din e-postadress hos Supabase.</p>
-
-        <h3>Varför</h3>
-        <p>Data används uteslutande för att visa rätt läst/oläst-status och bevara ditt arkiv mellan besök. Vi säljer eller delar aldrig din data med tredje part.</p>
-
-        <h3>Tredjepartstjänster</h3>
-        <ul>
-          <li><strong>Supabase</strong> — databas och autentisering (servrar inom EU)</li>
-          <li><strong>Vercel</strong> — hosting och anonymiserad besöksstatistik (ingen spårning av individer)</li>
-        </ul>
-
-        <h3>Dina rättigheter</h3>
-        <p>Du kan när som helst begära att din data raderas genom att kontakta <a href="mailto:andreas.emmoth@gmail.com">andreas.emmoth@gmail.com</a>. Anonym data raderas automatiskt om du inte loggat in på 90 dagar.</p>
-
-        <div className="privacy-modal__footer">
-          <button className="btn btn--primary" onClick={onClose}>Stäng</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ----- Om Notiserna -----
-function AboutModal({ onClose, onOpenPrivacy }) {
-  useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') onClose() }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [onClose])
-  useEffect(() => {
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = '' }
-  }, [])
-
-  return (
-    <div className="reader-overlay" onClick={onClose}>
-      <div className="about-modal" onClick={e => e.stopPropagation()}>
-        <button className="reader-close" onClick={onClose} title="Stäng (Esc)">
-          <Icon name="close" size={18} />
-        </button>
-
-        <div className="about-modal__logo">N</div>
-        <h2>Om Notiserna</h2>
-        <p className="about-modal__lead">
-          Notiserna samlar nyheter från svenska och internationella källor i ett personligt flöde — utan algoritmer, utan reklam, uppdaterat var 15:e minut.
-        </p>
-
-        <h3>Vem driver sajten?</h3>
-        <p>
-          Notiserna är ett personligt projekt byggt med React och Supabase.
-          Sajten drivs av <a href="mailto:andreas.emmoth@gmail.com">Andreas Emmoth</a>.
-        </p>
-
-        <div className="about-modal__footer">
-          <button className="btn btn--ghost btn--sm" onClick={() => { onClose(); onOpenPrivacy() }}>
-            Integritetspolicy <Icon name="arrow" size={13} />
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ----- GDPR banner -----
-function GdprBanner({ onAccept, onOpenPrivacy }) {
-  return (
-    <div className="gdpr-banner">
-      <p className="gdpr-banner__text">
-        Vi använder cookies och anonym inloggning för att spara bokmärken och lästa artiklar.{' '}
-        <button className="gdpr-link" onClick={onOpenPrivacy}>Läs mer</button>
-      </p>
-      <button className="btn btn--primary btn--sm" onClick={onAccept}>
-        Jag förstår
-      </button>
-    </div>
   )
 }
 
@@ -303,7 +195,7 @@ function CompactCard({ item }) {
 }
 
 // ----- Nav -----
-function Nav({ query, setQuery, onGoHome, onOpenAbout, colorScheme, onToggleTheme }) {
+function Nav({ query, setQuery, onGoHome, colorScheme, onToggleTheme }) {
   return (
     <header className="nav">
       <a className="nav__brand" href="/" onClick={e => { e.preventDefault(); onGoHome() }}>
@@ -314,7 +206,7 @@ function Nav({ query, setQuery, onGoHome, onOpenAbout, colorScheme, onToggleThem
         <a href="/" onClick={e => { e.preventDefault(); onGoHome() }}
            className="is-active" aria-current="page">Nyheter</a>
         <a href="/artiklar">Artiklar</a>
-        <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
+        <a href="/om">Om</a>
       </nav>
       <div className="nav__right">
         <div className="nav__search">
@@ -331,7 +223,7 @@ function Nav({ query, setQuery, onGoHome, onOpenAbout, colorScheme, onToggleThem
 }
 
 // ----- MobileNav -----
-function MobileNav({ onGoHome, onOpenAbout }) {
+function MobileNav({ onGoHome }) {
   return (
     <nav className="mobile-nav" aria-label="Huvudmeny">
       <a className="mobile-nav__item is-active" href="/" aria-current="page"
@@ -343,10 +235,10 @@ function MobileNav({ onGoHome, onOpenAbout }) {
         <Icon name="book-open" size={20} />
         <span>Artiklar</span>
       </a>
-      <button className="mobile-nav__item" onClick={onOpenAbout}>
+      <a className="mobile-nav__item" href="/om">
         <Icon name="info" size={20} />
         <span>Om</span>
-      </button>
+      </a>
     </nav>
   )
 }
@@ -405,10 +297,6 @@ function App() {
   const newsGeneration = useRef(0)
   const [newsError, setNewsError] = useState('')
 
-  const [gdprOk,      setGdprOk]      = useState(() => !!localStorage.getItem('gdpr_ok'))
-  const [privacyOpen, setPrivacyOpen] = useState(false)
-  const [aboutOpen,   setAboutOpen]   = useState(false)
-
   // Mörkt/ljust läge
   const [colorScheme, setColorScheme] = useState(() => {
     const stored = localStorage.getItem('colorScheme')
@@ -439,11 +327,6 @@ function App() {
     if (query.trim())          p.set('q', query.trim())
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
   }, [active, query])
-
-  const acceptGdpr = useCallback(() => {
-    localStorage.setItem('gdpr_ok', '1')
-    setGdprOk(true)
-  }, [])
 
   const goHome = useCallback(() => {
     setActive('all')
@@ -562,7 +445,7 @@ function App() {
   return (
     <div className="shell">
       <Nav query={query} setQuery={setQuery}
-           onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)}
+           onGoHome={goHome}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
 
       <header className="brand-header">
@@ -570,7 +453,7 @@ function App() {
           <div className="brand-header__logo">N</div>
           <span className="brand-header__name">Notiserna</span>
           <span className="brand-header__sep">&mdash;</span>
-          <span className="brand-header__tagline">Dina nyheter, samlat på ett ställe</span>
+          <span className="brand-header__tagline">Nyheter och vardagsekonomi</span>
         </button>
       </header>
 
@@ -647,23 +530,15 @@ function App() {
           <span>
             © Notiserna 2026
             {' · '}
-            <button className="foot__privacy-link" onClick={() => setAboutOpen(true)}>
-              Om sajten
-            </button>
+            <a className="foot__privacy-link" href="/om">Om sajten</a>
             {' · '}
-            <button className="foot__privacy-link" onClick={() => setPrivacyOpen(true)}>
-              Integritetspolicy
-            </button>
+            <a className="foot__privacy-link" href="/integritet">Integritetspolicy</a>
           </span>
           <span>{updatedAt ? `Uppdaterad ${formatUpdated(updatedAt)}` : 'Uppdateras var 15:e minut'}</span>
         </div>
       </footer>
 
-      {privacyOpen && <PrivacyModal onClose={() => setPrivacyOpen(false)} />}
-      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
-      {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
-
-      <MobileNav onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)} />
+      <MobileNav onGoHome={goHome} />
     </div>
   )
 }

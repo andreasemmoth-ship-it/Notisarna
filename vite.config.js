@@ -3,11 +3,11 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { POSTS_DIR, publishedPosts } from './scripts/lib/posts.js'
-import { renderArticlePage, renderArticlesIndex } from './scripts/lib/render.js'
+import { renderAboutPage, renderArticlePage, renderArticlesIndex, renderPrivacyPage } from './scripts/lib/render.js'
 
 // Statiska sidor som byggs till <sökväg>/index.html. Samma lista finns som
 // rewrites i vercel.json.
-const STATIC_PAGE = /^\/(artiklar(\/[a-z0-9-]+)?)$/
+const STATIC_PAGE = /^\/(artiklar(\/[a-z0-9-]+)?|om|integritet)$/
 
 const VIRTUAL_POSTS = 'virtual:posts'
 const RESOLVED_VIRTUAL_POSTS = '\0' + VIRTUAL_POSTS
@@ -43,6 +43,10 @@ function posts() {
         let html = null
         if (pathname === '/artiklar') {
           html = renderArticlesIndex(publishedPosts(), { headAssets })
+        } else if (pathname === '/om') {
+          html = renderAboutPage({ headAssets })
+        } else if (pathname === '/integritet') {
+          html = renderPrivacyPage({ headAssets })
         } else {
           const match = pathname.match(/^\/artiklar\/([a-z0-9-]+)$/)
           const post = match && publishedPosts().find(p => p.slug === match[1])

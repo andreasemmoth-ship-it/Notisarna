@@ -14,7 +14,19 @@ function legacyRedirect() {
   return slug && /^[a-z0-9-]+$/.test(slug) ? `/artiklar/${slug}` : '/artiklar'
 }
 
+// Tidigare versioner sparade cookiesamtycke, cachad data och en Supabase-session
+// i webbläsaren. Inget av det används längre, så det tas bort vid besök.
+function removeLegacyStorage() {
+  try {
+    const legacy = ['gdpr_ok', 'cached_feeds', 'cached_categories', 'sb-juzqqvhupgvojdeuihok-auth-token']
+    for (const key of Object.keys(localStorage)) {
+      if (legacy.includes(key) || key.startsWith('cached_news_')) localStorage.removeItem(key)
+    }
+  } catch {}
+}
+
 const redirect = legacyRedirect()
+removeLegacyStorage()
 if (redirect) {
   window.location.replace(redirect)
 } else {

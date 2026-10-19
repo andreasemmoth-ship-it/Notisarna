@@ -142,8 +142,8 @@ function footerHtml() {
   return `<footer class="foot">
       <div class="foot__rule"></div>
       <div class="foot__row">
-        <span>© Notiserna ${new Date().getFullYear()} · <a class="foot__privacy-link" href="/artiklar">Artiklar</a></span>
-        <span><a class="foot__privacy-link" href="/">Senaste nyheterna</a></span>
+        <span>© Notiserna ${new Date().getFullYear()} · <a class="foot__privacy-link" href="/om">Om sajten</a> · <a class="foot__privacy-link" href="/integritet">Integritetspolicy</a></span>
+        <span>Allmän information, inte rådgivning</span>
       </div>
     </footer>`
 }
@@ -413,4 +413,100 @@ export function renderSitemap(entries) {
 ${urls}
 </urlset>
 `
+}
+
+// ----- Textsidor (Om, Integritet) -----
+function textPage({ title, lead, path, active, description, content, headAssets }) {
+  return layout({
+    title: `${title} — ${SITE_NAME}`,
+    description,
+    path,
+    active,
+    headAssets,
+    body: `    <article class="article-view text-page">
+      <header class="article-view__header">
+        <h1 class="article-view__title">${title}</h1>
+        <p class="article-view__lead">${lead}</p>
+      </header>
+      <div class="article-view__content">
+${content}
+      </div>
+    </article>`,
+  })
+}
+
+export function renderAboutPage({ headAssets }) {
+  return textPage({
+    title: 'Om Notiserna',
+    lead: 'Nyheter och förklarande artiklar om vardagsekonomi.',
+    description: 'Vad Notiserna är, hur nyheter, artiklar och AI-genererade videor tas fram och granskas, annonslänkar och kontakt.',
+    path: '/om',
+    active: 'om',
+    headAssets,
+    content: `<h2>Vad är Notiserna?</h2>
+<p>Notiserna har två delar. <a href="/">Nyheterna</a> är ett flöde med rubriker från svenska och internationella nyhetskällor som uppdateras automatiskt ungefär var femtonde minut. Varje nyhet länkar till källan, där du läser hela texten. <a href="/artiklar">Artiklarna</a> är våra egna och förklarar vardagsekonomi: sådant som påverkar plånboken, som avgifter, avtal, skatter och priser.</p>
+
+<h2>Våra videor</h2>
+<p>Många artiklar hör ihop med en kort video på TikTok, Instagram eller YouTube. Text, presentatör och röst i videorna är AI-genererade. Presentatören är alltså ingen verklig person. Varje video granskas av en människa innan den publiceras, och artikeln här på sajten innehåller källorna som videon bygger på.</p>
+
+<h2>Så tar vi fram och granskar innehållet</h2>
+<ul>
+<li>Vi utgår från primärkällor när det går, till exempel myndigheter, lagtext och företagens egna villkor. Källorna listas längst ner i varje artikel.</li>
+<li>AI-verktyg används för att ta fram utkast till text och video. En människa kontrollerar fakta, siffror och källor och ansvarar för det som publiceras.</li>
+<li>Varje artikel visar när den senast granskades. Regler och priser ändras, så kontrollera alltid aktuella villkor innan du fattar beslut.</li>
+<li>Hittar du ett fel? Hör av dig så rättar vi det.</li>
+</ul>
+<p>Innehållet är allmän information och inte individuell rådgivning.</p>
+
+<h2>Annonslänkar</h2>
+<p>Sajten kan innehålla annonslänkar (affiliatelänkar). Om du använder en tjänst via en sådan länk kan Notiserna få ersättning, utan att det kostar dig något extra. Annonslänkar är alltid märkta med texten ”Annonslänk” ovanför den första länken i artikeln. Ersättningen påverkar inte vad vi skriver.</p>
+
+<h2>Kontakt</h2>
+<p>Notiserna drivs av [NAMN/KONTAKT].</p>
+<p>E-post: [NAMN/KONTAKT]</p>
+<p>Läs om hur vi hanterar personuppgifter i vår <a href="/integritet">integritetspolicy</a>.</p>`,
+  })
+}
+
+export function renderPrivacyPage({ headAssets }) {
+  return textPage({
+    title: 'Integritetspolicy',
+    lead: 'Notiserna har inga konton och ingen inloggning. Här beskriver vi vad som ändå sparas och vilka tjänster sajten använder.',
+    description: 'Hur Notiserna hanterar personuppgifter: inga konton, inga kakor, cookiefri besöksstatistik från Vercel.',
+    path: '/integritet',
+    active: '',
+    headAssets,
+    content: `<p><em>Senast uppdaterad: oktober 2026</em></p>
+
+<h2>Inga konton, ingen inloggning</h2>
+<p>Du kan inte skapa konto eller logga in på Notiserna, och vi använder inga sessions-ID. Vi vet inte vem du är när du besöker sajten.</p>
+
+<h2>Vad som sparas i din webbläsare</h2>
+<p>Notiserna sätter inga kakor (cookies). Två inställningar kan sparas i webbläsarens lokala lagring (localStorage), och bara om du själv gör ett val:</p>
+<ul>
+<li><strong>colorScheme</strong> – om du valt ljust eller mörkt läge.</li>
+<li><strong>viewMode</strong> – om du valt rutnät eller lista i nyhetsflödet.</li>
+</ul>
+<p>Uppgifterna lämnar aldrig din enhet. Du tar bort dem genom att rensa webbplatsdata för notiserna.se i webbläsaren.</p>
+
+<h2>Besöksstatistik</h2>
+<p>Vi använder Vercel Web Analytics och Vercel Speed Insights för att förstå hur många som besöker sajten och hur snabbt sidorna laddar. Tjänsterna använder inga kakor. Enligt Vercel samlas uppgifterna in i aggregerad form, till exempel vilken sida som visades, varifrån besökaren kom, land, typ av enhet och webbläsare samt laddningstider. Enligt Vercel går enskilda besökare inte att identifiera eller följa mellan olika webbplatser.</p>
+
+<h2>Tjänster vi använder</h2>
+<ul>
+<li><strong>Vercel</strong> – driftar sajten. Som alla webbservrar tar Vercel emot din IP-adress för att kunna skicka sidan till dig.</li>
+<li><strong>Supabase</strong> – databasen som nyhetsflödet hämtas från. Din webbläsare hämtar nyheterna direkt därifrån, och Supabase tar då emot din IP-adress.</li>
+<li><strong>Google Fonts</strong> – typsnitten hämtas från Google, som då tar emot din IP-adress.</li>
+<li><strong>TikTok och YouTube</strong> – videor i artiklarna laddas först när du trycker på dem. Då hämtas innehåll från plattformen, och dess egen integritetspolicy gäller.</li>
+</ul>
+
+<h2>Länkar till andra webbplatser</h2>
+<p>Nyheter och annonslänkar leder till andra webbplatser. När du klickar dig vidare gäller deras villkor och integritetspolicyer, och de kan sätta egna kakor.</p>
+
+<h2>Tidigare versioner av sajten</h2>
+<p>Tidigare kunde besökare spara bokmärken och läst-historik via anonym inloggning. Funktionen är borttagen. [BEKRÄFTA: Sparade uppgifter raderades ÅÅÅÅ-MM-DD.]</p>
+
+<h2>Dina rättigheter och kontakt</h2>
+<p>Personuppgiftsansvarig är [NAMN/KONTAKT]. Du har rätt att begära information om, rättelse av och radering av personuppgifter som rör dig. Kontakta oss på [NAMN/KONTAKT]. Du kan också lämna klagomål till Integritetsskyddsmyndigheten (IMY).</p>`,
+  })
 }

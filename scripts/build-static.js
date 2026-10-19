@@ -2,12 +2,15 @@
 // artiklarna går att läsa och indexera utan JavaScript:
 //   dist/artiklar/index.html          artikellistan
 //   dist/artiklar/<slug>/index.html   en sida per publicerad artikel
+//   dist/om/index.html, dist/integritet/index.html
 //   dist/404.html, dist/sitemap.xml
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { publishedPosts } from './lib/posts.js'
-import { articleUrl, renderArticlePage, renderArticlesIndex, renderNotFound, renderSitemap } from './lib/render.js'
+import {
+  articleUrl, renderAboutPage, renderArticlePage, renderArticlesIndex, renderNotFound, renderPrivacyPage, renderSitemap,
+} from './lib/render.js'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const DIST = path.join(ROOT, 'dist')
@@ -47,6 +50,8 @@ function build() {
   for (const post of posts) {
     write(`artiklar/${post.slug}/index.html`, renderArticlePage(post, { headAssets }))
   }
+  write('om/index.html', renderAboutPage({ headAssets }))
+  write('integritet/index.html', renderPrivacyPage({ headAssets }))
   write('404.html', renderNotFound({ headAssets }))
 
   const today = new Date().toISOString().slice(0, 10)
@@ -54,9 +59,11 @@ function build() {
     { path: '/', lastmod: today },
     { path: '/artiklar', lastmod: posts[0]?.senastGranskad },
     ...posts.map(post => ({ path: articleUrl(post.slug), lastmod: post.senastGranskad })),
+    { path: '/om' },
+    { path: '/integritet' },
   ]))
 
-  console.log(`Statiska sidor: ${posts.length} artiklar, artikellista, 404 och sitemap.xml`)
+  console.log(`Statiska sidor: ${posts.length} artiklar, artikellista, om, integritet, 404 och sitemap.xml`)
 }
 
 build()
