@@ -420,7 +420,7 @@ function Nav({ query, setQuery, active, onSetActive, onGoHome, onOpenAbout, colo
       </button>
       <nav className="nav__links">
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
-           className={active !== 'artiklar' ? 'is-active' : ''}>Flöde</a>
+           className={active !== 'artiklar' ? 'is-active' : ''}>Nyheter</a>
         <a href="#" onClick={e => { e.preventDefault(); onSetActive('artiklar') }}
            className={active === 'artiklar' ? 'is-active' : ''}>Artiklar</a>
         <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
@@ -448,7 +448,7 @@ function MobileNav({ active, onSetActive, onOpenAbout }) {
         onClick={() => onSetActive('all')}
       >
         <Icon name="rss" size={20} />
-        <span>Flöde</span>
+        <span>Nyheter</span>
       </button>
       <button 
         className={`mobile-nav__item ${active === 'artiklar' ? 'is-active' : ''}`}
@@ -465,6 +465,32 @@ function MobileNav({ active, onSetActive, onOpenAbout }) {
         <span>Om</span>
       </button>
     </nav>
+  )
+}
+
+// ----- Senaste artiklarna (visas ovanför nyhetsflödet) -----
+function LatestPosts({ posts, onOpen, onShowAll }) {
+  if (posts.length === 0) return null
+  return (
+    <section className="latest-posts" aria-labelledby="latest-posts-title">
+      <div className="latest-posts__head">
+        <h2 id="latest-posts-title" className="latest-posts__title">Senaste från Notiserna</h2>
+        <a href="?view=artiklar" className="latest-posts__all"
+           onClick={e => { e.preventDefault(); onShowAll() }}>
+          Alla artiklar <Icon name="arrow" size={13} />
+        </a>
+      </div>
+      <div className="latest-posts__list">
+        {posts.slice(0, 3).map(post => (
+          <a key={post.slug} href={`?view=artiklar&slug=${post.slug}`} className="latest-post"
+             onClick={e => { e.preventDefault(); onOpen(post.slug) }}>
+            <span className="latest-post__date">{post.date}</span>
+            <span className="latest-post__title">{post.title}</span>
+            <span className="latest-post__desc">{post.description}</span>
+          </a>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -860,6 +886,12 @@ function App() {
 
 
       {active !== 'artiklar' && (
+        <LatestPosts posts={POSTS}
+                     onOpen={slug => { setActive('artiklar'); setActiveSlug(slug) }}
+                     onShowAll={() => handleSetActive('artiklar')} />
+      )}
+
+      {active !== 'artiklar' && (
         <div className="filter-bar">
           <div className="filter-bar__inner">
             {NEWS_TABS.map(c => (
@@ -903,7 +935,7 @@ function App() {
         <main className="content">
           <div className="article-archive-header">
             <h2>Artiklar</h2>
-            <p>Våra egna fördjupningar och analyser</p>
+            <p>Förklarande artiklar om vardagsekonomi, senaste först</p>
           </div>
           {POSTS.length === 0 ? (
             <div className="empty">
