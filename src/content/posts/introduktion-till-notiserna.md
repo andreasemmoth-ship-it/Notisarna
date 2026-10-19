@@ -7,6 +7,7 @@ senastGranskad: 2026-10-19
 publicerad: true
 affiliate: false
 kallor: []
+bild: /images/blogg/valkommen.jpeg
 ---
 Notiserna har två delar: ett nyhetsflöde och egna artiklar om vardagsekonomi. Har du kommit hit från en video på TikTok, Instagram eller YouTube hittar du artikeln som videon hänvisar till under [Artiklar](/artiklar).
 
