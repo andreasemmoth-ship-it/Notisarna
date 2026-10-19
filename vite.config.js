@@ -27,7 +27,7 @@ function posts() {
     },
     load(id) {
       if (id !== RESOLVED_VIRTUAL_POSTS) return
-      const list = publishedPosts().map(({ slug, titel, beskrivning, datum }) => ({ slug, titel, beskrivning, datum }))
+      const list = publishedPosts().map(({ slug, titel, beskrivning, datum, bild }) => ({ slug, titel, beskrivning, datum, bild }))
       return `export default ${JSON.stringify(list)}`
     },
     handleHotUpdate({ file, server }) {

@@ -101,6 +101,13 @@ const Icon = ({ name, size = 16 }) => {
 }
 
 // ----- Cards -----
+// Nyheter öppnas hos källan i ny flik; egna artiklar öppnas på sajten.
+function linkProps(item) {
+  if (!item.link) return { href: '#' }
+  if (item.link.startsWith('/')) return { href: item.link }
+  return { href: item.link, target: '_blank', rel: 'noopener noreferrer' }
+}
+
 function HeroCard({ item }) {
   return (
     <article className="hero-card">
@@ -125,9 +132,8 @@ function HeroCard({ item }) {
         <h1 className="hero-card__title">{item.headline}</h1>
         <p className="hero-card__summary">{item.summary}</p>
         <div className="card__footer">
-          <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-             rel="noopener noreferrer" className="read-more">
-            Läs hela artikeln <Icon name="arrow" size={15} />
+          <a {...linkProps(item)} className="read-more">
+            {item.cta ?? 'Läs hela artikeln'} <Icon name="arrow" size={15} />
           </a>
         </div>
       </div>
@@ -158,9 +164,8 @@ function NewsCard({ item }) {
         <h3 className="news-card__title">{item.headline}</h3>
         <p className="news-card__summary">{item.summary}</p>
         <div className="card__footer">
-          <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-             rel="noopener noreferrer" className="read-more read-more--small">
-            Läs mer <Icon name="arrow" size={13} />
+          <a {...linkProps(item)} className="read-more read-more--small">
+            {item.cta ?? 'Läs mer'} <Icon name="arrow" size={13} />
           </a>
         </div>
       </div>
@@ -182,8 +187,7 @@ function CompactCard({ item }) {
         )}
       </div>
       <div className="compact-row__text">
-        <a href={item.link || '#'} target={item.link ? '_blank' : undefined}
-           rel="noopener noreferrer" className="compact-row__title">
+        <a {...linkProps(item)} className="compact-row__title">
           {item.headline}
         </a>
         <span className="compact-row__meta">
@@ -195,7 +199,7 @@ function CompactCard({ item }) {
 }
 
 // ----- Nav -----
-function Nav({ query, setQuery, onGoHome, colorScheme, onToggleTheme }) {
+function Nav({ query, setQuery, active, onGoHome, onShowArticles, colorScheme, onToggleTheme }) {
   return (
     <header className="nav">
       <a className="nav__brand" href="/" onClick={e => { e.preventDefault(); onGoHome() }}>
@@ -204,8 +208,9 @@ function Nav({ query, setQuery, onGoHome, colorScheme, onToggleTheme }) {
       </a>
       <nav className="nav__links" aria-label="Huvudmeny">
         <a href="/" onClick={e => { e.preventDefault(); onGoHome() }}
-           className="is-active" aria-current="page">Nyheter</a>
-        <a href="/artiklar">Artiklar</a>
+           className={active !== 'artiklar' ? 'is-active' : ''}>Nyheter</a>
+        <a href="/artiklar" onClick={e => { e.preventDefault(); onShowArticles() }}
+           className={active === 'artiklar' ? 'is-active' : ''}>Artiklar</a>
         <a href="/om">Om</a>
       </nav>
       <div className="nav__right">
@@ -223,15 +228,16 @@ function Nav({ query, setQuery, onGoHome, colorScheme, onToggleTheme }) {
 }
 
 // ----- MobileNav -----
-function MobileNav({ onGoHome }) {
+function MobileNav({ active, onGoHome, onShowArticles }) {
   return (
     <nav className="mobile-nav" aria-label="Huvudmeny">
-      <a className="mobile-nav__item is-active" href="/" aria-current="page"
+      <a className={`mobile-nav__item ${active !== 'artiklar' ? 'is-active' : ''}`} href="/"
          onClick={e => { e.preventDefault(); onGoHome() }}>
         <Icon name="rss" size={20} />
         <span>Nyheter</span>
       </a>
-      <a className="mobile-nav__item" href="/artiklar">
+      <a className={`mobile-nav__item ${active === 'artiklar' ? 'is-active' : ''}`} href="/artiklar"
+         onClick={e => { e.preventDefault(); onShowArticles() }}>
         <Icon name="book-open" size={20} />
         <span>Artiklar</span>
       </a>
@@ -243,32 +249,20 @@ function MobileNav({ onGoHome }) {
   )
 }
 
-// ----- Senaste artiklarna (visas ovanför nyhetsflödet) -----
-const postDateFormat = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
-const formatPostDate = iso => postDateFormat.format(new Date(`${iso}T00:00:00Z`))
-
-function LatestPosts({ posts }) {
-  if (posts.length === 0) return null
-  return (
-    <section className="latest-posts" aria-labelledby="latest-posts-title">
-      <div className="latest-posts__head">
-        <h2 id="latest-posts-title" className="latest-posts__title">Senaste från Notiserna</h2>
-        <a href="/artiklar" className="latest-posts__all">
-          Alla artiklar <Icon name="arrow" size={13} />
-        </a>
-      </div>
-      <div className="latest-posts__list">
-        {posts.slice(0, 3).map(post => (
-          <a key={post.slug} href={`/artiklar/${post.slug}`} className="latest-post">
-            <time className="latest-post__date" dateTime={post.datum}>{formatPostDate(post.datum)}</time>
-            <span className="latest-post__title">{post.titel}</span>
-            <span className="latest-post__desc">{post.beskrivning}</span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )
-}
+// ----- Egna artiklar som kort i flödet -----
+const postDateFormat = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+const POST_ITEMS = POSTS.map(post => ({
+  id: `post-${post.slug}`,
+  category: 'Artikel',
+  source: 'Notiserna',
+  date: postDateFormat.format(new Date(`${post.datum}T00:00:00Z`)),
+  headline: post.titel,
+  summary: post.beskrivning,
+  link: `/artiklar/${post.slug}`,
+  image: post.bild || '/images/blogg/notiserna.jpeg',
+  hue: 220,
+  cta: 'Läs artikeln',
+}))
 
 function formatUpdated(iso) {
   if (!iso) return ''
@@ -394,10 +388,16 @@ function App() {
     loadedCount.current = PAGE_SIZE
     setNews([])
     setUpdatedAt(null)
-    setLoading(true)
     setLoadingMore(false)
-    setHasMore(true)
     setNewsError('')
+    // Artikelfliken visar egna artiklar och behöver ingen hämtning.
+    if (active === 'artiklar') {
+      setLoading(false)
+      setHasMore(false)
+      return
+    }
+    setLoading(true)
+    setHasMore(true)
     fetchNews()
     const interval = setInterval(fetchNews, 60000)
     let refreshTimer
@@ -414,11 +414,12 @@ function App() {
       clearTimeout(refreshTimer)
       db.removeChannel(channel)
     }
-  }, [fetchNews])
+  }, [fetchNews, active])
 
   const filtered = useMemo(() => {
     let list = news
-    if (active === 'all') list = list.filter(i => NEWS_CATEGORY_KEYS.includes(i.categoryKey))
+    if (active === 'artiklar') list = POST_ITEMS
+    else if (active === 'all') list = list.filter(i => NEWS_CATEGORY_KEYS.includes(i.categoryKey))
     else list = list.filter(i => i.categoryKey === active)
     if (query.trim()) {
       const q = query.toLowerCase()
@@ -432,9 +433,11 @@ function App() {
     return list
   }, [news, active, query])
 
+  // Herokortet på startsidan är den senaste egna artikeln, annars en utvald nyhet.
   const featured = useMemo(() => {
+    if (active === 'all' && POST_ITEMS.length > 0) return POST_ITEMS[0]
     return filtered.find(i => i.featured) || filtered[0]
-  }, [filtered])
+  }, [filtered, active])
 
   const rest = useMemo(() => {
     return filtered.filter(i => i.id !== featured?.id)
@@ -444,8 +447,8 @@ function App() {
 
   return (
     <div className="shell">
-      <Nav query={query} setQuery={setQuery}
-           onGoHome={goHome}
+      <Nav query={query} setQuery={setQuery} active={active}
+           onGoHome={goHome} onShowArticles={() => setActive('artiklar')}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
 
       <header className="brand-header">
@@ -458,9 +461,7 @@ function App() {
       </header>
 
 
-      <LatestPosts posts={POSTS} />
-
-      <div className="filter-bar">
+        <div className="filter-bar">
         <div className="filter-bar__inner">
           {NEWS_TABS.map(c => (
             <button key={c.key}
@@ -538,7 +539,7 @@ function App() {
         </div>
       </footer>
 
-      <MobileNav onGoHome={goHome} />
+      <MobileNav active={active} onGoHome={goHome} onShowArticles={() => setActive('artiklar')} />
     </div>
   )
 }

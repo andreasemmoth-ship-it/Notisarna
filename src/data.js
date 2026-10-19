@@ -1,6 +1,7 @@
 export const NEWS_TABS = [
   { key: 'all', label: 'Nyheter' },
   { key: 'ai', label: 'AI' },
+  { key: 'artiklar', label: 'Artiklar' },
 ]
 
 // Kategorier som visas i fliken Nyheter. Övriga kategorier i news_articles
