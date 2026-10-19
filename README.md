@@ -3,7 +3,7 @@
 **Notiserna** har två delar:
 
 - **Nyheter** (startsidan `/`): ett flöde med rubriker från svenska och internationella källor, hämtade
-  automatiskt från RSS var 15:e minut. Flikar: *Nyheter* (Sverige, Teknik, Världen, Näringsliv) och *AI*.
+  automatiskt från RSS var 15:e minut. Flikar: *Nyheter* (allt samlat), *Sverige*, *Världen*, *Näringsliv*, *Teknik* och *Artiklar*.
 - **Artiklar** (`/artiklar`): egna förklarande artiklar om vardagsekonomi. Korta videor på TikTok, Reels och
   YouTube Shorts hänvisar hit.
 
@@ -82,7 +82,7 @@ samma sak som en befintlig sida (`/artiklar`, `/om`, `/integritet`).
   (tidigare såg bara inloggade allt). Filen innehåller också valfria steg för att ta bort gamla tabeller och
   anonyma konton.
 - **Källor** hanteras direkt i Supabase, i tabellen `feed_config` (kolumnen `feeds`). Sajten visar bara
-  kategorierna i `src/data.js` (`NEWS_CATEGORY_KEYS` och fliken `ai`). Andra kategorier som hämtas syns inte.
+  kategorierna i `NEWS_CATEGORY_KEYS` i `src/data.js`. Andra kategorier som hämtas (t.ex. `ai`, `sport`) syns inte.
 
 ### Säker schemaläggning av `fetch-news`
 
