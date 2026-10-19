@@ -1,16 +1,19 @@
 ---
-title: "Claude 5 Fable: Anthropics dyra supermotor kan vara en prisfälla"
-date: "2026-06-12"
-description: "Vi granskar Anthropics nya flaggskeppsmodell Claude 5 Fable. Benchmarks visar imponerande kodningsförmåga, men oberoende säkerhetstester avslöjar allvarliga brister, paranoida filter och en ekonomisk prisfälla."
-slug: "claude-5-fable-sanningen-bakom-benchmarks"
-image: "/images/blogg/claude-5-fable.webp"
-source_title_1: "Claude Fable 5 and Claude Mythos 5 | Anthropic Official"
-source_url_1: "https://www.anthropic.com/news/claude-fable-5-mythos-5"
-source_title_2: "Models and Capabilities | Claude API Docs"
-source_url_2: "https://platform.claude.com/docs/en/about-claude/models"
-source_title_3: "My Claw: Claude Fable 5 Review"
-source_url_3: "https://myclaw.ai/sv/blog/claude-fable-5-review"
+titel: "Claude 5 Fable: Anthropics dyra supermotor kan vara en prisfälla"
+beskrivning: "Vi granskar Anthropics nya flaggskeppsmodell Claude 5 Fable. Benchmarks visar imponerande kodningsförmåga, men oberoende säkerhetstester avslöjar allvarliga brister, paranoida filter och en ekonomisk prisfälla."
+slug: claude-5-fable-sanningen-bakom-benchmarks
+datum: 2026-06-12
+senastGranskad: 2026-06-12
 publicerad: false
+affiliate: false
+bild: /images/blogg/claude-5-fable.webp
+kallor:
+  - titel: "Claude Fable 5 and Claude Mythos 5 | Anthropic Official"
+    url: https://www.anthropic.com/news/claude-fable-5-mythos-5
+  - titel: "Models and Capabilities | Claude API Docs"
+    url: https://platform.claude.com/docs/en/about-claude/models
+  - titel: "My Claw: Claude Fable 5 Review"
+    url: https://myclaw.ai/sv/blog/claude-fable-5-review
 ---
 ## Skiftet från korta chattar till tunga bakgrundsjobb
 Anthropic har precis rullat ut Claude 5 Fable, den första tillgängliga modellen i deras nya, tyngre produktklass. Skillnaden mot den tidigare toppmodellen Opus ligger inte i hur snabbt den svarar på enkla frågor, utan i en helt ny förmåga att hålla den logiska röda tråden över enorma datamängder. 

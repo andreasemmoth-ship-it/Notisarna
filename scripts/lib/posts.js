@@ -26,23 +26,33 @@ function toBool(value) {
 }
 
 // Källor anges som lista under `kallor`. Varje post är antingen en sträng
-// (text eller URL) eller { titel, url }. Äldre artiklar använder
-// source_title_N/source_url_N och source_title/source_url.
+// (text eller URL) eller { titel, url }.
 function normalizeSources(data) {
-  const sources = []
-  for (const item of data.kallor ?? []) {
+  return (data.kallor ?? []).map(item => {
     if (typeof item === 'string') {
-      sources.push(/^https?:\/\//.test(item) ? { title: item, url: item } : { title: item, url: '' })
-    } else if (item && typeof item === 'object') {
-      const url = item.url ?? ''
-      sources.push({ title: item.titel ?? item.title ?? url, url })
+      return /^https?:\/\//.test(item) ? { title: item, url: item } : { title: item, url: '' }
     }
+    const url = String(item?.url ?? '')
+    return { title: String(item?.titel ?? url), url }
+  }).filter(src => src.title)
+}
+
+// Gör om en länk till en TikTok- eller YouTube-video till en inbäddningsadress.
+export function parseVideo(url) {
+  let u
+  try { u = new URL(url) } catch { return null }
+  const host = u.hostname.replace(/^(www|m)\./, '')
+  if (host === 'tiktok.com') {
+    const id = u.pathname.match(/\/video\/(\d+)/)?.[1]
+    return id ? { platform: 'TikTok', url, embed: `https://www.tiktok.com/player/v1/${id}?autoplay=1&rel=0` } : null
   }
-  for (let i = 1; data[`source_url_${i}`]; i++) {
-    sources.push({ title: data[`source_title_${i}`] || data[`source_url_${i}`], url: data[`source_url_${i}`] })
+  let id = null
+  if (host === 'youtu.be') id = u.pathname.slice(1)
+  else if (host === 'youtube.com') id = u.pathname.match(/^\/(?:shorts|embed)\/([\w-]+)/)?.[1] ?? u.searchParams.get('v')
+  if (id && /^[\w-]{6,}$/.test(id)) {
+    return { platform: 'YouTube', url, embed: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0` }
   }
-  if (data.source_url) sources.push({ title: data.source_title || data.source_url, url: data.source_url })
-  return sources
+  return null
 }
 
 function normalize(file, text) {
@@ -51,19 +61,19 @@ function normalize(file, text) {
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
     throw new Error(`${file}: ogiltig slug "${slug}" (använd a–z, 0–9 och bindestreck)`)
   }
-  const datum = toDate(data.datum ?? data.date)
+  const datum = toDate(data.datum)
   return {
     file,
     slug,
-    titel: String(data.titel ?? data.title ?? '').trim(),
-    beskrivning: String(data.beskrivning ?? data.description ?? '').trim(),
+    titel: String(data.titel ?? '').trim(),
+    beskrivning: String(data.beskrivning ?? '').trim(),
     datum,
     senastGranskad: toDate(data.senastGranskad) || datum,
     publicerad: toBool(data.publicerad),
     video: data.video ? String(data.video).trim() : '',
     affiliate: toBool(data.affiliate),
     kallor: normalizeSources(data),
-    bild: String(data.bild ?? data.image ?? '').trim(),
+    bild: String(data.bild ?? '').trim(),
     body,
   }
 }
@@ -82,6 +92,10 @@ export function loadPosts(dir = POSTS_DIR) {
       if (!post.titel) throw new Error(`${post.file}: titel saknas`)
       if (!/^\d{4}-\d{2}-\d{2}$/.test(post.datum)) throw new Error(`${post.file}: datum måste vara ÅÅÅÅ-MM-DD`)
       if (!/^\d{4}-\d{2}-\d{2}$/.test(post.senastGranskad)) throw new Error(`${post.file}: senastGranskad måste vara ÅÅÅÅ-MM-DD`)
+      if (!post.beskrivning) throw new Error(`${post.file}: beskrivning saknas`)
+      if (post.video && !parseVideo(post.video)) {
+        throw new Error(`${post.file}: video måste vara en fullständig TikTok-länk (…/video/<id>) eller YouTube-länk`)
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 // Genererar statisk HTML för artikelsidor och övriga innehållssidor.
 // Sidorna fungerar utan JavaScript; React-appen laddas bara på startsidan.
 import { Marked } from 'marked'
+import { parseVideo } from './posts.js'
 
 export const SITE_URL = 'https://www.notiserna.se'
 export const SITE_NAME = 'Notiserna'
@@ -28,9 +29,15 @@ function absoluteUrl(url) {
 export const articleUrl = slug => `/artiklar/${slug}`
 
 // ----- Markdown -----
+export const AD_LABEL = 'Annonslänk – Notiserna kan få ersättning om du använder tjänsten.'
+export const DISCLAIMER = 'Allmän information, inte individuell rådgivning. Text, presentatör och röst i våra videor är AI-genererade och granskade av människa.'
+
 function isExternal(href) {
   return /^https?:\/\//.test(href) && !href.startsWith(SITE_URL)
 }
+
+// Annonslänkar skrivs i Markdown med titeln "annons": [Tjänsten](https://… "annons")
+const isAdLink = title => typeof title === 'string' && title.trim().toLowerCase() === 'annons'
 
 function createMarked() {
   const marked = new Marked({ gfm: true })
@@ -39,8 +46,12 @@ function createMarked() {
       link({ href, title, tokens }) {
         const text = this.parser.parseInline(tokens)
         const attrs = [`href="${escapeHtml(href)}"`]
-        if (title) attrs.push(`title="${escapeHtml(title)}"`)
-        if (isExternal(href)) attrs.push('target="_blank"', 'rel="noopener"')
+        if (isAdLink(title)) {
+          attrs.push('target="_blank"', 'rel="sponsored noopener"', 'class="ad-link"')
+        } else {
+          if (title) attrs.push(`title="${escapeHtml(title)}"`)
+          if (isExternal(href)) attrs.push('target="_blank"', 'rel="noopener"')
+        }
         return `<a ${attrs.join(' ')}>${text}</a>`
       },
       // Artikelns rubrik är sidans enda h1; rubriker i texten börjar på h2.
@@ -53,8 +64,27 @@ function createMarked() {
   return marked
 }
 
-export function renderMarkdown(markdown) {
-  return createMarked().parse(markdown)
+// Renderar brödtexten och lägger annonsmärkningen ovanför det första
+// stycke (eller lista, tabell …) som innehåller en annonslänk.
+function renderArticleBody(post) {
+  const marked = createMarked()
+  const tokens = marked.lexer(post.body)
+  let labelled = false
+  const blocks = tokens.map(token => {
+    const block = [token]
+    block.links = tokens.links
+    const html = marked.parser(block)
+    if (labelled || !html.includes('class="ad-link"')) return html
+    if (!post.affiliate) {
+      throw new Error(`${post.file}: innehåller annonslänkar men har affiliate: false. Sätt affiliate: true.`)
+    }
+    labelled = true
+    return `<p class="ad-label">${AD_LABEL}</p>\n${html}`
+  })
+  if (post.affiliate && !labelled) {
+    console.warn(`Varning: ${post.file} har affiliate: true men inga länkar märkta "annons".`)
+  }
+  return blocks.join('')
 }
 
 // ----- Ikoner (samma som i React-appen) -----
@@ -225,12 +255,31 @@ function shareHtml(post) {
       </div>`
 }
 
+// Videon laddas först när besökaren trycker på den. Då hämtas inget från
+// TikTok/YouTube (och inga kakor sätts) förrän besökaren själv väljer det.
+// Utan JavaScript leder länken till videon på plattformen.
+function videoHtml(post) {
+  const video = parseVideo(post.video)
+  if (!video) return ''
+  return `
+      <figure class="article-video">
+        <a class="article-video__facade" href="${escapeHtml(video.url)}" target="_blank" rel="noopener"
+           data-video-embed="${escapeHtml(video.embed)}" data-video-title="${escapeHtml(post.titel)}">
+          <span class="article-video__play" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86A1 1 0 0 0 8 5.14Z"/></svg></span>
+          <span class="article-video__label">Se videon</span>
+          <span class="article-video__note">Spelas upp från ${video.platform}. När du startar videon hämtas innehåll från ${video.platform}.</span>
+        </a>
+      </figure>`
+}
+
+const VIDEO_SCRIPT = `<script>document.querySelectorAll('[data-video-embed]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var f=document.createElement('iframe');f.src=a.getAttribute('data-video-embed');f.title=a.getAttribute('data-video-title')||'Video';f.className='article-video__frame';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');a.replaceWith(f)})})</script>`
+
 // Delningsknappen kräver JavaScript och visas bara när den fungerar.
 const SHARE_SCRIPT = `<script>(function(){var b=document.querySelector('[data-share]');if(!b)return;var t=document.querySelector('[data-share-toast]');var canShare=!!navigator.share;if(!canShare&&!navigator.clipboard)return;b.textContent=canShare?'Dela':'Kopiera länk';b.hidden=false;b.addEventListener('click',function(){var u=document.querySelector('link[rel=canonical]').href;if(canShare){navigator.share({title:document.title,url:u}).catch(function(){});return}navigator.clipboard.writeText(u).then(function(){t.hidden=false;setTimeout(function(){t.hidden=true},2000)})})})();</script>`
 
 export function renderArticlePage(post, { headAssets }) {
   const path = articleUrl(post.slug)
-  const content = renderMarkdown(post.body)
+  const content = renderArticleBody(post)
   const ld = jsonLd({
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -267,13 +316,19 @@ export function renderArticlePage(post, { headAssets }) {
           <time datetime="${post.datum}">${formatDate(post.datum)}</time>
         </div>
         <h1 class="article-view__title">${escapeHtml(post.titel)}</h1>
-        ${post.beskrivning ? `<p class="article-view__lead">${escapeHtml(post.beskrivning)}</p>` : ''}${image}
+        <p class="article-view__lead">${escapeHtml(post.beskrivning)}</p>
+        <p class="article-view__reviewed">Senast granskad: <time datetime="${post.senastGranskad}">${formatDate(post.senastGranskad)}</time></p>${image}
       </header>
+${videoHtml(post)}
 
       <div class="article-view__content">
 ${content}
       </div>
 ${sourcesHtml(post.kallor)}
+
+      <aside class="article-view__info-box article-view__disclaimer">
+        <p>${DISCLAIMER}</p>
+      </aside>
 ${shareHtml(post)}
 
       <div class="article-view__footer-nav">
@@ -293,7 +348,7 @@ ${shareHtml(post)}
     extraHead: `  <meta property="article:published_time" content="${post.datum}" />
   <meta property="article:modified_time" content="${post.senastGranskad}" />
   ${ld}`,
-    extraScripts: SHARE_SCRIPT,
+    extraScripts: (post.video ? VIDEO_SCRIPT : '') + SHARE_SCRIPT,
   })
 }
 

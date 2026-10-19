@@ -1045,3 +1045,46 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .theme-toggle__sun { display: none; }
 [data-theme="dark"] .theme-toggle__sun { display: inline; }
 [data-theme="dark"] .theme-toggle__moon { display: none; }
+
+/* ===== Artikelmall: granskningsdatum, video, annonsmärkning, informationsruta ===== */
+.article-view__reviewed {
+  margin-top: 14px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+}
+.article-video { margin: 0 auto 36px; max-width: 340px; }
+.article-video__facade,
+.article-video__frame {
+  display: flex; width: 100%; aspect-ratio: 9 / 16;
+  border-radius: 14px; border: 1px solid var(--line);
+}
+.article-video__facade {
+  flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  padding: 24px; text-align: center;
+  background: linear-gradient(160deg, var(--surface) 0%, color-mix(in oklch, var(--ink) 8%, var(--surface)) 100%);
+  transition: border-color 0.15s;
+}
+.article-video__facade:hover { border-color: var(--ink); }
+.article-video__play {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center; padding-left: 4px;
+  background: var(--accent); color: var(--on-accent);
+}
+.article-video__label { font-size: 15px; font-weight: 600; color: var(--ink); }
+.article-video__note { font-size: 12px; line-height: 1.45; color: var(--muted); max-width: 230px; }
+.article-video__frame { border: 0; background: #000; }
+
+.ad-label {
+  display: block; width: fit-content;
+  padding: 6px 10px; margin-bottom: 0.75em !important;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
+  font-size: 12.5px; line-height: 1.4; color: var(--muted);
+}
+.article-view__content a {
+  text-decoration: underline; text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklch, var(--ink) 35%, transparent);
+}
+.article-view__content a:hover { text-decoration-color: var(--ink); }
+.article-view__content table { width: 100%; border-collapse: collapse; margin-bottom: 1.5em; font-size: 15px; }
+.article-view__content th, .article-view__content td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.article-view__disclaimer p { color: var(--ink); }

@@ -1,20 +1,23 @@
 ---
-title: "AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet"
-date: "2026-06-10"
-description: "Medan molnbaserade AI-jättar kräver att du skickar iväg din data, sker en tyst revolution på din hårddisk. Vi granskar användarnyttan och forskningen bakom lokala språkmodeller."
-slug: "lokal-ai-integritet"
-image: "/images/blogg/lokal-ai.png"
-source_title_1: "Local LLMs: Safeguarding Data Privacy in the Age of Generative AI"
-source_url_1: "https://www.researchgate.net/publication/386388005_LOCAL_LLMS_SAFEGUARDING_DATA_PRIVACY_IN_THE_AGE_OF_GENERATIVE_AI_A_CASE_STUDY_AT_THE_UNIVERSITY_OF_ANDORRA"
-source_title_2: "Security and Privacy of Large Language Models (MDPI)"
-source_url_2: "https://www.mdpi.com/2673-2688/7/5/152"
-source_title_3: "LM Studio: Desktop app for local LLMs"
-source_url_3: "https://lmstudio.ai"
-source_title_4: "AnythingLLM: Local RAG and document analysis"
-source_url_4: "https://anythingllm.com"
-source_title_5: "Llama.cpp: CPU-optimized LLM inference (GitHub)"
-source_url_5: "https://github.com/ggerganov/llama.cpp"
+titel: "AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet"
+beskrivning: "Medan molnbaserade AI-jättar kräver att du skickar iväg din data, sker en tyst revolution på din hårddisk. Vi granskar användarnyttan och forskningen bakom lokala språkmodeller."
+slug: lokal-ai-integritet
+datum: 2026-06-10
+senastGranskad: 2026-06-10
 publicerad: false
+affiliate: false
+bild: /images/blogg/lokal-ai.png
+kallor:
+  - titel: "Local LLMs: Safeguarding Data Privacy in the Age of Generative AI"
+    url: https://www.researchgate.net/publication/386388005_LOCAL_LLMS_SAFEGUARDING_DATA_PRIVACY_IN_THE_AGE_OF_GENERATIVE_AI_A_CASE_STUDY_AT_THE_UNIVERSITY_OF_ANDORRA
+  - titel: "Security and Privacy of Large Language Models (MDPI)"
+    url: https://www.mdpi.com/2673-2688/7/5/152
+  - titel: "LM Studio: Desktop app for local LLMs"
+    url: https://lmstudio.ai
+  - titel: "AnythingLLM: Local RAG and document analysis"
+    url: https://anythingllm.com
+  - titel: "Llama.cpp: CPU-optimized LLM inference (GitHub)"
+    url: https://github.com/ggerganov/llama.cpp
 ---
 
 # AI på hårddisken: Så förändrar lokala språkmodeller din digitala integritet

@@ -1,18 +1,21 @@
 ---
-title: "Din smarta klocka vet mer om dig än du tror"
-date: "2026-07-02"
-description: "Smartklockor samlar in enorma mängder hälsodata varje dag. Frågan är inte bara hur bra mätningarna är – utan också vem som får tillgång till informationen."
-slug: "smarta-klockor-overvakning-halsodata"
-image: "/images/blogg/wearable-surveillance.jpeg"
-source_title_1: "MDPI - Wearable Health Monitoring Devices and Privacy Regulations"
-source_url_1: "https://www.mdpi.com/2410-387X/8/2/26"
-source_title_2: "Nature Communications - High-dimensional data anonymity study"
-source_url_2: "https://www.ooa.world/why-it-matters"
-source_title_3: "Lunds universitet - Forskning om hälsoappar och medicinska råd"
-source_url_3: "https://www.lu.se/artikel/hog-risk-felaktiga-medicinska-rad-med-halsoappar"
-source_title_4: "E-hälsomyndigheten - Det europeiska hälsodataområdet (EHDS)"
-source_url_4: "https://www.ehalsomyndigheten.se/verksamhet/ndi/ehds/om-det-europeiska-halsodataomradet/"
+titel: "Din smarta klocka vet mer om dig än du tror"
+beskrivning: "Smartklockor samlar in enorma mängder hälsodata varje dag. Frågan är inte bara hur bra mätningarna är – utan också vem som får tillgång till informationen."
+slug: smarta-klockor-overvakning-halsodata
+datum: 2026-07-02
+senastGranskad: 2026-07-02
 publicerad: false
+affiliate: false
+bild: /images/blogg/wearable-surveillance.jpeg
+kallor:
+  - titel: "MDPI - Wearable Health Monitoring Devices and Privacy Regulations"
+    url: https://www.mdpi.com/2410-387X/8/2/26
+  - titel: "Nature Communications - High-dimensional data anonymity study"
+    url: https://www.ooa.world/why-it-matters
+  - titel: "Lunds universitet - Forskning om hälsoappar och medicinska råd"
+    url: https://www.lu.se/artikel/hog-risk-felaktiga-medicinska-rad-med-halsoappar
+  - titel: "E-hälsomyndigheten - Det europeiska hälsodataområdet (EHDS)"
+    url: https://www.ehalsomyndigheten.se/verksamhet/ndi/ehds/om-det-europeiska-halsodataomradet/
 ---
 
 ## Din smarta klocka vet mer om dig än du tror

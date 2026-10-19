@@ -1,14 +1,17 @@
 ---
-title: "Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google"
-date: "2026-06-09"
-description: "Forskningen visar svart på vitt: Så här optimerar du din webbplats när AI-assistenterna tar över sökandet."
-slug: "geo-optimering-ai"
-image: "/images/blogg/geo-analys.jpeg"
-source_title_1: "Generative Engine Optimization: How to Dominate AI Search"
-source_url_1: "https://arxiv.org/abs/2311.09738"
-source_title_2: "GEO: Generative Engine Optimization"
-source_url_2: "https://arxiv.org/pdf/2311.09735"
+titel: "Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google"
+beskrivning: "Forskningen visar svart på vitt: Så här optimerar du din webbplats när AI-assistenterna tar över sökandet."
+slug: geo-optimering-ai
+datum: 2026-06-09
+senastGranskad: 2026-06-09
 publicerad: false
+affiliate: false
+bild: /images/blogg/geo-analys.jpeg
+kallor:
+  - titel: "Generative Engine Optimization: How to Dominate AI Search"
+    url: https://arxiv.org/abs/2311.09738
+  - titel: "GEO: Generative Engine Optimization"
+    url: https://arxiv.org/pdf/2311.09735
 ---
 
 # Vad är GEO? Så optimerar du din hemsida när AI tar över efter Google
