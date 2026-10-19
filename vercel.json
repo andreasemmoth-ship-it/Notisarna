@@ -2,44 +2,26 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "trailingSlash": false,
   "redirects": [
+    { "source": "/valkommen", "destination": "/artiklar/introduktion-till-notiserna", "statusCode": 301 },
+
     {
       "source": "/",
       "has": [
-        {
-          "type": "query",
-          "key": "view",
-          "value": "artiklar"
-        },
-        {
-          "type": "query",
-          "key": "slug",
-          "value": "(?<slug>[a-z0-9-]+)"
-        }
+        { "type": "query", "key": "view", "value": "artiklar" },
+        { "type": "query", "key": "slug", "value": "(?<slug>[a-z0-9-]+)" }
       ],
       "destination": "/artiklar/:slug",
       "statusCode": 301
     },
     {
       "source": "/",
-      "has": [
-        {
-          "type": "query",
-          "key": "view",
-          "value": "artiklar"
-        }
-      ],
+      "has": [{ "type": "query", "key": "view", "value": "artiklar" }],
       "destination": "/artiklar",
       "statusCode": 301
     }
   ],
   "rewrites": [
-    {
-      "source": "/artiklar",
-      "destination": "/artiklar/index.html"
-    },
-    {
-      "source": "/artiklar/:slug",
-      "destination": "/artiklar/:slug/index.html"
-    }
+    { "source": "/artiklar", "destination": "/artiklar/index.html" },
+    { "source": "/artiklar/:slug", "destination": "/artiklar/:slug/index.html" }
   ]
 }

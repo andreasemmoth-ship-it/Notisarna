@@ -19,6 +19,18 @@ function headAssetsFrom(indexHtml) {
   return links.join('\n  ')
 }
 
+// Korta länkar i vercel.json (t.ex. /flyg) ska peka på en publicerad artikel.
+function checkShortLinks(posts) {
+  const config = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf-8'))
+  const slugs = new Set(posts.map(post => post.slug))
+  for (const { source, destination, has } of config.redirects ?? []) {
+    const slug = !has && destination.match(/^\/artiklar\/([a-z0-9-]+)$/)?.[1]
+    if (slug && !slugs.has(slug)) {
+      console.warn(`Varning: kortlänken ${source} pekar på /artiklar/${slug}, som inte är en publicerad artikel.`)
+    }
+  }
+}
+
 function write(relPath, content) {
   const file = path.join(DIST, relPath)
   fs.mkdirSync(path.dirname(file), { recursive: true })
@@ -29,6 +41,7 @@ function build() {
   const indexHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8')
   const headAssets = headAssetsFrom(indexHtml)
   const posts = publishedPosts()
+  checkShortLinks(posts)
 
   write('artiklar/index.html', renderArticlesIndex(posts, { headAssets }))
   for (const post of posts) {

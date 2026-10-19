@@ -56,9 +56,15 @@ function posts() {
     // `vite preview` ska bete sig som Vercel: statiska sidor utan avslutande
     // snedstreck och 404 för okända artiklar i stället för SPA-fallback.
     configurePreviewServer(server) {
+      const shortLinks = JSON.parse(fs.readFileSync(path.join(server.config.root, 'vercel.json'), 'utf-8')).redirects.filter(r => !r.has)
       server.middlewares.use((req, res, next) => {
         const [pathname, search = ''] = (req.url ?? '').split('?')
         const clean = pathname.replace(/\/$/, '')
+        const shortLink = shortLinks.find(r => r.source === clean)
+        if (shortLink) {
+          res.writeHead(shortLink.statusCode ?? 308, { Location: shortLink.destination })
+          return res.end()
+        }
         if (!STATIC_PAGE.test(clean)) return next()
         if (fs.existsSync(path.join(outDir, clean, 'index.html'))) {
           req.url = `${clean}/index.html${search ? `?${search}` : ''}`

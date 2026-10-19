@@ -156,6 +156,24 @@ Detta genererar en lokal fil `news.json` baserad på dina förinställda nyhetsf
 
 ---
 
+## 🔗 Korta länkar för videor
+
+Videorna hänvisar till korta adresser som `notiserna.se/flyg`. De ligger som 301-omdirigeringar
+överst i `redirects` i [vercel.json](vercel.json). Lägg till en rad per länk:
+
+```json
+{ "source": "/flyg", "destination": "/artiklar/forsenat-flyg-ersattning", "statusCode": 301 },
+```
+
+- `source`: den korta adressen som sägs i videon. Använd bara små bokstäver a–z, siffror och bindestreck (inga å, ä, ö).
+- `destination`: artikelns adress, alltid `/artiklar/<slug>` där `<slug>` är `slug` i artikelns frontmatter.
+- Raden behöver avslutas med kommatecken om fler rader följer. JSON tillåter inga kommentarer i filen.
+- `npm run build` varnar om en kort länk pekar på en artikel som inte är publicerad.
+- Testa lokalt med `npm run build && npm run preview` och öppna `http://localhost:4173/flyg`.
+
+Omdirigeringarna kontrolleras innan statiska filer och rewrites, så en kort länk får inte heta
+samma sak som en befintlig sida (`/artiklar`, `/om`, `/integritet`).
+
 ## 🚀 Drift & Driftsättning (Vercel)
 
 Webbplatsen är konfigurerad för att hostas direkt på **Vercel**:
