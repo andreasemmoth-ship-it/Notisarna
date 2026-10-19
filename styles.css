@@ -91,63 +91,12 @@ input, select { font: inherit; color: inherit; outline: none; border: none; back
 .icon-btn { padding: 8px; border-radius: 8px; color: var(--muted); }
 .icon-btn:hover { background: var(--bg); color: var(--ink); }
 
-/* ===== Brand header (kompakt, en rad) ===== */
-.brand-header {
-  padding: 20px 40px 14px;
-  max-width: 1240px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-}
-.brand-header__link {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.brand-header__link:hover { opacity: 0.8; }
-.brand-header__logo {
-  width: 36px; height: 36px; border-radius: 9px;
-  background: var(--ink); color: var(--surface);
-  display: grid; place-items: center;
-  font-family: 'Instrument Serif', serif;
-  font-size: 23px; font-style: italic; font-weight: 500;
-  letter-spacing: -0.02em; line-height: 1;
-  box-shadow: 0 6px 16px -8px color-mix(in oklch, var(--ink) 50%, transparent);
-  flex-shrink: 0;
-}
-.brand-header__name {
-  font-family: 'Instrument Serif', serif;
-  font-size: 26px; font-weight: 500;
-  letter-spacing: -0.02em; line-height: 1;
-  color: var(--ink);
-}
-.brand-header__sep {
-  color: var(--line); font-size: 18px; line-height: 1;
-}
-.brand-header__tagline {
-  font-family: 'Instrument Serif', Georgia, serif;
-  font-size: 18px; font-weight: 400;
-  color: var(--muted); letter-spacing: -0.01em;
-  line-height: 1.25; white-space: nowrap;
-}
-@media (max-width: 720px) {
-  .brand-header { padding: 16px 20px 12px; }
-}
-/* Mobil: menyn visar redan loggan, så bara sloganen ligger kvar, mindre */
-@media (max-width: 600px) {
-  .brand-header { padding: 10px 16px 8px; justify-content: center; }
-  .brand-header__logo, .brand-header__name, .brand-header__sep { display: none; }
-  .brand-header__tagline { font-size: 15px; }
-}
-
 /* ===== Filter bar ===== */
 .filter-bar {
   position: sticky; top: 65px; z-index: 10;
   background: color-mix(in oklch, var(--bg) 80%, transparent);
   backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
   padding: 14px 0;
 }
 .filter-bar__inner {

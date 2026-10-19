@@ -451,17 +451,7 @@ function App() {
            onGoHome={goHome} onShowArticles={() => setActive('artiklar')}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
 
-      <header className="brand-header">
-        <button className="brand-header__link" onClick={goHome}>
-          <div className="brand-header__logo">N</div>
-          <span className="brand-header__name">Notiserna</span>
-          <span className="brand-header__sep">&mdash;</span>
-          <span className="brand-header__tagline">Nyheter och vardagsekonomi</span>
-        </button>
-      </header>
-
-
-        <div className="filter-bar">
+      <div className="filter-bar">
         <div className="filter-bar__inner">
           {NEWS_TABS.map(c => (
             <button key={c.key}
