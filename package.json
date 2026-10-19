@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node generate-llms-txt.js && vite build",
+    "build": "vite build && node scripts/build-static.js && node generate-llms-txt.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4",
-    "vite": "^5"
+    "marked": "^18.1.1",
+    "vite": "^5",
+    "yaml": "^2.9.1"
   }
 }

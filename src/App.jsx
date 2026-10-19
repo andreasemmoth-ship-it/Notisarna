@@ -2,6 +2,8 @@ import React, { Component, useState, useMemo, useEffect, useCallback, useRef } f
 import { createClient } from '@supabase/supabase-js'
 import { NEWS_TABS, NEWS_CATEGORY_KEYS } from './data.js'
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js'
+// Publicerade artiklar (slug, titel, beskrivning, datum), senaste först. Se vite.config.js.
+import POSTS from 'virtual:posts'
 
 // Besökare loggas inte in; klienten används bara för att läsa nyheter.
 const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -11,116 +13,6 @@ const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
 const PAGE_SIZE = 30
 const mapArticle = (row) => ({ ...row, categoryKey: row.category_key, date: row.date_sv })
 
-
-// ----- Markdown / Frontmatter Parser & Static Posts Loader -----
-function parseFrontmatter(markdownText) {
-  const match = markdownText.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
-  if (!match) return { attributes: {}, body: markdownText }
-  
-  const yamlBlock = match[1]
-  const body = match[2]
-  const attributes = {}
-  
-  yamlBlock.split('\n').forEach(line => {
-    const parts = line.split(':')
-    if (parts.length >= 2) {
-      const key = parts[0].trim()
-      let value = parts.slice(1).join(':').trim()
-      if (value.startsWith('"') && value.endsWith('"')) {
-        value = value.slice(1, -1)
-      } else if (value.startsWith("'") && value.endsWith("'")) {
-        value = value.slice(1, -1)
-      }
-      attributes[key] = value
-    }
-  })
-  
-  return { attributes, body }
-}
-
-function renderMarkdown(md) {
-  let html = md
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-
-  html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>')
-  html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>')
-  html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>')
-
-  let inList = false
-  const lines = html.split('\n')
-  const processedLines = lines.map(line => {
-    const listMatch = line.match(/^[\*\-]\s+(.*?)$/)
-    if (listMatch) {
-      let result = ''
-      if (!inList) {
-        inList = true
-        result += '<ul>'
-      }
-      result += `<li>${listMatch[1]}</li>`
-      return result
-    } else {
-      let result = ''
-      if (inList) {
-        inList = false
-        result += '</ul>'
-      }
-      result += line
-      return result
-    }
-  })
-  if (inList) {
-    processedLines.push('</ul>')
-  }
-  html = processedLines.join('\n')
-
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>')
-
-  html = html.split('\n').map(line => {
-    const trimmed = line.trim()
-    if (!trimmed) return ''
-    if (trimmed.startsWith('<h') || trimmed.startsWith('</h') || trimmed.startsWith('<ul') || trimmed.startsWith('</ul') || trimmed.startsWith('<li') || trimmed.startsWith('</li')) {
-      return line
-    }
-    return `<p>${line}</p>`
-  }).join('\n')
-
-  return html
-}
-
-const rawPosts = import.meta.glob('./content/posts/*.md', { query: '?raw', import: 'default', eager: true })
-
-// Endast artiklar med publicerad: true visas.
-const POSTS = Object.entries(rawPosts).map(([path, content]) => ({ path, ...parseFrontmatter(content) }))
-  .filter(({ attributes }) => attributes.publicerad === 'true')
-  .map(({ path, attributes, body }) => {
-  const sources = []
-  let index = 1
-  while (attributes[`source_url_${index}`]) {
-    sources.push({
-      url: attributes[`source_url_${index}`],
-      title: attributes[`source_title_${index}`] || attributes[`source_url_${index}`]
-    })
-    index++
-  }
-  if (attributes.source_url) {
-    sources.push({
-      url: attributes.source_url,
-      title: attributes.source_title || attributes.source_url
-    })
-  }
-  return {
-    title: attributes.title || 'Utan titel',
-    date: attributes.date || '',
-    description: attributes.description || '',
-    image: attributes.image || '',
-    sources,
-    slug: attributes.slug || path.split('/').pop().replace('.md', ''),
-    body,
-  }
-}).sort((a, b) => (b.date > a.date ? 1 : -1))
 
 // ----- Error Boundary -----
 class ErrorBoundary extends Component {
@@ -411,18 +303,17 @@ function CompactCard({ item }) {
 }
 
 // ----- Nav -----
-function Nav({ query, setQuery, active, onSetActive, onGoHome, onOpenAbout, colorScheme, onToggleTheme }) {
+function Nav({ query, setQuery, onGoHome, onOpenAbout, colorScheme, onToggleTheme }) {
   return (
     <header className="nav">
-      <button className="nav__brand" onClick={onGoHome}>
+      <a className="nav__brand" href="/" onClick={e => { e.preventDefault(); onGoHome() }}>
         <div className="nav__logo">N</div>
         <div className="nav__name">Notiserna</div>
-      </button>
-      <nav className="nav__links">
-        <a href="#" onClick={e => { e.preventDefault(); onSetActive('all') }}
-           className={active !== 'artiklar' ? 'is-active' : ''}>Nyheter</a>
-        <a href="#" onClick={e => { e.preventDefault(); onSetActive('artiklar') }}
-           className={active === 'artiklar' ? 'is-active' : ''}>Artiklar</a>
+      </a>
+      <nav className="nav__links" aria-label="Huvudmeny">
+        <a href="/" onClick={e => { e.preventDefault(); onGoHome() }}
+           className="is-active" aria-current="page">Nyheter</a>
+        <a href="/artiklar">Artiklar</a>
         <a href="#" onClick={e => { e.preventDefault(); onOpenAbout() }}>Om</a>
       </nav>
       <div className="nav__right">
@@ -440,27 +331,19 @@ function Nav({ query, setQuery, active, onSetActive, onGoHome, onOpenAbout, colo
 }
 
 // ----- MobileNav -----
-function MobileNav({ active, onSetActive, onOpenAbout }) {
+function MobileNav({ onGoHome, onOpenAbout }) {
   return (
-    <nav className="mobile-nav">
-      <button 
-        className={`mobile-nav__item ${active !== 'artiklar' ? 'is-active' : ''}`}
-        onClick={() => onSetActive('all')}
-      >
+    <nav className="mobile-nav" aria-label="Huvudmeny">
+      <a className="mobile-nav__item is-active" href="/" aria-current="page"
+         onClick={e => { e.preventDefault(); onGoHome() }}>
         <Icon name="rss" size={20} />
         <span>Nyheter</span>
-      </button>
-      <button 
-        className={`mobile-nav__item ${active === 'artiklar' ? 'is-active' : ''}`}
-        onClick={() => onSetActive('artiklar')}
-      >
+      </a>
+      <a className="mobile-nav__item" href="/artiklar">
         <Icon name="book-open" size={20} />
         <span>Artiklar</span>
-      </button>
-      <button 
-        className="mobile-nav__item"
-        onClick={onOpenAbout}
-      >
+      </a>
+      <button className="mobile-nav__item" onClick={onOpenAbout}>
         <Icon name="info" size={20} />
         <span>Om</span>
       </button>
@@ -469,160 +352,29 @@ function MobileNav({ active, onSetActive, onOpenAbout }) {
 }
 
 // ----- Senaste artiklarna (visas ovanför nyhetsflödet) -----
-function LatestPosts({ posts, onOpen, onShowAll }) {
+const postDateFormat = new Intl.DateTimeFormat('sv-SE', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+const formatPostDate = iso => postDateFormat.format(new Date(`${iso}T00:00:00Z`))
+
+function LatestPosts({ posts }) {
   if (posts.length === 0) return null
   return (
     <section className="latest-posts" aria-labelledby="latest-posts-title">
       <div className="latest-posts__head">
         <h2 id="latest-posts-title" className="latest-posts__title">Senaste från Notiserna</h2>
-        <a href="?view=artiklar" className="latest-posts__all"
-           onClick={e => { e.preventDefault(); onShowAll() }}>
+        <a href="/artiklar" className="latest-posts__all">
           Alla artiklar <Icon name="arrow" size={13} />
         </a>
       </div>
       <div className="latest-posts__list">
         {posts.slice(0, 3).map(post => (
-          <a key={post.slug} href={`?view=artiklar&slug=${post.slug}`} className="latest-post"
-             onClick={e => { e.preventDefault(); onOpen(post.slug) }}>
-            <span className="latest-post__date">{post.date}</span>
-            <span className="latest-post__title">{post.title}</span>
-            <span className="latest-post__desc">{post.description}</span>
+          <a key={post.slug} href={`/artiklar/${post.slug}`} className="latest-post">
+            <time className="latest-post__date" dateTime={post.datum}>{formatPostDate(post.datum)}</time>
+            <span className="latest-post__title">{post.titel}</span>
+            <span className="latest-post__desc">{post.beskrivning}</span>
           </a>
         ))}
       </div>
     </section>
-  )
-}
-
-// ----- ArticleView Component -----
-function ArticleView({ slug, onBack, onBackToFlow }) {
-  const post = useMemo(() => POSTS.find(p => p.slug === slug), [slug])
-  const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [slug])
-
-  if (!post) {
-    return (
-      <div className="empty">
-        <h3>Artikeln hittades inte</h3>
-        <p>Den artikel du söker verkar inte finnas kvar.</p>
-        <button className="btn btn--primary" onClick={onBack}>Tillbaka</button>
-      </div>
-    )
-  }
-
-  const shareUrl = `${window.location.origin}${window.location.pathname}?view=artiklar&slug=${post.slug}`
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
-
-  const htmlContent = useMemo(() => renderMarkdown(post.body), [post.body])
-
-  return (
-    <article className="article-view">
-      <div className="article-view__back-wrapper">
-        <button className="btn btn--ghost btn--sm" onClick={onBack}>
-          <Icon name="arrow" size={13} style={{ transform: 'rotate(180deg)', marginRight: '4px' }} /> Tillbaka till artiklar
-        </button>
-      </div>
-
-      <header className="article-view__header">
-        <div className="article-view__meta">
-          <span>EGEN ARTIKEL</span>
-          <span className="dot-sep">·</span>
-          <span>{post.date}</span>
-        </div>
-        <h1 className="article-view__title">{post.title}</h1>
-        {post.description && <p className="article-view__lead">{post.description}</p>}
-        {post.image && (
-          <div className="article-view__featured-image-wrapper">
-            <img src={post.image} alt={post.title} className="article-view__featured-image" />
-          </div>
-        )}
-      </header>
-
-      <div className="article-view__content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
-
-      {post.sources && post.sources.length > 0 && (
-        <div className="article-view__sources">
-          <span className="article-view__sources-label">Källor &amp; vidareläsning:</span>
-          <ul className="article-view__sources-list">
-            {post.sources.map((src, i) => (
-              <li key={i} className="article-view__sources-item">
-                <a href={src.url} target="_blank" rel="noopener noreferrer" className="article-view__source-link">
-                  {src.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <div className="article-view__divider">···</div>
-
-      <div className="article-view__info-box">
-        <h4>Notiserna Spaning</h4>
-        <p>Denna artikel är en del av våra egna djuplodande analyser om intressanta ämnen inom ekonomi och teknik. Vill du tipsa om ämnen eller ge feedback? Kontakta oss via Om-sidan.</p>
-      </div>
-
-      {/* Monochrome Share buttons */}
-      <div className="article-view__share">
-        <span className="article-view__share-label">Dela artikeln:</span>
-        <div className="article-view__share-buttons">
-          <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn"
-            title="Dela på LinkedIn"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-            LinkedIn
-          </a>
-          <a
-            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="share-btn"
-            title="Dela på X"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-            X
-          </a>
-          <button
-            onClick={handleCopy}
-            className="share-btn share-btn--copy"
-            title="Kopiera länk"
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-            </svg>
-            Kopiera länk
-          </button>
-
-          {copied && <span className="share-toast">Länken kopierad!</span>}
-        </div>
-      </div>
-
-      <div className="article-view__footer-nav">
-        <button className="article-view__footer-nav-btn" onClick={onBackToFlow}>
-          &larr; Tillbaka till nyhetsflödet
-        </button>
-      </div>
-    </article>
   )
 }
 
@@ -637,14 +389,8 @@ function formatUpdated(iso) {
 
 function App() {
   const [active,        setActive]        = useState(() => {
-    const p = new URLSearchParams(window.location.search)
-    if (p.get('view') === 'artiklar') return 'artiklar'
-    const cat = p.get('cat')
+    const cat = new URLSearchParams(window.location.search).get('cat')
     return NEWS_TABS.some(t => t.key === cat) ? cat : 'all'
-  })
-  const [activeSlug,    setActiveSlug]    = useState(() => {
-    const p = new URLSearchParams(window.location.search)
-    return p.get('view') === 'artiklar' ? p.get('slug') : null
   })
   const [query,         setQuery]         = useState(() =>
     new URLSearchParams(window.location.search).get('q') ?? ''
@@ -684,64 +430,15 @@ function App() {
   // Scroll to top when active view/tab changes
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [active, activeSlug])
+  }, [active])
 
-  // Synka active/query/slug → URL (delningsbara länkar)
+  // Synka flik/sökning → URL (delningsbara länkar)
   useEffect(() => {
     const p = new URLSearchParams()
-    if (active === 'artiklar') {
-      p.set('view', 'artiklar')
-      if (activeSlug) p.set('slug', activeSlug)
-    }
-    else if (active !== 'all') p.set('cat', active)
+    if (active !== 'all')      p.set('cat', active)
     if (query.trim())          p.set('q', query.trim())
     history.replaceState(null, '', p.toString() ? `?${p}` : location.pathname)
-  }, [active, activeSlug, query])
-
-  // Update document title, description, canonical and OG tags for SEO
-  useEffect(() => {
-    let title = "Notiserna — dina nyheter, samlat på ett ställe"
-    let description = "Notiserna samlar nyheter från svenska och internationella källor i ett rent, personligt flöde. Teknik, näringsliv, världen, kultur och mer — uppdaterat var 15:e minut."
-    let image = "https://www.notiserna.se/images/blogg/notiserna.jpeg"
-    let canonical = "https://www.notiserna.se/"
-
-    if (active === 'artiklar' && activeSlug) {
-      const post = POSTS.find(p => p.slug === activeSlug)
-      if (post) {
-        title = `${post.title} — Notiserna`
-        description = post.description || ''
-        if (post.image) {
-          image = post.image.startsWith('http') ? post.image : `https://www.notiserna.se${post.image}`
-        }
-        canonical = `https://www.notiserna.se/?view=artiklar&slug=${activeSlug}`
-      }
-    } else if (active !== 'all') {
-      canonical = `https://www.notiserna.se/?cat=${active}`
-    }
-
-    document.title = title
-
-    // Update canonical link in document head
-    const canonicalLink = document.querySelector('link[rel="canonical"]')
-    if (canonicalLink) {
-      canonicalLink.setAttribute('href', canonical)
-    }
-    
-    const metaTags = {
-      'meta[name="description"]': description,
-      'meta[property="og:title"]': title,
-      'meta[property="og:description"]': description,
-      'meta[property="og:image"]': image,
-      'meta[name="twitter:title"]': title,
-      'meta[name="twitter:description"]': description,
-      'meta[name="twitter:image"]': image,
-    }
-
-    Object.entries(metaTags).forEach(([selector, val]) => {
-      const el = document.querySelector(selector)
-      if (el) el.setAttribute('content', val)
-    })
-  }, [active, activeSlug])
+  }, [active, query])
 
   const acceptGdpr = useCallback(() => {
     localStorage.setItem('gdpr_ok', '1')
@@ -750,14 +447,8 @@ function App() {
 
   const goHome = useCallback(() => {
     setActive('all')
-    setActiveSlug(null)
     setQuery('')
     window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
-
-  const handleSetActive = useCallback((tab) => {
-    setActive(tab)
-    setActiveSlug(null)
   }, [])
 
   const changeViewMode = useCallback((mode) => {
@@ -768,7 +459,7 @@ function App() {
   // Filtrera före paginering så varje flik får egna, kompletta sidor.
   const newsQuery = useCallback(() => {
     let request = db.from('news_articles').select('*')
-    if (active === 'all' || active === 'artiklar') {
+    if (active === 'all') {
       request = request.in('category_key', NEWS_CATEGORY_KEYS).not('image', 'is', null).neq('image', '')
     } else {
       request = request.eq('category_key', active)
@@ -871,7 +562,6 @@ function App() {
   return (
     <div className="shell">
       <Nav query={query} setQuery={setQuery}
-           active={active} onSetActive={handleSetActive}
            onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)}
            colorScheme={colorScheme} onToggleTheme={toggleTheme} />
 
@@ -885,133 +575,71 @@ function App() {
       </header>
 
 
-      {active !== 'artiklar' && (
-        <LatestPosts posts={POSTS}
-                     onOpen={slug => { setActive('artiklar'); setActiveSlug(slug) }}
-                     onShowAll={() => handleSetActive('artiklar')} />
-      )}
+      <LatestPosts posts={POSTS} />
 
-      {active !== 'artiklar' && (
-        <div className="filter-bar">
-          <div className="filter-bar__inner">
-            {NEWS_TABS.map(c => (
-              <button key={c.key}
-                      className={`pill ${active === c.key ? 'is-active' : ''}`}
-                      onClick={() => handleSetActive(c.key)}
-                      aria-pressed={active === c.key}>
-                {c.label}
-                {active === c.key && <span className="pill__count">{filtered.length}</span>}
+      <div className="filter-bar">
+        <div className="filter-bar__inner">
+          {NEWS_TABS.map(c => (
+            <button key={c.key}
+                    className={`pill ${active === c.key ? 'is-active' : ''}`}
+                    onClick={() => setActive(c.key)}
+                    aria-pressed={active === c.key}>
+              {c.label}
+              {active === c.key && <span className="pill__count">{filtered.length}</span>}
+            </button>
+          ))}
+          <div className="filter-bar__tools">
+            <div className="view-toggle">
+              <button className={`view-btn ${viewMode === 'grid' ? 'is-active' : ''}`}
+                      onClick={() => changeViewMode('grid')} title="Rutnät">
+                <Icon name="grid" size={15} />
               </button>
-            ))}
-            <div className="filter-bar__tools">
-              <div className="view-toggle">
-                <button className={`view-btn ${viewMode === 'grid' ? 'is-active' : ''}`}
-                        onClick={() => changeViewMode('grid')} title="Rutnät">
-                  <Icon name="grid" size={15} />
-                </button>
-                <button className={`view-btn ${viewMode === 'compact' ? 'is-active' : ''}`}
-                        onClick={() => changeViewMode('compact')} title="Kompakt lista">
-                  <Icon name="rows" size={15} />
-                </button>
-              </div>
+              <button className={`view-btn ${viewMode === 'compact' ? 'is-active' : ''}`}
+                      onClick={() => changeViewMode('compact')} title="Kompakt lista">
+                <Icon name="rows" size={15} />
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
-      {active === 'artiklar' && activeSlug ? (
-        <main className="content">
-          <ArticleView slug={activeSlug}
-                       onBack={() => {
-                         setActive('artiklar')
-                         setActiveSlug(null)
-                       }}
-                       onBackToFlow={() => {
-                         setActive('all')
-                         setActiveSlug(null)
-                       }} />
-        </main>
-      ) : active === 'artiklar' ? (
-        <main className="content">
-          <div className="article-archive-header">
-            <h2>Artiklar</h2>
-            <p>Förklarande artiklar om vardagsekonomi, senaste först</p>
+      <main className="content">
+        {newsError && <div className="empty" role="alert"><p>{newsError}</p></div>}
+        {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
+        {!loading && !newsError && filtered.length === 0 && (
+          <div className="empty">
+            <h3>Inga artiklar matchar</h3>
+            <p>Prova att rensa sökningen eller välj en annan flik.</p>
           </div>
-          {POSTS.length === 0 ? (
-            <div className="empty">
-              <h3>Inga artiklar hittades</h3>
-              <p>Vi fyller på med nytt innehåll inom kort.</p>
-            </div>
-          ) : (
-            <div className="article-archive-list">
-              {POSTS.map(post => (
-                <a
-                  key={post.slug}
-                  href={`?view=artiklar&slug=${post.slug}`}
-                  className="article-archive-item"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    setActive('artiklar')
-                    setActiveSlug(post.slug)
-                  }}
-                >
-                  {post.image && (
-                    <div className="article-archive-item__img">
-                      <img src={post.image} alt={post.title} loading="lazy" />
-                    </div>
-                  )}
-                  <div className="article-archive-item__content">
-                    <span className="article-archive-item__date">{post.date}</span>
-                    <h3 className="article-archive-item__title">{post.title}</h3>
-                    <p className="article-archive-item__desc">{post.description}</p>
-                    <span className="article-archive-item__link">
-                      Läs artikeln <Icon name="arrow" size={13} />
-                    </span>
-                  </div>
-                </a>
+        )}
+
+        {!loading && viewMode === 'grid' && (
+          <>
+            {showHero && <HeroCard item={featured} />}
+            <div className="grid">
+              {(showHero ? rest : filtered).map(item => (
+                <NewsCard key={item.id} item={item} />
               ))}
             </div>
-          )}
-        </main>
-      ) : (
-        <main className="content">
-          {newsError && <div className="empty" role="alert"><p>{newsError}</p></div>}
-          {loading && <div className="empty"><p>Hämtar nyheter…</p></div>}
-          {!loading && !newsError && filtered.length === 0 && (
-            <div className="empty">
-              <h3>Inga artiklar matchar</h3>
-              <p>Prova att rensa sökningen eller välj en annan flik.</p>
-            </div>
-          )}
+          </>
+        )}
 
-          {!loading && viewMode === 'grid' && (
-            <>
-              {showHero && <HeroCard item={featured} />}
-              <div className="grid">
-                {(showHero ? rest : filtered).map(item => (
-                  <NewsCard key={item.id} item={item} />
-                ))}
-              </div>
-            </>
-          )}
+        {!loading && viewMode === 'compact' && (
+          <div className="compact-list">
+            {filtered.map(item => (
+              <CompactCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
 
-          {!loading && viewMode === 'compact' && (
-            <div className="compact-list">
-              {filtered.map(item => (
-                <CompactCard key={item.id} item={item} />
-              ))}
-            </div>
-          )}
-
-          {!loading && hasMore && (
-            <div className="load-more">
-              <button className="btn btn--ghost" onClick={loadMore} disabled={loadingMore}>
-                {loadingMore ? 'Hämtar…' : 'Ladda fler nyheter'}
-              </button>
-            </div>
-          )}
-        </main>
-      )}
+        {!loading && hasMore && (
+          <div className="load-more">
+            <button className="btn btn--ghost" onClick={loadMore} disabled={loadingMore}>
+              {loadingMore ? 'Hämtar…' : 'Ladda fler nyheter'}
+            </button>
+          </div>
+        )}
+      </main>
 
       <footer className="foot">
         <div className="foot__rule" />
@@ -1035,7 +663,7 @@ function App() {
       {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} onOpenPrivacy={() => { setAboutOpen(false); setPrivacyOpen(true) }} />}
       {!gdprOk && <GdprBanner onAccept={acceptGdpr} onOpenPrivacy={() => setPrivacyOpen(true)} />}
 
-      <MobileNav active={active} onSetActive={handleSetActive} onOpenAbout={() => setAboutOpen(true)} />
+      <MobileNav onGoHome={goHome} onOpenAbout={() => setAboutOpen(true)} />
     </div>
   )
 }
